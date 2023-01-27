@@ -1,0 +1,38 @@
+stages:
+  data_prep:
+    cmd: python3 src/data_prep.py
+    deps:
+    - data/te_ai_cup_sales_forecasting_data.csv
+    - data_processing.py
+    - saving_reading_data.py
+    - src/constants.py
+    - src/data_prep.py
+    - src/saving_reading_data.py
+    - visualization.py
+    outs:
+    - data/dicts/test_dict.pkl:
+        persist: true
+    - data/dicts/train_dict.pkl:
+        persist: true
+    - data/dicts/validation_dict.pkl:
+        persist: true
+    - data/model_io/test_x.pkl:
+        persist: true
+    - data/model_io/test_y.pkl:
+        persist: true
+    - data/model_io/train_x.pkl:
+        persist: true
+    - data/model_io/train_y.pkl:
+        persist: true
+    - data/model_io/validation_x.pkl:
+        persist: true
+    - data/model_io/validation_y.pkl:
+        persist: true
+    - data/regular_data.pkl:
+        persist: true
+    - data/transformations/input_transformations.pkl:
+        persist: true
+    - data/transformations/output_transformations.pkl:
+        persist: true
+    - data/transformed_data.pkl:
+        persist: true
