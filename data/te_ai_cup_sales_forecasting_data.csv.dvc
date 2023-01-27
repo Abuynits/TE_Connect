@@ -1,0 +1,4 @@
+outs:
+- md5: 6fb382498b126fc3e903d56da73768c8
+  size: 46029876
+  path: te_ai_cup_sales_forecasting_data.csv

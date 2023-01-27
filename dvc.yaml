@@ -3,12 +3,11 @@ stages:
     cmd: python3 src/data_prep.py
     deps:
     - data/te_ai_cup_sales_forecasting_data.csv
-    - data_processing.py
-    - saving_reading_data.py
+    - src/data_processing.py
     - src/constants.py
     - src/data_prep.py
     - src/saving_reading_data.py
-    - visualization.py
+    - src/visualization.py
     outs:
     - data/dicts/test_dict.pkl:
         persist: true

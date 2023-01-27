@@ -1,0 +1,63 @@
+schema: '2.0'
+stages:
+  data_prep:
+    cmd: python3 src/data_prep.py
+    deps:
+    - path: data/te_ai_cup_sales_forecasting_data.csv
+      md5: 6fb382498b126fc3e903d56da73768c8
+      size: 46029876
+    - path: src/constants.py
+      md5: ad5eb17b114b7936691f0460fb763e11
+      size: 3712
+    - path: src/data_prep.py
+      md5: 34f4b6a972634d4023331450478f20ef
+      size: 2617
+    - path: src/data_processing.py
+      md5: df777ae6e30c389235bdca79c12e40e8
+      size: 7596
+    - path: src/saving_reading_data.py
+      md5: c842c37b6fef0ab3d6a6557f7be2e704
+      size: 3256
+    - path: src/visualization.py
+      md5: 55f692b3369c5f8893122313814a095f
+      size: 6655
+    outs:
+    - path: data/dicts/test_dict.pkl
+      md5: 47da1bcb8937ee3b2b01a39e22450e32
+      size: 8698457
+    - path: data/dicts/train_dict.pkl
+      md5: c37d1cd64948b942a017ded013cc081c
+      size: 23742059
+    - path: data/dicts/validation_dict.pkl
+      md5: ebe1cd5accb668848b5e699a199690f1
+      size: 8005855
+    - path: data/model_io/test_x.pkl
+      md5: 52bbb508b3858072a44aa161e85fd876
+      size: 6902564
+    - path: data/model_io/test_y.pkl
+      md5: c9842d100c14a9cacdc6df0f0a23a445
+      size: 1794788
+    - path: data/model_io/train_x.pkl
+      md5: e248d4c8abcfc38a8c01ffdf678a4951
+      size: 18840164
+    - path: data/model_io/train_y.pkl
+      md5: 000fb61fee8c773843e066a841f9c7c1
+      size: 4898564
+    - path: data/model_io/validation_x.pkl
+      md5: 46272894e5d7a644db0b455f345309e9
+      size: 6352964
+    - path: data/model_io/validation_y.pkl
+      md5: 0f7e835d3a20f57ea3ce00b97ddf2692
+      size: 1651892
+    - path: data/regular_data.pkl
+      md5: 49a14f92b002cb1e32ead7c2d8a17964
+      size: 1832967
+    - path: data/transformations/input_transformations.pkl
+      md5: a0192a099aee3c7bf591255f6609980c
+      size: 20804
+    - path: data/transformations/output_transformations.pkl
+      md5: 432cde6f376710ed2c19a3ffae10b301
+      size: 16023
+    - path: data/transformed_data.pkl
+      md5: f2ce444f3feffcc8a96c36bbef17a3df
+      size: 1837684

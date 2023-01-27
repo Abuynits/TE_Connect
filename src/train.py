@@ -1,6 +1,6 @@
 from constants import *
 from dl_ds import *
-from data_processing import read_arrs_from_fp,read_dicts_from_fp
+from saving_reading_data import read_arrs_from_fp,read_dicts_from_fp
 from seq2seq_arch import *
 from lstm_arch import *
 from visualization import *

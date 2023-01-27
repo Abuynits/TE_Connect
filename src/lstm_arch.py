@@ -1,105 +1,41 @@
 from constants import *
+from dl_ds import print_model
+class lstm(nn.Module):
+    def __init__(self, inp_size=INPUT_DATA_FEATURES, out_size=INPUT_DATA_FEATURES, hidden_size=LSTM_HIDDEN_SIZE,
+                 layer_count=LSTM_LAYER_COUNT, seq_len=LOOKBACK, dropout=0):
+        super(lstm, self).__init__()
+        self.model_name = "lstm"
+        self.inp_size = inp_size
+        self.out_size = out_size
+        self.hid_size = hidden_size
+        self.layer_count = layer_count
+        self.seq_len = seq_len
+        self.drop = dropout
 
+        self.lstm = nn.LSTM(input_size=self.inp_size, hidden_size=self.hid_size, num_layers=self.layer_count,
+                            batch_first=True, dropout=self.drop)
 
-def save_train_val_test_dicts(train_dict, val_dict, test_dict):
-    with open(TRAIN_DICT_FILE_PATH, 'wb') as f:
-        pickle.dump(train_dict, f)
-    with open(VAL_DICT_FILE_PATH, 'wb') as f:
-        pickle.dump(val_dict, f)
-    with open(TEST_DICT_FILE_PATH, 'wb') as f:
-        pickle.dump(test_dict, f)
+        self.fc = nn.Linear(hidden_size, out_size)
 
+        print_model(self)
 
-def save_train_val_test_arrs(train_x, train_y, valid_x, valid_y, test_x, test_y):
-    with open(TRAIN_X_FILE_PATH, 'wb') as f:
-        pickle.dump(train_x, f)
-    with open(VAL_X_FILE_PATH, 'wb') as f:
-        pickle.dump(valid_x, f)
-    with open(TEST_X_FILE_PATH, 'wb') as f:
-        pickle.dump(test_x, f)
-    with open(TRAIN_Y_FILE_PATH, 'wb') as f:
-        pickle.dump(train_y, f)
-    with open(VAL_Y_FILE_PATH, 'wb') as f:
-        pickle.dump(valid_y, f)
-    with open(TEST_Y_FILE_PATH, 'wb') as f:
-        pickle.dump(test_y, f)
+    def forward(self, inp):
+        (hn, cn) = self.init_hidden(inp.size(0))
+        if LSTM_VERBOSE:
+            print("inp shape:", inp.shape)
+            print("hn shape:", hn.shape)
+            print("cn shape:", cn.shape)
+        # try with (hn,cn)
+        lstm_out, hidden = self.lstm(inp, (hn, cn))
+        out = self.fc(hn[0]).flatten()
+        if LSTM_VERBOSE:
+            print("hn[0] shape:", hn[0].shape)
+            print("out lstm shape:", out.shape)
+        return out
 
-
-def save_all_transformations(input_transformations, output_transformations):
-    with open(INPUT_TRANSFORMATIONS_FILE_PATH, 'wb') as f:
-        pickle.dump(input_transformations, f)
-    with open(OUTPUT_TRANSFORMATIONS_FILE_PATH, 'wb') as f:
-        pickle.dump(output_transformations, f)
-
-
-def save_all_data(reg_data, transformed_data):
-    with open(REGULAR_DATA_FILE_PATH, 'wb') as f:
-        pickle.dump(reg_data, f)
-    with open(TRANSFORMED_DATA_FILE_PATH, 'wb') as f:
-        pickle.dump(transformed_data, f)
-
-
-def read_transformations_from_fp():
-    inp_transformation = {}
-    out_transformation = {}
-    with open(INPUT_TRANSFORMATIONS_FILE_PATH, 'wb') as f:
-        inp_transformation = pickle.load(f)
-    with open(OUTPUT_TRANSFORMATIONS_FILE_PATH, 'wb') as f:
-        out_transformation = pickle.load(f)
-    return inp_transformation, out_transformation
-
-
-def read_data_from_fp():
-    reg_data = {}
-    transformed_data = {}
-    with open(REGULAR_DATA_FILE_PATH, 'wb') as f:
-        reg_data = pickle.load(f)
-    with open(TRANSFORMED_DATA_FILE_PATH, 'wb') as f:
-        transformed_data = pickle.load(f)
-    return reg_data, transformed_data
-
-
-def read_dicts_from_fp():
-    train_dict = {}
-    test_dict = {}
-    val_dict = {}
-    with open(TRAIN_DICT_FILE_PATH, 'wb') as f:
-        train_dict = pickle.load(f)
-    with open(VAL_DICT_FILE_PATH, 'wb') as f:
-        val_dic = pickle.load(f)
-    with open(TEST_DICT_FILE_PATH, 'wb') as f:
-        test_dict = pickle.load(f)
-    return train_dict, val_dict, test_dict
-
-
-def read_arrs_from_fp():
-    train_x = []
-    train_y = []
-    test_x = []
-    test_y = []
-    valid_x = []
-    valid_y = []
-    with open(TRAIN_X_FILE_PATH, 'wb') as f:
-        train_x = pickle.load(f)
-    with open(VAL_X_FILE_PATH, 'wb') as f:
-        valid_x = pickle.load(f)
-    with open(TEST_X_FILE_PATH, 'wb') as f:
-        test_x = pickle.load(f)
-    with open(TRAIN_Y_FILE_PATH, 'wb') as f:
-        train_y = pickle.load(f)
-    with open(VAL_Y_FILE_PATH, 'wb') as f:
-        valid_y = pickle.load(f)
-    with open(TEST_Y_FILE_PATH, 'wb') as f:
-        test_y = pickle.load(f)
-    return train_x, train_y, test_x, test_y, valid_x, valid_y
-
-
-def save_model(model):
-    with open(MODEL_SAVE_PATH) as f:
-        pickle.dump(model, f)
-
-
-def read_model_from_fp():
-    with open(MODEL_SAVE_PATH) as f:
-        model = pickle.load(f)
-    return model
+    def init_hidden(self, b_size):
+        h_0 = torch.randn(self.layer_count, b_size, self.hid_size).to(
+            DEVICE)  # lstm cells, batches, hidden features
+        c_0 = torch.randn(self.layer_count, b_size, self.hid_size).to(
+            DEVICE)  # lstm cells, batches, hidden features
+        return (h_0, c_0)

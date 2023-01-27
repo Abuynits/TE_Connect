@@ -1,0 +1,37 @@
+dvc stage add -n data_prep \
+    -d constants.py \
+    -d data/test_data.csv \
+    -d data/train_data.csv \
+    -o data/norm_params.json \
+    -o data/processed_test_data.npy \
+    -o data/processed_train_data.npy \
+    python3 code/featurization.py
+
+dvc stage add -n data_prep \
+    -d src/data_prep.py \
+    -d src/data_processing.py \
+    -d src/visualization.py \
+    -d src/saving_reading_data.py \
+    -d src/constants.py \
+    -d data/te_ai_cup_sales_forecasting_data.csv \
+    --outs-persist data/dicts/train_dict.pkl \
+    --outs-persist data/dicts/validation_dict.pkl \
+    --outs-persist data/dicts/test_dict.pkl \
+    --outs-persist data/model_io/train_x.pkl \
+    --outs-persist data/model_io/validation_x.pkl \
+    --outs-persist data/model_io/test_x.pkl \
+    --outs-persist data/model_io/train_y.pkl \
+    --outs-persist data/model_io/validation_y.pkl \
+    --outs-persist data/model_io/test_y.pkl \
+    --outs-persist data/transformations/input_transformations.pkl \
+    --outs-persist data/transformations/output_transformations.pkl \
+    --outs-persist data/regular_data.pkl \
+    --outs-persist data/transformed_data.pkl \
+    python3 src/data_prep.py
+
+
+
+
+
+
+
