@@ -1,7 +1,7 @@
 import pandas as pd
 from data_processing import *
 from visualization import *
-
+from saving_reading_data import *
 # load in the data and mount it on the drive
 if READ_FROM_DRIVE:
     from google.colab import drive
@@ -73,4 +73,4 @@ save_train_val_test_arrs(train_x, train_y, valid_x, valid_y, test_x, test_y)
 
 # save data:
 save_all_transformations(input_transformations, output_transformations)
-save_al(reg_data, transformed_data)
+save_all_data(reg_data, transformed_data)

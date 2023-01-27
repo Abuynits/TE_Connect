@@ -16,29 +16,29 @@ from sklearn.preprocessing import MinMaxScaler
 from torch.autograd import Variable
 import pickle
 from torch.optim.lr_scheduler import ExponentialLR
-
+from IPython.display import display
 # DATA INFO
 # location of CSV file:
 READ_FROM_DRIVE = False
-CSV_DRIVE_PATH = "/content/gdrive/MyDrive/te_ai_cup_sales_forecasting_data.csv"
-CSV_FILE_PATH = "/data/te_ai_cup_sales_forecasting_data.csv"
+CSV_DRIVE_PATH = "content/gdrive/MyDrive/te_ai_cup_sales_forecasting_data.csv"
+CSV_FILE_PATH = "data/te_ai_cup_sales_forecasting_data.csv"
 
-TRAIN_DICT_FILE_PATH = "/data/dicts/train_dict.pkl"
-VAL_DICT_FILE_PATH = "/data/dicts/validation_dict.pkl"
-TEST_DICT_FILE_PATH = "/data/dicts/test_dict.pkl"
+TRAIN_DICT_FILE_PATH = "data/dicts/train_dict.pkl"
+VAL_DICT_FILE_PATH = "data/dicts/validation_dict.pkl"
+TEST_DICT_FILE_PATH = "data/dicts/test_dict.pkl"
 
-TRAIN_X_FILE_PATH = "/data/model_io/train_x.pkl"
-VAL_X_FILE_PATH = "/data/model_io/validation_x.pkl"
-TEST_X_FILE_PATH = "/data/model_io/test_x.pkl"
-TRAIN_Y_FILE_PATH = "/data/model_io/train_y.pkl"
-VAL_Y_FILE_PATH = "/data/model_io/validation_y.pkl"
-TEST_Y_FILE_PATH = "/data/model_io/test_y.pkl"
+TRAIN_X_FILE_PATH = "data/model_io/train_x.pkl"
+VAL_X_FILE_PATH = "data/model_io/validation_x.pkl"
+TEST_X_FILE_PATH = "data/model_io/test_x.pkl"
+TRAIN_Y_FILE_PATH = "data/model_io/train_y.pkl"
+VAL_Y_FILE_PATH = "data/model_io/validation_y.pkl"
+TEST_Y_FILE_PATH = "data/model_io/test_y.pkl"
 
-INPUT_TRANSFORMATIONS_FILE_PATH = "/data/transformations/input_transformations.pkl"
-OUTPUT_TRANSFORMATIONS_FILE_PATH = "/data/transformations/output_transformations.pkl"
+INPUT_TRANSFORMATIONS_FILE_PATH = "data/transformations/input_transformations.pkl"
+OUTPUT_TRANSFORMATIONS_FILE_PATH = "data/transformations/output_transformations.pkl"
 
-REGULAR_DATA_FILE_PATH = "/data/regular_data.pkl"
-TRANSFORMED_DATA_FILE_PATH = "/data/transformed_data.pkl"
+REGULAR_DATA_FILE_PATH = "data/regular_data.pkl"
+TRANSFORMED_DATA_FILE_PATH = "data/transformed_data.pkl"
 
 GROUP_BY_PRODUCT_LINE = True
 GROUP_BY_BUSINESS_UNIT = True
