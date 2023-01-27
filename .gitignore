@@ -1,4 +1,4 @@
 .idea/
 savedModels/
-.vscode/git add .gitignore data.dvc
+.vscode/
 /data
