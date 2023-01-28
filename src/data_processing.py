@@ -1,11 +1,4 @@
-import pickle
-
-import pandas as pd
-from constants import *
-from matplotlib import pyplot as plt
-from sklearn.preprocessing import MinMaxScaler
-import numpy as np
-import random as random
+from data_constants import *
 
 
 def get_raw_data(filtered_df, business_unit_group_name=None, company_region_name_level1=None, product_line_code=None):
@@ -134,7 +127,7 @@ def prep_data_for_model(data, past, future, input_data_cols, output_data_cols):
         x.append(inp_data_arr[i:lag_end])
         y.append(out_data_arr[lag_end:forcast_end])
     if np.array(x) != np.array(y):
-        print(np.array(x).shape,np.array(y).shape)
+        print(np.array(x).shape, np.array(y).shape)
     return np.array(x), np.array(y)
 
 

@@ -1,5 +1,6 @@
-from constants import *
 from dl_ds import print_model
+from model_constants import *
+
 
 class encoder_lstm(nn.Module):
     def __init__(self, inp_size, hid_size, dropout, layer_count):

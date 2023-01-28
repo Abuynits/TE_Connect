@@ -1,16 +1,16 @@
-from constants import *
+from model_constants import *
 from data_processing import prep_data_for_model
 
-def show_all_model_prediction(pred_dict,transformed_data,output_transformations,model,count = 10):
 
+def show_all_model_prediction(pred_dict, transformed_data, output_transformations, model, count=10):
     for key, val in enumerate(pred_dict):
         count -= 1
         if count == 0:
-            return # account if a person wants tobreak out of trianign and evalutating
+            return  # account if a person wants to break out of trianing and evaluating
 
         print(val)
         x, y = prep_data_for_model(transformed_data[val], LOOKBACK, PREDICT, INPUT_DATA_COLS,
-                         OUTPUT_DATA_COLS)
+                                   OUTPUT_DATA_COLS)
         print(val)
         print(x.shape)
         print(y.shape)
@@ -100,7 +100,9 @@ def show_all_model_prediction(pred_dict,transformed_data,output_transformations,
         # print(x.shape)
         # print(y.shape)
         # print(transformations[val])
-def plot_train_val_loss(train_loss,valid_loss):
+
+
+def plot_train_val_loss(train_loss, valid_loss):
     plt.plot(range(0, len(train_loss)), train_loss, label="train loss")
     plt.plot(range(0, len(train_loss)), valid_loss, label="validation loss")
     plt.legend()
@@ -108,6 +110,7 @@ def plot_train_val_loss(train_loss,valid_loss):
     plt.ylabel("loss")
     plt.xlabel("epochs")
     plt.show()
+
 
 def display_train_test_valid_data(all_train_data, all_valid_data, all_test_data):
     print("all_valid_data:", len(all_valid_data))
@@ -121,6 +124,7 @@ def display_train_test_valid_data(all_train_data, all_valid_data, all_test_data)
     print("all_train_data shape:", all_train_data.shape)
     print()
 
+
 def display_group_df(grouped_df, limit=5):
     count = 0
     for name, group in grouped_df:
@@ -131,6 +135,7 @@ def display_group_df(grouped_df, limit=5):
         count = count + 1
         if count == limit:
             break
+
 
 def check_data_transformations(check_transforms_key, reg_data, transformed_data, output_transformations):
     plt.title("Data Input")
@@ -147,7 +152,8 @@ def check_data_transformations(check_transforms_key, reg_data, transformed_data,
     plt.plot(inv_t_data)
     plt.show()
 
-def show_model_inp_out_shapes(train_x,train_y,valid_x,valid_y,test_x,test_y):
+
+def show_model_inp_out_shapes(train_x, train_y, valid_x, valid_y, test_x, test_y):
     print()
     print("x train shape:", train_x.shape)
     print("y train shape:", train_y.shape)

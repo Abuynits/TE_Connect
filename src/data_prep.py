@@ -1,7 +1,6 @@
-import pandas as pd
-from data_processing import *
 from visualization import *
 from saving_reading_data import *
+from data_processing import *
 
 # load in the data and mount it on the drive
 if READ_FROM_DRIVE:

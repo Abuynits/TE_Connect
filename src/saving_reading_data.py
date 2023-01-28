@@ -1,6 +1,4 @@
-from constants import *
-
-
+from filepaths_constants import *
 def save_train_val_test_dicts(train_dict, val_dict, test_dict):
     with open(TRAIN_DICT_FILE_PATH, 'wb') as f:
         pickle.dump(train_dict, f)
