@@ -100,22 +100,17 @@ def test_epoch(dl, epoch):
 
     return epoch_test_loss / times_run
 
+run_ml_flow = EXPERIMENT_SOURCE
+if run_ml_flow:
+    try:
+        mlflow.set_tracking_uri(MLFLOW_URL)
+        mlflow.start_run()
+    except:
+        print("mlflow not authenticated, running through git")
+        run_ml_flow = False
 
-if EXPERIMENT_SOURCE == RUN_TYPE.MLFLOW_RUN:
-    mlflow.set_tracking_uri(MLFLOW_URL)
-    # experiment_id = mlflow.create_experiment(
-    #     "Social NLP Experiments",
-    #     artifact_location="mlruns",
-    #     tags={"version": "v1", "priority": "P1"},
-    # )
-    # experiment = mlflow.get_experiment(experiment_id)
-    # print("Name: {}".format(experiment.name))
-    # print("Experiment_id: {}".format(experiment.experiment_id))
-    # print("Artifact Location: {}".format(experiment.artifact_location))
-    # print("Tags: {}".format(experiment.tags))
-    # print("Lifecycle_stage: {}".format(experiment.lifecycle_stage))
-    # print("Creation timestamp: {}".format(experiment.creation_time))
-    mlflow.start_run()
+
+if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
     run = mlflow.active_run()
     run_id = run.info.run_id
 # log training parameters
@@ -128,7 +123,7 @@ for e in range(EPOCHS):
     train_loss.append(avg_train_loss)
     valid_loss.append(avg_valid_loss)
     scheduler.step()
-    if EXPERIMENT_SOURCE == RUN_TYPE.MLFLOW_RUN:
+    if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
         mlflow.log_metric("avg train loss", avg_train_loss, step=e)
         mlflow.log_metric("avg validation loss", avg_valid_loss, step=e)
     print(f"epoch {e}: avg train loss: {avg_train_loss} avg val loss: {avg_valid_loss}")
@@ -148,7 +143,7 @@ train_run_params = {
     "total train time": train_time
 }
 
-if EXPERIMENT_SOURCE == RUN_TYPE.MLFLOW_RUN:
+if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
     print("Done Training!!!")
     print("saving param to MLflow...")
     mlflow.log_params(train_run_params)
