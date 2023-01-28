@@ -159,7 +159,8 @@ else:
     print("saving to git!!!!")
     print("Save model....")
     save_model(model)
-
+    print("save data params...")
+    save_json(DATA_PREP_DICT, DATA_PARAM_FILE_PATH)
     print("Save run params....")
     save_json(MODEL_PARAM_DICT, MODEL_PARAM_FILE_PATH)
     print("saving train run params...", )

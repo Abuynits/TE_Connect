@@ -128,18 +128,18 @@ stages:
       md5: 855d11e57416f019394dabd3c903cf27
       size: 6484
     - path: src/train.py
-      md5: 532d45d7dfa0eaaa189fb9158bac54e7
-      size: 5265
+      md5: 2397d6500ad9aa242a29296d1c0032d1
+      size: 5349
     - path: src/visualization.py
       md5: 3d22c724b73795e6424b01ec28140615
       size: 6480
     outs:
     - path: data/model/model.pkl
-      md5: 36bb894d27fdb6a4e3a38908a5eb8cf7
+      md5: d2c335ce7e8effda6aef324cf78263f7
       size: 7946431
     - path: metrics/model_param.json
       md5: 6a315836ffc1ae2f1743a944edc2d379
       size: 455
     - path: metrics/train_metric.json
-      md5: 942c2cb73382f7d4858f6b1a2ac3b841
+      md5: 09f57d28a8b9d44ca001b091308c9059
       size: 212
