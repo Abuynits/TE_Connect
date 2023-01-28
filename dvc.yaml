@@ -36,6 +36,9 @@ stages:
           persist: true
       - data/transformed_data.pkl:
           persist: true
+    metrics:
+      - metrics/data_param.json:
+          cache: false
   train_model:
     cmd: python3 src/train.py
     deps:
