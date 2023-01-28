@@ -22,6 +22,7 @@ import dagshub
 import json
 import time
 import os
+import pytorch_lightning as pl
 from sklearn.preprocessing import MinMaxScaler
 import random as andom
 
@@ -32,6 +33,8 @@ MODEL_SAVE_PATH = "data/model/model.pkl"
 DATA_PARAM_FILE_PATH = "metrics/data_param.json"
 MODEL_PARAM_FILE_PATH = "metrics/model_param.json"
 MODEL_TRAIN_METRICS_FILE_PATH = "metrics/train_metric.json"
+
+ML_RUNS_PATH = "mlruns"
 # not tracked by dvc
 READ_FROM_DRIVE = False
 CSV_DRIVE_PATH = "content/gdrive/MyDrive/te_ai_cup_sales_forecasting_data.csv"
@@ -50,6 +53,15 @@ TEST_Y_FILE_PATH = "data/model_io/test_y.pkl"
 
 INPUT_TRANSFORMATIONS_FILE_PATH = "data/transformations/input_transformations.pkl"
 OUTPUT_TRANSFORMATIONS_FILE_PATH = "data/transformations/output_transformations.pkl"
+
+MLFLOW_URL = "https://dagshub.com/Abuynits/TE_Connect.mlflow"
+
+class RUN_TYPE(Enum):
+    MLFLOW_RUN = 0
+    GIT_RUN = 1
+
+
+EXPERIMENT_SOURCE = RUN_TYPE.MLFLOW_RUN
 
 REGULAR_DATA_FILE_PATH = "data/regular_data.pkl"
 TRANSFORMED_DATA_FILE_PATH = "data/transformed_data.pkl"
@@ -70,14 +82,6 @@ PERCENT_DISPLAY_MODEL_FORCAST = 0.9  # display if greater than 0.9
 PREDICT_DISPLAY_COUNT = 10  # number of times you will display the data
 
 """
-TODO:
-1. have a global config file (this one)
-    will hold file paths
-    debug control statements, and general booleans that control the run conditions
-2. have a file for all data constants
-    will store information regarding data collumn selection and so on
-3. have a file for all the model constants
-    will contain some identical inputs to the data constants and hold them the same for runs
 4. have a constants file for evaluation part of the data
 ^^ done in order to prevent having to rerun everything after changing one constants file
 ===============

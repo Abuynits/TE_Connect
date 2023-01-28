@@ -2,7 +2,7 @@ from dl_ds import print_model
 from model_constants import *
 
 
-class encoder_lstm(nn.Module):
+class encoder_lstm(pl.LightningModule):
     def __init__(self, inp_size, hid_size, dropout, layer_count):
         super(encoder_lstm, self).__init__()
         self._input_size = inp_size  # number of input features
@@ -34,7 +34,7 @@ class encoder_lstm(nn.Module):
         return (h_0, c_0)
 
 
-class decoder_lstm(nn.Module):
+class decoder_lstm(pl.LightningModule):
     def __init__(self, inp_size, out_size, hid_size, layer_count, drop):
         super(decoder_lstm, self).__init__()
         self._inp_feature_size = inp_size  # number of input features
@@ -72,7 +72,7 @@ class decoder_lstm(nn.Module):
         return final_output, output, (self.hn, self.cn)
 
 
-class seq2seq(nn.Module):
+class seq2seq(pl.LightningModule):
     def __init__(self, inp_size=INPUT_DATA_FEATURES, out_size=OUTPUT_DATA_FEATURES,
                  hid_size=SEQ2SEQ_HIDDEN_SIZE, layer_count=SEQ2SEQ_LAYER_COUNT,
                  dec_dropout=SEQ2SEQ_DECODER_DROPOUT, enc_dropout=SEQ2SEQ_ENCODER_DROPOUT):

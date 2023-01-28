@@ -16,8 +16,8 @@ stages:
       md5: 7faa14d4aafbf35922cc86590a718ed3
       size: 7463
     - path: src/filepaths_constants.py
-      md5: b5d56d80ea971c42671283bdf7235ca0
-      size: 4260
+      md5: fb6ca61bc9a933e911acc8132d678490
+      size: 4050
     - path: src/saving_reading_data.py
       md5: b6a6f0058852df29b2068d009dc72b31
       size: 3538
@@ -26,32 +26,32 @@ stages:
       size: 6480
     outs:
     - path: data/dicts/test_dict.pkl
-      md5: fb60b7459a28f586bc5d925a2866e685
-      size: 1132351
+      md5: 5deee895f462eb040a3ef96c4c265e58
+      size: 679475
     - path: data/dicts/train_dict.pkl
-      md5: 66f85abac91a16a7ce4556d9083624d6
-      size: 3478030
+      md5: 1fa673ad1b16cf250d15cb281d2a6ef6
+      size: 4720919
     - path: data/dicts/validation_dict.pkl
-      md5: 2db76b6577654f05e359c062fb94999f
-      size: 1695926
+      md5: 6225f74426496d13401754137e16f16d
+      size: 905913
     - path: data/model_io/test_x.pkl
-      md5: f9cda0e10e05a1a3f6cea915520d97fb
-      size: 969764
+      md5: fe10727f7058cad4f2b340ae36d07bf1
+      size: 581924
     - path: data/model_io/test_y.pkl
-      md5: b16c2ad7d69a5bec5e7c75a4e84f9c5e
-      size: 161764
+      md5: a7e5d01e0758d74d8e668e95840fac07
+      size: 97124
     - path: data/model_io/train_x.pkl
-      md5: 117da5eece64d4d4775d73427fd44d30
-      size: 2978564
+      md5: 02911de72654e681ae2bd901664810bc
+      size: 4042964
     - path: data/model_io/train_y.pkl
-      md5: 5abbf7467ccd1d79bb895ea210d54469
-      size: 496564
+      md5: 6432316717b0f0a6f8b70294059352b3
+      size: 673964
     - path: data/model_io/validation_x.pkl
-      md5: e742845827ed2f73ac97079af32bee33
-      size: 1452404
+      md5: 9b4d7a81e2693eb1429f6d294c41b671
+      size: 775844
     - path: data/model_io/validation_y.pkl
-      md5: af4d5d708c2f0f54f71c429cede37efb
-      size: 242204
+      md5: b90e3613c62cac458bd62f7b9144c9de
+      size: 129444
     - path: data/regular_data.pkl
       md5: 49a14f92b002cb1e32ead7c2d8a17964
       size: 1832967

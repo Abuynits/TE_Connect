@@ -1,3 +1,5 @@
+import mlflow
+
 from dl_ds import *
 from saving_reading_data import *
 from seq2seq_arch import *
@@ -99,6 +101,23 @@ def test_epoch(dl, epoch):
     return epoch_test_loss / times_run
 
 
+if EXPERIMENT_SOURCE == RUN_TYPE.MLFLOW_RUN:
+    mlflow.set_tracking_uri(MLFLOW_URL)
+    # experiment_id = mlflow.create_experiment(
+    #     "Social NLP Experiments",
+    #     artifact_location="mlruns",
+    #     tags={"version": "v1", "priority": "P1"},
+    # )
+    # experiment = mlflow.get_experiment(experiment_id)
+    # print("Name: {}".format(experiment.name))
+    # print("Experiment_id: {}".format(experiment.experiment_id))
+    # print("Artifact Location: {}".format(experiment.artifact_location))
+    # print("Tags: {}".format(experiment.tags))
+    # print("Lifecycle_stage: {}".format(experiment.lifecycle_stage))
+    # print("Creation timestamp: {}".format(experiment.creation_time))
+    mlflow.start_run()
+    run = mlflow.active_run()
+    run_id = run.info.run_id
 # log training parameters
 start_time = time.time()
 
@@ -109,6 +128,9 @@ for e in range(EPOCHS):
     train_loss.append(avg_train_loss)
     valid_loss.append(avg_valid_loss)
     scheduler.step()
+    if EXPERIMENT_SOURCE == RUN_TYPE.MLFLOW_RUN:
+        mlflow.log_metric("avg train loss", avg_train_loss, step=e)
+        mlflow.log_metric("avg validation loss", avg_valid_loss, step=e)
     print(f"epoch {e}: avg train loss: {avg_train_loss} avg val loss: {avg_valid_loss}")
 
 train_time = time.time() - start_time
@@ -123,19 +145,31 @@ train_run_params = {
     "last validation loss": last_val_loss,
     "best train loss": best_train_loss,
     "last train loss": last_train_loss,
-    "total train time": train_time,
-    "epochs": EPOCHS
+    "total train time": train_time
 }
 
-print("Done Training!!!")
+if EXPERIMENT_SOURCE == RUN_TYPE.MLFLOW_RUN:
+    print("Done Training!!!")
+    print("saving param to MLflow...")
+    mlflow.log_params(train_run_params)
+    mlflow.log_params(DATA_PREP_DICT)
+    mlflow.log_params(MODEL_PARAM_DICT)
+    print("saving model to MLflow...")
+    model_uri = mlflow.get_registry_uri()
+    mlflow.pytorch.log_model(model, MODEL_SAVE_PATH)
+    mlflow.end_run()
+    #mlflow.pytorch.save_model(model, MODEL_SAVE_PATH)
+    # mlflow.register_model(f'runs:/{run_id}/{MODEL_CHOICE}', model)
+else:
+    print("saving to git!!!!")
+    print("Save model....")
+    save_model(model)
 
-print("Save model....")
-save_model(model)
-print("Save run params....")
-save_json(MODEL_PARAM_DICT, MODEL_PARAM_FILE_PATH)
-print("saving train run params...", )
-save_json(train_run_params, MODEL_TRAIN_METRICS_FILE_PATH)
-
+    print("Save run params....")
+    save_json(MODEL_PARAM_DICT, MODEL_PARAM_FILE_PATH)
+    print("saving train run params...", )
+    save_json(train_run_params, MODEL_TRAIN_METRICS_FILE_PATH)
+print("done!!!")
 # Plot the validation and training loss
 plot_train_val_loss(train_loss, valid_loss)
 plt.show()

@@ -1,9 +1,10 @@
 from data_constants import *
+ML_FLOW_EXPERIMENT_NAME = "testing"
 # MODEL INFO:
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 BATCH_SIZE = 2048
 LEARNING_RATE = 5e-3
-EPOCHS = 5
+EPOCHS = 2
 
 
 TRAIN_PREDICTION = 'recursive'
