@@ -167,5 +167,4 @@ else:
     save_json(train_run_params, MODEL_TRAIN_METRICS_FILE_PATH)
 print("done!!!")
 # Plot the validation and training loss
-plot_train_val_loss(train_loss, valid_loss)
-plt.show()
+

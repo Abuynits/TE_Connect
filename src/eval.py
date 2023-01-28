@@ -15,3 +15,6 @@ for key, val in enumerate(dict_valid_data):
   print (val)
 
 show_all_model_prediction(dict_test_data,transformed_data,output_transformations,model,PREDICT_DISPLAY_COUNT)
+
+plot_train_val_loss(train_loss, valid_loss)
+plt.show()
