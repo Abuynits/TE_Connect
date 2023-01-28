@@ -1,6 +1,5 @@
 from data_constants import *
 
-
 def get_raw_data(filtered_df, business_unit_group_name=None, company_region_name_level1=None, product_line_code=None):
     if business_unit_group_name is not None:
         filtered_df = filtered_df[filtered_df['business_unit_group_name']
@@ -126,8 +125,6 @@ def prep_data_for_model(data, past, future, input_data_cols, output_data_cols):
             break
         x.append(inp_data_arr[i:lag_end])
         y.append(out_data_arr[lag_end:forcast_end])
-    if np.array(x) != np.array(y):
-        print(np.array(x).shape, np.array(y).shape)
     return np.array(x), np.array(y)
 
 

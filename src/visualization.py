@@ -117,14 +117,6 @@ def display_train_test_valid_data(all_train_data, all_valid_data, all_test_data)
     print("all_train_data:", len(all_train_data))
     print("all_test_data:", len(all_test_data))
 
-    print("all_valid_data shape:", all_valid_data.shape)
-    print()
-    print("all_test_data shape:", all_test_data.shape)
-    print()
-    print("all_train_data shape:", all_train_data.shape)
-    print()
-
-
 def display_group_df(grouped_df, limit=5):
     count = 0
     for name, group in grouped_df:

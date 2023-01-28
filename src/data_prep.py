@@ -55,9 +55,9 @@ split_data(transformed_data,
            all_train_data,
            all_test_data)
 
-all_train_data = np.array(all_train_data, dtype=object)
-all_test_data = np.array(all_test_data, dtype=object)
-all_valid_data = np.array(all_valid_data, dtype=object)
+#all_train_data = np.array(all_train_data)
+#all_test_data = np.array(all_test_data)
+#all_valid_data = np.array(all_valid_data)
 
 display_train_test_valid_data(all_train_data, all_valid_data, all_test_data)
 
