@@ -1,6 +1,6 @@
 from constants import *
 from dl_ds import *
-from saving_reading_data import read_arrs_from_fp,read_dicts_from_fp
+from saving_reading_data import *
 from seq2seq_arch import *
 from lstm_arch import *
 from visualization import *
@@ -23,18 +23,17 @@ test_dl = DataLoader(test_ds, batch_size=BATCH_SIZE, shuffle=False)
 print(f"batches in test dl: {len(test_dl)}")
 
 if CHECK_DL:
-    check_data_loader(next(iter(train_dl))[0],next(iter(train_dl))[1])
+    check_data_loader(next(iter(train_dl))[0], next(iter(train_dl))[1])
 
-print_data_loader(next(iter(train_dl))[0],next(iter(train_dl))[1],2)
-print_data_loader(next(iter(train_dl))[0],next(iter(train_dl))[1],2)
+print_data_loader(next(iter(train_dl))[0], next(iter(train_dl))[1], 2)
+print_data_loader(next(iter(train_dl))[0], next(iter(train_dl))[1], 2)
 print(next(iter(train_dl))[0].shape)
 print(next(iter(train_dl))[1].shape)
 print(next(iter(test_dl))[0].shape)
 print(next(iter(test_dl))[1].shape)
 
-
-train_loss = [] # track training loss
-valid_loss = [] # track validation loss
+train_loss = []  # track training loss
+valid_loss = []  # track validation loss
 
 model = seq2seq().to(DEVICE) if (ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ) else lstm().to(DEVICE)
 
@@ -101,15 +100,43 @@ def test_epoch(dl, epoch):
     return epoch_test_loss / times_run
 
 
+# log training parameters
+start_time = time.time()
+
 for e in range(EPOCHS):
     avg_train_loss = train_epoch(train_dl, e)
-    avg_valid_epoch = test_epoch(valid_dl, e)
+    avg_valid_loss = test_epoch(valid_dl, e)
     num_epochs_run += 1
     train_loss.append(avg_train_loss)
-    valid_loss.append(avg_valid_epoch)
+    valid_loss.append(avg_valid_loss)
     scheduler.step()
-    print(f"epoch {e}: avg train loss: {avg_train_loss} avg val loss: {avg_valid_epoch}")
+    print(f"epoch {e}: avg train loss: {avg_train_loss} avg val loss: {avg_valid_loss}")
+
+train_time = time.time() - start_time
+
+best_val_loss = min(train_loss)
+last_val_loss = valid_loss[-1]
+best_train_loss = min(valid_loss)
+last_train_loss = train_loss[-1]
+
+train_run_params = {
+    "best validation loss": best_val_loss,
+    "last validation loss": last_val_loss,
+    "best train loss": best_train_loss,
+    "last train loss": last_train_loss,
+    "total train time": train_time,
+    "epochs": EPOCHS
+}
+
+print("Done Training!!!")
+
+print("Save model....")
+save_model(model)
+print("Save run params....")
+save_json(MODEL_PARAM_DICT, MODEL_PARAM_FILE_PATH)
+print("saving train run params...", )
+save_json(train_run_params, MODEL_TRAIN_METRICS_FILE_PATH)
 
 # Plot the validation and training loss
-plot_train_val_loss(train_loss,valid_loss)
+plot_train_val_loss(train_loss, valid_loss)
 plt.show()

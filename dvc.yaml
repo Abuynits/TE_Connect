@@ -35,3 +35,32 @@ stages:
         persist: true
     - data/transformed_data.pkl:
         persist: true
+  train_model:
+    cmd: python3 src/train.py
+    deps:
+    - data/dicts/test_dict.pkl
+    - data/dicts/train_dict.pkl
+    - data/dicts/validation_dict.pkl
+    - data/model_io/test_x.pkl
+    - data/model_io/test_y.pkl
+    - data/model_io/train_x.pkl
+    - data/model_io/train_y.pkl
+    - data/model_io/validation_x.pkl
+    - data/model_io/validation_y.pkl
+    - data/regular_data.pkl
+    - data/transformed_data.pkl
+    - src/constants.py
+    - src/data_processing.py
+    - src/dl_ds.py
+    - src/lstm_arch.py
+    - src/saving_reading_data.py
+    - src/seq2seq_arch.py
+    - src/train.py
+    - src/visualization.py
+    outs:
+    - data/model/model.pkl
+    metrics:
+    - metrics/model_param.json:
+        cache: false
+    - metrics/train_metric.json:
+        cache: false

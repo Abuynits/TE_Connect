@@ -126,13 +126,15 @@ def prep_data_for_model(data, past, future, input_data_cols, output_data_cols):
     x, y = list(), list()
     inp_data_arr = data[input_data_cols].to_numpy()
     out_data_arr = data[output_data_cols].to_numpy()
-    for i in range(len(inp_data_arr)):
+    for i in range(min(len(inp_data_arr), len(out_data_arr))):
         lag_end = i + past
         forcast_end = lag_end + future
         if forcast_end > len(data):
             break
         x.append(inp_data_arr[i:lag_end])
         y.append(out_data_arr[lag_end:forcast_end])
+    if np.array(x) != np.array(y):
+        print(np.array(x).shape,np.array(y).shape)
     return np.array(x), np.array(y)
 
 

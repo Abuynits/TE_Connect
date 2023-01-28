@@ -83,10 +83,10 @@ class seq2seq(nn.Module):
         self._dec_dropout = dec_dropout
         self._out_size = out_size
 
-        self._enc = encoder_lstm(inp_size=self._inp_size, hid_size=self._hid_size, dropout=self._dropout,
+        self._enc = encoder_lstm(inp_size=self._inp_size, hid_size=self._hid_size, dropout=self._enc_dropout,
                                  layer_count=self._layer_count)
         self._dec = decoder_lstm(inp_size=self._inp_size, out_size=self._out_size, hid_size=self._hid_size,
-                                 drop=self._dropout, layer_count=self._layer_count)
+                                 drop=self._dec_dropout, layer_count=self._layer_count)
 
         print_model(self)
         self.model_name = "seq2seq"
