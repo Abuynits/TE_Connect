@@ -145,7 +145,7 @@ train_run_params = {
 
 if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
     print("Done Training!!!")
-    print("saving param to MLflow...")
+    print("=====saving param to MLflow=====")
     mlflow.log_params(train_run_params)
     mlflow.log_params(DATA_PREP_DICT)
     mlflow.log_params(MODEL_PARAM_DICT)
@@ -155,16 +155,16 @@ if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
     mlflow.end_run()
     #mlflow.pytorch.save_model(model, MODEL_SAVE_PATH)
     # mlflow.register_model(f'runs:/{run_id}/{MODEL_CHOICE}', model)
-else:
-    print("saving to git!!!!")
-    print("Save model....")
-    save_model(model)
-    print("save data params...")
-    save_json(DATA_PREP_DICT, DATA_PARAM_FILE_PATH)
-    print("Save run params....")
-    save_json(MODEL_PARAM_DICT, MODEL_PARAM_FILE_PATH)
-    print("saving train run params...", )
-    save_json(train_run_params, MODEL_TRAIN_METRICS_FILE_PATH)
+
+print("=====saving locally=====")
+print("Save model....")
+save_model(model)
+print("save data params...")
+save_json(DATA_PREP_DICT, DATA_PARAM_FILE_PATH)
+print("Save run params....")
+save_json(MODEL_PARAM_DICT, MODEL_PARAM_FILE_PATH)
+print("saving train run params...", )
+save_json(train_run_params, MODEL_TRAIN_METRICS_FILE_PATH)
 print("done!!!")
 # Plot the validation and training loss
 
