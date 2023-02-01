@@ -25,6 +25,7 @@ import os
 import pytorch_lightning as pl
 from sklearn.preprocessing import MinMaxScaler
 import random as andom
+import math
 
 # DATA INFO
 # location of CSV file:

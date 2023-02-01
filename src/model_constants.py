@@ -32,6 +32,12 @@ SEQ2SEQ_DROPOUT = 0.  # dropout
 SEQ2SEQ_LAYER_COUNT = 2  # number of layers in lstm cell
 SEQ2SEQ_INPUT_SEQ_LENGTH = LOOKBACK  # length of input sequence to LSTM
 
+TIME_DIM_VAL = 512 # hyper paramter to the input size throughout the encoder
+TIME_MAX_SEQ_LEN = 5000 # hyper parameter for initialization of positional encoder
+TIME_POS_ENC_DROP = 0.0
+TIME_HEAD_COUNT = 4
+TIME_LAYER_COUNT = 4
+
 MODEL_CHOICE_NAME = "lstm" if ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM else "seq2seq"
 
 MODEL_PARAM_DICT = {
