@@ -52,9 +52,9 @@ class time_encoder(pl.LightningModule):
         super.__init__()
 
         self.input_features = INPUT_DATA_FEATURES  # num vars as input to the model
-        self.dim_val = TIME_DIM_VAL  # hyper parameter for input dim throughout encoder
-        self.n_head = TIME_HEAD_COUNT
-        self.enc_layer_count = TIME_LAYER_COUNT
+        self.dim_val = TIME_ENC_DIM_VAL  # hyper parameter for input dim throughout encoder
+        self.n_head = TIME_ENC_HEAD_COUNT
+        self.enc_layer_count = TIME_ENC_LAYER_COUNT
         self.enc_inp_layer = nn.Linear(  # converts the data to the dimensions for the encoder
             in_features=self.input_features,
             out_features=self.dim_val
@@ -70,7 +70,7 @@ class time_encoder(pl.LightningModule):
         # norm: optional param - need to pass in null as enc_block already normalizes it
         self.enc = nn.TransformerEncoder(self.enc_block, num_layers=self.enc_layer_count, norm=None)
 
-    def forward(self,inp):
+    def forward(self, inp):
         # pass through input for the decoder
         # input size is: [batch size, inp seq len,num input features]
         x = self.enc_inp_layer(inp)
@@ -81,13 +81,14 @@ class time_encoder(pl.LightningModule):
         # output is still: [batch size, inp seq len,num input features]
         return x
 
+
 class time_decoder(pl.LightningModule):
     def __init__(self):
         super.__init__()
         self.input_features = INPUT_DATA_FEATURES
-        self.dim_val = TIME_DIM_VAL
-        self.nheads = TIME_HEAD_COUNT
-        self.dec_layer_count = TIME_LAYER_COUNT
+        self.dim_val = TIME_DEC_DIM_VAL
+        self.nheads = TIME_DEC_HEAD_COUNT
+        self.dec_layer_count = TIME_DEC_LAYER_COUNT
         # will be passing in the variables as input to the decoder - need to get them to size 512
         # this way match output of encoder
         self.dec_inp_layer = nn.Linear(
@@ -114,13 +115,35 @@ class time_decoder(pl.LightningModule):
             out_features=PREDICT
         )
 
-# TODO: finish up the forward methods for both encoder, decoder and time transformer
+    def forward(self, enc_out, target, input_mask, target_mask):
+        # the target is the last element in seq that is used for predictions - need to convert it to right size
+        # x shape: target_seq_len,batch_size,features
+        x = self.dec_inp_layer(target)
+        # x shape: target_seq_len,batch_size,dim_val
+        # run the decoder, performing a mask on the target, nad on the input
+        dec_out = self.decoder(
+            tgt=x,
+            memory=enc_out,
+            tgt_mask=target_mask,
+            memory_mask=input_mask
+        )
+        # get: [batch_size,target_seq_len,dim_val]
+        # now pass through linear mapping to convert back to size of features to be used
+        mapped_dec_out = self.linear_mapping(dec_out)
+
+        return mapped_dec_out
+
+
+# https://towardsdatascience.com/how-to-make-a-pytorch-transformer-for-time-series-forecasting-69e073d4061e
 class time_transformer(pl.LightningModule):
     def __init__(self):
         super.__init__()
         self.enc = time_encoder()
         self.dec = time_decoder()
-    def forward(self,inp,target,inp_mask,target_mask):
-        x = self.enc(inp)
 
-
+    def forward(self, inp, target, inp_mask, target_mask):
+        # need to convert the target sequence to a dimension that can be inputed to the decoder
+        enc_out = self.enc(inp)
+        dec_inp = enc_out
+        out = self.dec(dec_inp, target, inp_mask, target_mask)
+        return out
