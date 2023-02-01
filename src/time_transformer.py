@@ -143,6 +143,10 @@ class time_transformer(pl.LightningModule):
 
     def forward(self, inp, target, inp_mask, target_mask):
         # need to convert the target sequence to a dimension that can be inputed to the decoder
+
+        # inp is all of the sequence that is taken as input
+        # target is the target output but shifted over by 1
+        # if you get [1,2,3,4,5] as src, then that target should be [2,3,4,5,6]
         enc_out = self.enc(inp)
         dec_inp = enc_out
         out = self.dec(dec_inp, target, inp_mask, target_mask)
