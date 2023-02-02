@@ -61,4 +61,4 @@ class finance_data_set(Dataset):
         x = torch.from_numpy(self.x[i]).float()
         y = torch.from_numpy(self.y[i]).float()
         t = torch.from_numpy(self.t[i]).float()
-        return (x,y,t)
+        return (x,t,y)

@@ -74,7 +74,9 @@ def train_epoch(dl, epoch):
         elif ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
             model_out = model.forward(x)
         elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
+            # input mask: [prediction length, prediction length]
             inp_mask = generate_mask(PREDICT, LOOKBACK)
+            # target mask: [prediction length, prediction length]
             target_mask = generate_mask(PREDICT, PREDICT)
             model_out = model.forward(x, target, inp_mask, target_mask)
         else:
@@ -82,7 +84,8 @@ def train_epoch(dl, epoch):
         # squeeze the tensors to account for 1 dim sizes
         model_out = model_out.squeeze()
         y = y.squeeze()
-
+        print(f"model size: {model_out.shape}")
+        print(f"other size: {y.shape}")
         loss = loss_func(model_out, y)
         epoch_train_loss += loss.item() * x.size(0)
 

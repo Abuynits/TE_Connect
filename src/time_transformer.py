@@ -86,15 +86,19 @@ class time_encoder(pl.LightningModule):
     def forward(self, inp):
         # pass through input for the decoder
         # input size is: [batch size, inp seq len,num input features]
-        print(f"\tenc: input shape:{inp.shape}")
+        if TIME_VERBOSE:
+            print(f"\tenc: input shape:{inp.shape}")
         x = self.enc_inp_layer(inp)
-        print(f"\tenc: after enc input layer:{x.shape}")
+        if TIME_VERBOSE:
+            print(f"\tenc: after enc input layer:{x.shape}")
         # output is: [batch_size,source,dim_val] where dim_val is 512 (arbitrarily preset)
         x = self.pos_enc(x)
         # output is still: [batch size, inp seq len,num input features]
-        print(f"\tenc: inp shape after positional encoder:{x.shape}")
+        if TIME_VERBOSE:
+            print(f"\tenc: inp shape after positional encoder:{x.shape}")
         x = self.enc(x)
-        print(f"\tenc: output:{x.shape}")
+        if TIME_VERBOSE:
+            print(f"\tenc: output:{x.shape}")
         # output is still: [batch size, inp seq len,num input features]
         return x
 
@@ -102,7 +106,7 @@ class time_encoder(pl.LightningModule):
 class time_decoder(pl.LightningModule):
     def __init__(self):
         super(time_decoder, self).__init__()
-        self.input_features = OUTPUT_DATA_FEATURES
+        self.input_features = INPUT_DATA_FEATURES
         self.dim_val = TIME_DEC_DIM_VAL
         self.nheads = TIME_DEC_HEAD_COUNT
         self.dec_layer_count = TIME_DEC_LAYER_COUNT
@@ -114,6 +118,7 @@ class time_decoder(pl.LightningModule):
             in_features=self.input_features,
             out_features=self.dim_val
         )
+
         # create a decoder block with number of heads and normal and attention built into it::
         self.dec_block = nn.TransformerDecoderLayer(
             d_model=self.dim_val,
@@ -133,14 +138,17 @@ class time_decoder(pl.LightningModule):
         # need to map from the hidden sequence length (dim_val) to the prediction sequence
         self.linear_mapping = nn.Linear(
             in_features=self.dim_val,
-            out_features=PREDICT
+            out_features=OUTPUT_DATA_FEATURES
         )
 
     def forward(self, enc_out, target, input_mask, target_mask):
         # the target is the last element in seq that is used for predictions - need to convert it to right size
         # x shape: target_seq_len,batch_size,features
+        if TIME_VERBOSE:
+            print(f"\ttarget shape: {target.shape}")
         x = self.dec_inp_layer(target)
-        print("dec: decoder inp layer:")
+        if TIME_VERBOSE:
+            print(f"\tdec: decoder inp layer:{x.shape}")
         # x shape: target_seq_len,batch_size,dim_val
         # run the decoder, performing a mask on the target, nad on the input
         dec_out = self.dec(
@@ -149,9 +157,13 @@ class time_decoder(pl.LightningModule):
             tgt_mask=target_mask,
             memory_mask=input_mask
         )
+        if TIME_VERBOSE:
+            print(f"\tdec: decoder output: {dec_out.shape}")
         # get: [batch_size,target_seq_len,dim_val]
         # now pass through linear mapping to convert back to size of features to be used
         mapped_dec_out = self.linear_mapping(dec_out)
+        if TIME_VERBOSE:
+            print(f"\tdec: mapped_dec output: {dec_out.shape}")
 
         return mapped_dec_out
 
@@ -169,11 +181,18 @@ class time_transformer(pl.LightningModule):
         # inp is all of the sequence that is taken as input
         # target is the target output but shifted over by 1
         # if you get [1,2,3,4,5] as src, then that target should be [2,3,4,5,6]
+        if TIME_VERBOSE:
+            print(f"input: {inp.shape}")
+            print(f"target: {target.shape}")
+            print(f"input mask: {inp_mask.shape}")
+            print(f"target mask: {target_mask.shape}")
         enc_out = self.enc(inp)
-        print("enc_out: Size of decoder_output after linear decoder layer: {}".format(enc_out.size()))
+        if TIME_VERBOSE:
+            print(f"enc_out/dec_inp: {enc_out.shape}")
         dec_inp = enc_out
         out = self.dec(dec_inp, target, inp_mask, target_mask)
-
+        if TIME_VERBOSE:
+            print(f"out shape: {out.shape}")
         return out
 
 
