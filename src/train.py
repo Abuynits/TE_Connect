@@ -74,7 +74,7 @@ def train_epoch(dl, epoch):
         elif ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
             model_out = model.forward(x)
         elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
-            inp_mask = generate_mask(PREDICT, TIME_ENC_DIM_VAL)
+            inp_mask = generate_mask(PREDICT, LOOKBACK)
             target_mask = generate_mask(PREDICT, PREDICT)
             model_out = model.forward(x, target, inp_mask, target_mask)
         else:
