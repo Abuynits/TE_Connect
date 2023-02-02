@@ -54,6 +54,24 @@ scheduler = ExponentialLR(optim, gamma=GAMMA)
 num_epochs_run = 0
 
 
+def get_model_pred(x, target, y):
+    if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
+        x = x.swapaxes(0, 1)  # want to put data in (seq, batches,num features)
+        y = y.swapaxes(0, 1)
+        model_out = model.forward(x)
+    elif ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
+        model_out = model.forward(x)
+    elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
+        # input mask: [prediction length, prediction length]
+        inp_mask = generate_mask(PREDICT, LOOKBACK)
+        # target mask: [prediction length, prediction length]
+        target_mask = generate_mask(PREDICT, PREDICT)
+        model_out = model.forward(x, target, inp_mask, target_mask)
+    else:
+        raise Exception("Bad model selected!")
+    return model_out
+
+
 def train_epoch(dl, epoch):
     print_once = True
     model.train(True)
@@ -65,27 +83,13 @@ def train_epoch(dl, epoch):
     for i, (x, target, y) in enumerate(dl):
         optim.zero_grad()  # zero gradients
         x = x.to(DEVICE)
+        target = target.to(DEVICE)
         y = y.to(DEVICE)
 
-        if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
-            x = x.swapaxes(0, 1)  # want to put data in (seq, batches,num features)
-            y = y.swapaxes(0, 1)
-            model_out = model.forward(x)
-        elif ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
-            model_out = model.forward(x)
-        elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
-            # input mask: [prediction length, prediction length]
-            inp_mask = generate_mask(PREDICT, LOOKBACK)
-            # target mask: [prediction length, prediction length]
-            target_mask = generate_mask(PREDICT, PREDICT)
-            model_out = model.forward(x, target, inp_mask, target_mask)
-        else:
-            raise Exception("Bad model selected!")
+        model_out = get_model_pred(x, target, y)
         # squeeze the tensors to account for 1 dim sizes
         model_out = model_out.squeeze()
         y = y.squeeze()
-        print(f"model size: {model_out.shape}")
-        print(f"other size: {y.shape}")
         loss = loss_func(model_out, y)
         epoch_train_loss += loss.item() * x.size(0)
 
@@ -104,13 +108,10 @@ def test_epoch(dl, epoch):
     epoch_test_loss = 0.
     times_run = 0
     # loop over testing batches
-    for i, (x, y) in enumerate(dl):
-        if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
-            x = x.swapaxes(0, 1).to(DEVICE)  # want to put data in (seq, batches,num features)
-            y = y.swapaxes(0, 1).to(DEVICE)
-        model_out = model(x)
-        # squeeze tensors to account for 1 dim sizes
-        model_out = model_out.squeeze()
+    for i, (x,target, y) in enumerate(dl):
+
+        model_out = get_model_pred(x, target, y)
+
         y = y.squeeze()
 
         loss = loss_func(model_out, y)

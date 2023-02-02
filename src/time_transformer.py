@@ -45,7 +45,6 @@ class Pos_Encoder(pl.LightningModule):
     def forward(self, inp):
         # shape: batch_size, enc_seq_len,dim val
         inp = inp + self.pe[:inp.size(0)]  # return the input seq added to the position encoder
-        print(inp.shape)
         x = self.dropout(inp)
 
         return x
