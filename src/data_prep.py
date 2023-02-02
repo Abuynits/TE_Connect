@@ -13,37 +13,29 @@ all_valid_data = []
 all_train_data = []
 all_test_data = []
 
-if MODEL_CHOICE_NAME == (MODEL_CHOICE.SEQ2SEQ or MODEL_CHOICE.BASIC_LSTM):
-    print("doing prep for basic_lstm or seq2seq")
-    split_data(transformed_data,
-               dict_train_data,
-               dict_valid_data,
-               dict_test_data,
-               all_valid_data,
-               all_train_data,
-               all_test_data)
-
-elif MODEL_CHOICE_NAME == MODEL_CHOICE.TIME_TRANSFORMER:
-    print("doing prep for transformers")
-    split_transformer(transformed_data,
-                      dict_train_data,
-                      dict_valid_data,
-                      dict_test_data,
-                      all_valid_data,
-                      all_train_data,
-                      all_test_data)
+split_data(transformed_data,
+           dict_train_data,
+           dict_valid_data,
+           dict_test_data,
+           all_valid_data,
+           all_train_data,
+           all_test_data)
 
 display_train_test_valid_data(all_train_data, all_valid_data, all_test_data)
 
-valid_x, valid_y = get_all_data_arr(all_valid_data)
-train_x, train_y = get_all_data_arr(all_train_data)
-test_x, test_y = get_all_data_arr(all_test_data)
+valid_x, valid_tg,valid_y = get_all_data_arr(all_valid_data)
+train_x, train_tg, train_y = get_all_data_arr(all_train_data)
+test_x, test_tg, test_y = get_all_data_arr(all_test_data)
 
-show_model_inp_out_shapes(train_x, train_y, valid_x, valid_y, test_x, test_y)
+show_model_inp_out_shapes(train_x, train_tg, train_y,
+                          valid_x, valid_tg, valid_y,
+                          test_x, test_tg, test_y)
 
 # Save the dictionaries and arrays
 save_train_val_test_dicts(dict_train_data, dict_valid_data, dict_test_data)
-save_train_val_test_arrs(train_x, train_y, valid_x, valid_y, test_x, test_y)
+save_train_val_test_arrs(train_x, train_tg, train_y,
+                          valid_x, valid_tg, valid_y,
+                          test_x, test_tg, test_y)
 # all_train_data = np.array(all_train_data)
 # all_test_data = np.array(all_test_data)
 # all_valid_data = np.array(all_valid_data)

@@ -24,8 +24,8 @@ from model_constants import *
 # need to implement the position encoder as a class for the model
 class Pos_Encoder(pl.LightningModule):
     def __init__(self):
-        super.__init__()
-        self.d_model = TIME_MAX_SEQ_LEN  # dimension of output of sublayers
+        super(Pos_Encoder, self).__init__()
+        self.d_model = TIME_DEC_DIM_VAL  # dimension of output of sublayers
         self.max_seq_len = TIME_MAX_SEQ_LEN  # max feature length of the pos encoder
         self.drop = TIME_POS_ENC_DROP  # dropout for time encoder
         # copy pasted from PyTorch tutorial
@@ -49,7 +49,7 @@ class Pos_Encoder(pl.LightningModule):
 
 class time_encoder(pl.LightningModule):
     def __init__(self):
-        super.__init__()
+        super(time_encoder, self).__init__()
 
         self.input_features = INPUT_DATA_FEATURES  # num vars as input to the model
         self.dim_val = TIME_ENC_DIM_VAL  # hyper parameter for input dim throughout encoder
@@ -84,7 +84,7 @@ class time_encoder(pl.LightningModule):
 
 class time_decoder(pl.LightningModule):
     def __init__(self):
-        super.__init__()
+        super(time_decoder, self).__init__()
         self.input_features = INPUT_DATA_FEATURES
         self.dim_val = TIME_DEC_DIM_VAL
         self.nheads = TIME_DEC_HEAD_COUNT
@@ -137,7 +137,7 @@ class time_decoder(pl.LightningModule):
 # https://towardsdatascience.com/how-to-make-a-pytorch-transformer-for-time-series-forecasting-69e073d4061e
 class time_transformer(pl.LightningModule):
     def __init__(self):
-        super.__init__()
+        super(time_transformer, self).__init__()
         self.enc = time_encoder()
         self.dec = time_decoder()
 
@@ -151,3 +151,10 @@ class time_transformer(pl.LightningModule):
         dec_inp = enc_out
         out = self.dec(dec_inp, target, inp_mask, target_mask)
         return out
+
+
+def generate_mask(dim1, dim2):
+    # dim1: for both input and output - is the target len
+    # dim2: for src, this is encoder seq length
+    #     : for target - this is target_seq length
+    return torch.triu(torch.ones(dim1, dim2) * float('-inf'), diagonal=1)

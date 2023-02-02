@@ -127,7 +127,7 @@ def prep_data_for_transformer_model(data, past, future, input_data_cols, output_
         if forcast_end > len(data):
             break
         x.append(inp_data_arr[i:lag_end])
-        target.append(input_data_cols[target_start:target_end])
+        target.append(inp_data_arr[target_start:target_end])
         y.append(out_data_arr[lag_end:forcast_end])
     return np.array(x), np.array(target), np.array(y)
 
@@ -146,9 +146,9 @@ def prep_data_for_model(data, past, future, input_data_cols, output_data_cols):
     return np.array(x), np.array(y)
 
 
-def split_transformer(transformed_data, dict_train_data, dict_valid_data, dict_test_data, all_valid_data,
-                      all_train_data,
-                      all_test_data):
+def split_data(transformed_data, dict_train_data, dict_valid_data,
+               dict_test_data, all_valid_data, all_train_data,
+               all_test_data):
     show_sample = SHOW_SAMPLE_TEST_TRAIN_VAL_SPLIT
     for key, group in transformed_data.items():
         train_test_split = random.random()
@@ -204,68 +204,16 @@ def split_transformer(transformed_data, dict_train_data, dict_valid_data, dict_t
                 print(y_test.shape)
 
 
-def split_data(transformed_data, dict_train_data, dict_valid_data, dict_test_data, all_valid_data, all_train_data,
-               all_test_data):
-    show_sample = SHOW_SAMPLE_TEST_TRAIN_VAL_SPLIT
-    for key, group in transformed_data.items():
-        train_test_split = random.random()
-        valid_data_split = random.random()
-        if train_test_split < TEST_TRAIN_SPLIT:
-
-            if valid_data_split < TEST_TRAIN_SPLIT:
-                x_train, y_train = prep_data_for_model(group,
-                                                       LOOKBACK,
-                                                       PREDICT,
-                                                       INPUT_DATA_COLS,
-                                                       OUTPUT_DATA_COLS)
-                all_train_data.append((x_train, y_train))
-                dict_train_data[key] = (x_train, y_train)
-                if show_sample:
-                    print("train:")
-                    print(x_train.shape)
-                    # print(x_train[0])
-                    print(y_train.shape)
-                    # print(y_train[0])
-                    # show_sample = False
-            else:
-                x_valid, y_valid = prep_data_for_model(group,
-                                                       LOOKBACK,
-                                                       PREDICT,
-                                                       INPUT_DATA_COLS,
-                                                       OUTPUT_DATA_COLS)
-                all_valid_data.append((x_valid, y_valid))
-                dict_valid_data[key] = (x_valid, y_valid)
-                if show_sample:
-                    print("valid:")
-                    print(x_valid.shape)
-                    # print(x_valid[0])
-                    print(y_valid.shape)
-                    # print(y_valid[0])
-                    show_sample = False
-        else:
-            x_test, y_test = prep_data_for_model(group,
-                                                 LOOKBACK,
-                                                 PREDICT,
-                                                 INPUT_DATA_COLS,
-                                                 OUTPUT_DATA_COLS)
-            all_test_data.append((x_test, y_test))
-            dict_test_data[key] = (x_test, y_test)
-            if show_sample:
-                print("test:")
-                print(x_test.shape)
-                # print(x_test[0])
-                print(y_test.shape)
-                # print(y_test[0])
-                # show_sample = False
-
-
 def get_all_data_arr(all_data):
     tr = []
+    target = []
     te = []
     for i in range(len(all_data)):
         x_tr = all_data[i][0]
-        x_te = all_data[i][1]
+        x_tg = all_data[i][1]
+        x_te = all_data[i][2]
         for j in range(len(x_tr)):
             tr.append(x_tr[j])
+            target.append(x_tg[j])
             te.append(x_te[j])
-    return np.array(tr), np.array(te)
+    return np.array(tr), np.array(target),np.array(te)

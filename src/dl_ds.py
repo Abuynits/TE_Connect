@@ -47,16 +47,18 @@ def check_data_loader(dl_train_item, dl_test_item):
 
 
 class finance_data_set(Dataset):
-    def __init__(self, trainDT, testDT):
+    def __init__(self, xDT, targetDT, yDT):
         super().__init__()
-        self.train = trainDT
-        self.test = testDT
-        self.data_len = len(trainDT)
+        self.x = xDT
+        self.y = yDT
+        self.t = targetDT
+        self.data_len = len(self.t)
 
     def __len__(self):
         return self.data_len
 
     def __getitem__(self, i):
-        tr = torch.from_numpy(self.train[i]).float()
-        te = torch.from_numpy(self.test[i]).float()
-        return (tr, te)
+        x = torch.from_numpy(self.x[i]).float()
+        y = torch.from_numpy(self.y[i]).float()
+        t = torch.from_numpy(self.t[i]).float()
+        return (x,y,t)

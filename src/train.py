@@ -4,20 +4,21 @@ from dl_ds import *
 from saving_reading_data import *
 from seq2seq_arch import *
 from lstm_arch import *
+from time_transformer import *
 from visualization import *
 
-train_x, train_y, test_x, test_y, valid_x, valid_y = read_arrs_from_fp()
+train_x, train_y, train_tg, test_x, test_y, test_tg, valid_x, valid_y, valid_tg = read_arrs_from_fp()
 
-train_ds = finance_data_set(train_x, train_y)
-test_ds = finance_data_set(test_x, test_y)
-valid_ds = finance_data_set(valid_x, valid_y)
+train_ds = finance_data_set(train_x, train_tg, train_y)
+test_ds = finance_data_set(test_x, test_tg, test_y)
+valid_ds = finance_data_set(valid_x, valid_tg, valid_y)
 
 print(train_x.shape)
 # create dataloader for train dataset
 train_dl = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True)
 print(f"batches in train dl: {len(train_dl)}")
 # create dataloader for validation dataset
-valid_dl = DataLoader(test_ds, batch_size=BATCH_SIZE, shuffle=True)
+valid_dl = DataLoader(valid_ds, batch_size=BATCH_SIZE, shuffle=True)
 print(f"batches in valid dl: {len(valid_dl)}")
 # create dataloader for test dataset
 test_dl = DataLoader(test_ds, batch_size=BATCH_SIZE, shuffle=False)
@@ -36,7 +37,14 @@ print(next(iter(test_dl))[1].shape)
 train_loss = []  # track training loss
 valid_loss = []  # track validation loss
 
-model = seq2seq().to(DEVICE) if (ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ) else lstm().to(DEVICE)
+if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
+    model = seq2seq().to(DEVICE)
+elif ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
+    model = lstm().to(DEVICE)
+elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
+    model = time_transformer().to(DEVICE)
+else:
+    raise Exception("bad model selected!")
 
 loss_func = nn.MSELoss()
 optim = optimizer.Adam(model.parameters(), lr=LEARNING_RATE)
@@ -53,7 +61,7 @@ def train_epoch(dl, epoch):
     # loop over training batches
     times_run = 0
 
-    for i, (x, y) in enumerate(dl):
+    for i, (x, target, y) in enumerate(dl):
         optim.zero_grad()  # zero gradients
         x = x.to(DEVICE)
         y = y.to(DEVICE)
@@ -61,8 +69,15 @@ def train_epoch(dl, epoch):
         if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
             x = x.swapaxes(0, 1)  # want to put data in (seq, batches,num features)
             y = y.swapaxes(0, 1)
-        model_out = model.forward(x)
-
+            model_out = model.forward(x)
+        elif ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
+            model_out = model.forward(x)
+        elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
+            inp_mask = generate_mask(PREDICT, TIME_ENC_DIM_VAL)
+            target_mask = generate_mask(PREDICT, PREDICT)
+            model_out = model.forward(x, target, inp_mask, target_mask)
+        else:
+            raise Exception("Bad model selected!")
         # squeeze the tensors to account for 1 dim sizes
         model_out = model_out.squeeze()
         y = y.squeeze()
@@ -100,6 +115,7 @@ def test_epoch(dl, epoch):
 
     return epoch_test_loss / times_run
 
+
 run_ml_flow = EXPERIMENT_SOURCE
 if run_ml_flow:
     try:
@@ -108,7 +124,6 @@ if run_ml_flow:
     except:
         print("mlflow not authenticated, running through git")
         run_ml_flow = False
-
 
 if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
     run = mlflow.active_run()
@@ -153,7 +168,7 @@ if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
     model_uri = mlflow.get_registry_uri()
     mlflow.pytorch.log_model(model, MODEL_SAVE_PATH)
     mlflow.end_run()
-    #mlflow.pytorch.save_model(model, MODEL_SAVE_PATH)
+    # mlflow.pytorch.save_model(model, MODEL_SAVE_PATH)
     # mlflow.register_model(f'runs:/{run_id}/{MODEL_CHOICE}', model)
 
 print("=====saving locally=====")
@@ -167,4 +182,3 @@ print("saving train run params...", )
 save_json(train_run_params, MODEL_TRAIN_METRICS_FILE_PATH)
 print("done!!!")
 # Plot the validation and training loss
-

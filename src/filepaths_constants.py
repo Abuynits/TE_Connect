@@ -52,6 +52,10 @@ TRAIN_Y_FILE_PATH = "data/model_io/train_y.pkl"
 VAL_Y_FILE_PATH = "data/model_io/validation_y.pkl"
 TEST_Y_FILE_PATH = "data/model_io/test_y.pkl"
 
+TRAIN_TARGET_FILE_PATH = "data/model_io/train_target.pkl";
+VAL_TARGET_FILE_PATH = "data/model_io/validation_target.pkl";
+TEST_TARGET_FILE_PATH = "data/model_io/test_target.pkl";
+
 INPUT_TRANSFORMATIONS_FILE_PATH = "data/transformations/input_transformations.pkl"
 OUTPUT_TRANSFORMATIONS_FILE_PATH = "data/transformations/output_transformations.pkl"
 

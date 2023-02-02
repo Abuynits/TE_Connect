@@ -145,13 +145,16 @@ def check_data_transformations(check_transforms_key, reg_data, transformed_data,
     plt.show()
 
 
-def show_model_inp_out_shapes(train_x, train_y, valid_x, valid_y, test_x, test_y):
+def show_model_inp_out_shapes(train_x, train_tg, train_y, valid_x, valid_tg, valid_y, test_x, test_tg, test_y):
     print()
     print("x train shape:", train_x.shape)
+    print("target train shape:", train_tg.shape)
     print("y train shape:", train_y.shape)
     print()
     print("x test shape:", test_x.shape)
+    print("target test shape:", test_tg.shape)
     print("y test shape:", test_y.shape)
     print()
     print("x valid shape:", valid_x.shape)
+    print("target valid shape:", valid_tg.shape)
     print("y valid shape:", valid_y.shape)
