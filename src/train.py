@@ -7,8 +7,9 @@ from lstm_arch import *
 from time_transformer import *
 from visualization import *
 
+print("reading data from files..")
 train_x, train_y, train_tg, test_x, test_y, test_tg, valid_x, valid_y, valid_tg = read_arrs_from_fp()
-
+print("creating datasets...")
 train_ds = finance_data_set(train_x, train_tg, train_y)
 test_ds = finance_data_set(test_x, test_tg, test_y)
 valid_ds = finance_data_set(valid_x, valid_tg, valid_y)

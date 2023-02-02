@@ -25,15 +25,16 @@ from model_constants import *
 class Pos_Encoder(pl.LightningModule):
     def __init__(self):
         super(Pos_Encoder, self).__init__()
-        self.d_model = TIME_DEC_DIM_VAL  # dimension of output of sublayers
+        self.dim_val = TIME_DEC_DIM_VAL  # dimension of output of sublayers
         self.max_seq_len = TIME_MAX_SEQ_LEN  # max feature length of the pos encoder
         self.drop = TIME_POS_ENC_DROP  # dropout for time encoder
+        self.dropout = nn.Dropout(self.drop)
         # copy pasted from PyTorch tutorial
         position = torch.arange(TIME_MAX_SEQ_LEN).unsqueeze(1)
 
-        div_term = torch.exp(torch.arange(0, self.d_model, 2) * (-math.log(10000.0) / self.d_model))
+        div_term = torch.exp(torch.arange(0, self.dim_val, 2) * (-math.log(10000.0) / self.dim_val))
 
-        pe = torch.zeros(self.max_seq_len, 1, self.d_model)
+        pe = torch.zeros(self.max_seq_len, 1, self.dim_val)
 
         pe[:, 0, 0::2] = torch.sin(position * div_term)
 
@@ -44,7 +45,10 @@ class Pos_Encoder(pl.LightningModule):
     def forward(self, inp):
         # shape: batch_size, enc_seq_len,dim val
         inp = inp + self.pe[:inp.size(0)]  # return the input seq added to the position encoder
-        return self.drop(inp)
+        print(inp.shape)
+        x = self.dropout(inp)
+
+        return x
 
 
 class time_encoder(pl.LightningModule):
@@ -54,7 +58,10 @@ class time_encoder(pl.LightningModule):
         self.input_features = INPUT_DATA_FEATURES  # num vars as input to the model
         self.dim_val = TIME_ENC_DIM_VAL  # hyper parameter for input dim throughout encoder
         self.n_head = TIME_ENC_HEAD_COUNT
-        self.enc_layer_count = TIME_ENC_LAYER_COUNT
+        self.layer_count = TIME_ENC_LAYER_COUNT
+        self.dim_feed_forward = TIME_ENC_DIM_FEED_FORWARD
+        self.drop = TIME_ENC_DROP
+
         self.enc_inp_layer = nn.Linear(  # converts the data to the dimensions for the encoder
             in_features=self.input_features,
             out_features=self.dim_val
@@ -65,19 +72,29 @@ class time_encoder(pl.LightningModule):
 
         # create encoders wiht n.TransfoermerEncoderLayer
         # will automatically have attention, feed forward and add and normalize layer
-        self.enc_block = nn.TransformerEncoderLayer(self.dim_val, self.n_head, batch_first=True)
+        self.enc_block = nn.TransformerEncoderLayer(
+            d_model=self.dim_val,
+            nhead=self.n_head,
+            dim_feedforward=self.dim_feed_forward,
+            dropout=self.drop,
+            batch_first=True
+        )
         # then need to pass this block to create multiple coppies in an encoder
         # norm: optional param - need to pass in null as enc_block already normalizes it
-        self.enc = nn.TransformerEncoder(self.enc_block, num_layers=self.enc_layer_count, norm=None)
+        self.enc = nn.TransformerEncoder(self.enc_block, num_layers=self.layer_count, norm=None)
 
     def forward(self, inp):
         # pass through input for the decoder
         # input size is: [batch size, inp seq len,num input features]
+        print(f"\tenc: input shape:{inp.shape}")
         x = self.enc_inp_layer(inp)
+        print(f"\tenc: after enc input layer:{x.shape}")
         # output is: [batch_size,source,dim_val] where dim_val is 512 (arbitrarily preset)
         x = self.pos_enc(x)
         # output is still: [batch size, inp seq len,num input features]
+        print(f"\tenc: inp shape after positional encoder:{x.shape}")
         x = self.enc(x)
+        print(f"\tenc: output:{x.shape}")
         # output is still: [batch size, inp seq len,num input features]
         return x
 
@@ -85,10 +102,12 @@ class time_encoder(pl.LightningModule):
 class time_decoder(pl.LightningModule):
     def __init__(self):
         super(time_decoder, self).__init__()
-        self.input_features = INPUT_DATA_FEATURES
+        self.input_features = OUTPUT_DATA_FEATURES
         self.dim_val = TIME_DEC_DIM_VAL
         self.nheads = TIME_DEC_HEAD_COUNT
         self.dec_layer_count = TIME_DEC_LAYER_COUNT
+        self.feed_feed_forward_dim = TIME_DEC_DIM_FEED_FORWARD
+        self.drop = TIME_DEC_DROP
         # will be passing in the variables as input to the decoder - need to get them to size 512
         # this way match output of encoder
         self.dec_inp_layer = nn.Linear(
@@ -96,8 +115,10 @@ class time_decoder(pl.LightningModule):
             out_features=self.dim_val
         )
         # create a decoder block with number of heads and normal and attention built into it::
-        self.dec_block = nn.TransformerEncoderLayer(
+        self.dec_block = nn.TransformerDecoderLayer(
             d_model=self.dim_val,
+            dim_feedforward=self.feed_feed_forward_dim,
+            dropout=self.drop,
             nhead=self.nheads,
             batch_first=True
         )
@@ -119,9 +140,10 @@ class time_decoder(pl.LightningModule):
         # the target is the last element in seq that is used for predictions - need to convert it to right size
         # x shape: target_seq_len,batch_size,features
         x = self.dec_inp_layer(target)
+        print("dec: decoder inp layer:")
         # x shape: target_seq_len,batch_size,dim_val
         # run the decoder, performing a mask on the target, nad on the input
-        dec_out = self.decoder(
+        dec_out = self.dec(
             tgt=x,
             memory=enc_out,
             tgt_mask=target_mask,
@@ -148,8 +170,10 @@ class time_transformer(pl.LightningModule):
         # target is the target output but shifted over by 1
         # if you get [1,2,3,4,5] as src, then that target should be [2,3,4,5,6]
         enc_out = self.enc(inp)
+        print("enc_out: Size of decoder_output after linear decoder layer: {}".format(enc_out.size()))
         dec_inp = enc_out
         out = self.dec(dec_inp, target, inp_mask, target_mask)
+
         return out
 
 
