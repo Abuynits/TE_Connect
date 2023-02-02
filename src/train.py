@@ -28,13 +28,14 @@ print(f"batches in test dl: {len(test_dl)}")
 if CHECK_DL:
     check_data_loader(next(iter(train_dl))[0], next(iter(train_dl))[1])
 
-print_data_loader(next(iter(train_dl))[0], next(iter(train_dl))[1], 2)
-print_data_loader(next(iter(train_dl))[0], next(iter(train_dl))[1], 2)
+print_data_loader(next(iter(train_dl))[0], next(iter(train_dl))[1], next(iter(train_dl))[2], 2)
+print_data_loader(next(iter(train_dl))[0], next(iter(train_dl))[1], next(iter(train_dl))[2], 2)
 print(next(iter(train_dl))[0].shape)
 print(next(iter(train_dl))[1].shape)
+print(next(iter(train_dl))[2].shape)
 print(next(iter(test_dl))[0].shape)
 print(next(iter(test_dl))[1].shape)
-
+print(next(iter(test_dl))[1].shape)
 train_loss = []  # track training loss
 valid_loss = []  # track validation loss
 
@@ -108,8 +109,7 @@ def test_epoch(dl, epoch):
     epoch_test_loss = 0.
     times_run = 0
     # loop over testing batches
-    for i, (x,target, y) in enumerate(dl):
-
+    for i, (x, target, y) in enumerate(dl):
         model_out = get_model_pred(x, target, y)
 
         y = y.squeeze()

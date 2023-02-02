@@ -14,9 +14,10 @@ def createList(l, h):
     return [i for i in range(l, h)]
 
 
-def print_data_loader(inp_seq, out_seq, num_print):
+def print_data_loader(inp_seq, targ_seq, out_seq, num_print):
     for i in range(num_print):
         print(" Input seq:", inp_seq[i])
+        print(" target seq:",targ_seq[i])
         print(" Out seq:", out_seq[i])
 
 
