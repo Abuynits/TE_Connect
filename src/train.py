@@ -109,7 +109,7 @@ def test_epoch(dl, epoch):
     # loop over testing batches
     for i, (x, target, y) in enumerate(dl):
         model_out = get_model_pred(x, target, y)
-
+        model_out = model_out.squeeze()
         y = y.squeeze()
 
         loss = loss_func(model_out, y)
