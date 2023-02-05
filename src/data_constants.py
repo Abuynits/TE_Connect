@@ -1,6 +1,6 @@
 from filepaths_constants import *
 # must contain each one of these labels
-DATA_FILTER = ["Asia Pacific & ANZ"]
+DATA_FILTER = ["Asia Pacific & ANZ","Channel - Industrial"]
 # data_filter = ["Asia Pacific & ANZ"]
 # collumns of interest
 INPUT_DATA_COLS = ["sales_amount", "sales_quantity",

@@ -169,9 +169,11 @@ def split_data(transformed_data, dict_train_data, dict_valid_data,
                 if show_sample:
                     print("train:")
                     print(train_x.shape)
-                    # print(x_train[0])
+                    print(train_x[0])
                     print(train_target.shape)
+                    print(train_target[0])
                     print(train_y.shape)
+                    print(train_y[0])
                     # print(y_train[0])
                     # show_sample = False
             else:
@@ -181,12 +183,15 @@ def split_data(transformed_data, dict_train_data, dict_valid_data,
                                                                                  INPUT_DATA_COLS,
                                                                                  OUTPUT_DATA_COLS)
                 all_valid_data.append((x_valid, target_valid, y_valid))
-                dict_valid_data[key] = (x_valid, y_valid)
+                dict_valid_data[key] = (x_valid, target_valid, y_valid)
                 if show_sample:
                     print("valid:")
                     print(x_valid.shape)
+                    print(x_valid[0])
                     print(target_valid.shape)
+                    print(target_valid[0])
                     print(y_valid.shape)
+                    print(y_valid[0])
                     # print(y_valid[0])
                     show_sample = False
         else:
@@ -200,8 +205,11 @@ def split_data(transformed_data, dict_train_data, dict_valid_data,
             if show_sample:
                 print("test:")
                 print(x_test.shape)
+                print(x_test[0])
                 print(target_test.shape)
+                print(target_test[0])
                 print(y_test.shape)
+                print(y_test[0])
 
 
 def get_all_data_arr(all_data):

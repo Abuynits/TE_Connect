@@ -14,7 +14,6 @@ train_ds = finance_data_set(train_x, train_tg, train_y)
 test_ds = finance_data_set(test_x, test_tg, test_y)
 valid_ds = finance_data_set(valid_x, valid_tg, valid_y)
 
-print(train_x.shape)
 # create dataloader for train dataset
 train_dl = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True)
 print(f"batches in train dl: {len(train_dl)}")
@@ -27,9 +26,9 @@ print(f"batches in test dl: {len(test_dl)}")
 
 if CHECK_DL:
     check_data_loader(next(iter(train_dl))[0], next(iter(train_dl))[1])
+dl_unit = next(iter(train_dl))
+print_data_loader(dl_unit[0], dl_unit[1], dl_unit[2], 2)
 
-print_data_loader(next(iter(train_dl))[0], next(iter(train_dl))[1], next(iter(train_dl))[2], 2)
-print_data_loader(next(iter(train_dl))[0], next(iter(train_dl))[1], next(iter(train_dl))[2], 2)
 print(next(iter(train_dl))[0].shape)
 print(next(iter(train_dl))[1].shape)
 print(next(iter(train_dl))[2].shape)
