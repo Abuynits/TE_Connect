@@ -46,7 +46,6 @@ elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
     model = time_transformer().to(DEVICE)
 else:
     raise Exception("bad model selected!")
-
 loss_func = nn.MSELoss()
 optim = optimizer.Adam(model.parameters(), lr=LEARNING_RATE)
 scheduler = ExponentialLR(optim, gamma=GAMMA)

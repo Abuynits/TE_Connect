@@ -16,9 +16,9 @@ def createList(l, h):
 
 def print_data_loader(inp_seq, targ_seq, out_seq, num_print):
     for i in range(num_print):
-        print(" Input seq:", inp_seq[i])
-        print(" target seq:", targ_seq[i])
-        print(" Out seq:", out_seq[i])
+        print(" Input seq:\n", inp_seq[i])
+        print(" target seq:\n", targ_seq[i])
+        print(" Out seq:\n", out_seq[i])
 
 
 def check_data_loader(dl_train_item, dl_test_item):

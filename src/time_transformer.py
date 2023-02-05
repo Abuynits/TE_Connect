@@ -19,6 +19,7 @@ Combinations of these techniques
 """
 from filepaths_constants import *
 from model_constants import *
+from dl_ds import *
 
 
 # need to implement the position encoder as a class for the model
@@ -173,6 +174,7 @@ class time_transformer(pl.LightningModule):
         super(time_transformer, self).__init__()
         self.enc = time_encoder()
         self.dec = time_decoder()
+        print_model(self)
 
     def forward(self, inp, target, inp_mask, target_mask):
         # need to convert the target sequence to a dimension that can be inputed to the decoder
