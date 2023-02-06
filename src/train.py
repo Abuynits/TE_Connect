@@ -136,8 +136,8 @@ if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
 start_time = time.time()
 
 for e in range(EPOCHS):
-    avg_train_loss = train_epoch(train_dl, e)
     avg_valid_loss = test_epoch(valid_dl, e)
+    avg_train_loss = train_epoch(train_dl, e)
     num_epochs_run += 1
     train_loss.append(avg_train_loss)
     valid_loss.append(avg_valid_loss)

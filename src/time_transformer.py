@@ -206,8 +206,6 @@ def generate_mask(dim1, dim2):
 
 
 def time_predict(model, inp, contain_batch=False, future_time_steps=PREDICT):
-    if model != time_transformer:
-        raise Exception("Bad model selected!")
     if TIME_PRED_VERBOSE:
         print("original inp:", inp.shape)
     # model: the model being used
@@ -219,7 +217,7 @@ def time_predict(model, inp, contain_batch=False, future_time_steps=PREDICT):
         print("processed inp shape:", inp.shape)
 
     target = inp[:, -1, 0]  # in shape [batches,last unit,1]
-
+    print("input target shape:",target.shape)
     for _ in range(future_time_steps - 1):
         dim_a = target.shape[1]
         dim_b = inp.shape[1]
