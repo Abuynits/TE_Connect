@@ -26,6 +26,7 @@ import pytorch_lightning as pl
 from sklearn.preprocessing import MinMaxScaler
 import random as andom
 import math
+import utils
 
 # DATA INFO
 # location of CSV file:
@@ -80,6 +81,7 @@ SAVE_MODEL = False  # control whether you want to save the model
 DISPLAY_BATCH_TRAIN_DATA = False  # debug: check if you want to display the atches in training
 LSTM_VERBOSE = False  # debug: check if you want to debug the LSTM model
 SEQ2SEQ_VERBOSE = False  # debug: check if you want to debug the seq2seq model
+TIME_PRED_VERBOSE = True
 PREDICT_ALL_FORCAST = True  # prediction: check if you want to plot global predictions for all data points
 PREDICT_MODEL_FORCAST = False  # prediction: check if you want to plot prediction for each prediction sement
 PREDICT_RECURSIVELY = False  # control how you want to predict

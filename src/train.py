@@ -108,7 +108,8 @@ def test_epoch(dl, epoch):
     times_run = 0
     # loop over testing batches
     for i, (x, target, y) in enumerate(dl):
-        model_out = get_model_pred(x, target, y)
+        #model_out = get_model_pred(x, target, y)
+        model_out = time_predict(model,x)
         model_out = model_out.squeeze()
         y = y.squeeze()
 

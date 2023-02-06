@@ -20,6 +20,7 @@ Combinations of these techniques
 from filepaths_constants import *
 from model_constants import *
 from dl_ds import *
+from filepaths_constants import *
 
 
 # need to implement the position encoder as a class for the model
@@ -202,3 +203,75 @@ def generate_mask(dim1, dim2):
     # dim2: for src, this is encoder seq length
     #     : for target - this is target_seq length
     return torch.triu(torch.ones(dim1, dim2) * float('-inf'), diagonal=1)
+
+
+def time_predict(model, inp, contain_batch=False, future_time_steps=PREDICT):
+    if model != time_transformer:
+        raise Exception("Bad model selected!")
+    if TIME_PRED_VERBOSE:
+        print("original inp:", inp.shape)
+    # model: the model being used
+    # future_time_steps: the number of steps to predict into the future - can change them
+    # the input should always be batch_first:
+    if not contain_batch and inp.dim() != 3:
+        inp = inp.unsqueeze(1)  # add in dim of 1 if asked to predict on single input
+    if TIME_PRED_VERBOSE:
+        print("processed inp shape:", inp.shape)
+
+    target = inp[:, -1, 0]  # in shape [batches,last unit,1]
+
+    for _ in range(future_time_steps - 1):
+        dim_a = target.shape[1]
+        dim_b = inp.shape[1]
+        if TIME_PRED_VERBOSE:
+            print(f"dim_a:{dim_a.shape},dim_b:{dim_b.shape}")
+        target_mask = utils.generate_square_subsequent_mask(
+            dim1=dim_a,
+            dim2=dim_a,
+            device=DEVICE
+        )
+        if TIME_PRED_VERBOSE:
+            print("input mask:", target_mask.shape)
+        inp_mask = utils.generate_square_subsequent_mask(
+            dim1=dim_a,
+            dim2=dim_a,
+            device=DEVICE
+        )
+        if TIME_PRED_VERBOSE:
+            print("input mask:", inp_mask.shape)
+        model_pred = model(inp, target, inp_mask, target_mask)
+        if TIME_PRED_VERBOSE:
+            print("All model prediction shape", last_model_pred.shape)
+        # output from model is [batch_size,output_length]
+        # need to unsqeeze to add in 3rd dim to make compatible with the currect dims
+        last_model_pred = model_pred[:, -1, :].unsqueeze(-1)
+        if TIME_PRED_VERBOSE:
+            print("last model prediciton shape", last_model_pred.shape)
+        # now add on the prediction to target:
+        target = torch.cat((target, last_model_pred.detach()), 0)  # concatonate along batches dimensions
+        if TIME_PRED_VERBOSE:
+            print("target size:", target.shape)
+        # get the size of the number of input features in the data used in the input
+        dim_a = target.shape[1]
+        dim_b = inp.shape[1]
+        if TIME_PRED_VERBOSE:
+            print(f"dim_a:{dim_a.shape},dim_b:{dim_b.shape}")
+
+    final_tgt_mask = utils.generate_square_subsequent_mask(
+        dim1=dim_a,
+        dim2=dim_a,
+        device=DEVICE
+    )
+    final_inp_mask = utils.generate_square_subsequent_mask(
+        dim1=dim_a,
+        dim2=dim_b,
+        device=DEVICE
+    )
+    if TIME_PRED_VERBOSE:
+        print("final input mask:", final_inp_mask.shape)
+    if TIME_PRED_VERBOSE:
+        print("final input mask:", final_tgt_mask.shape)
+    final_prediction = model(inp, target, final_inp_mask, final_inp_mask)
+    if TIME_PRED_VERBOSE:
+        print("final prediction shape:", final_prediction.shape)
+    return final_prediction
