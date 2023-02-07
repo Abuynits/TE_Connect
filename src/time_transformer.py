@@ -224,7 +224,6 @@ def time_predict(model, inp, contain_batch=False, future_time_steps=PREDICT):
     target = inp[:, -1, :]  # in shape [batches,last unit]
     target = target[:, None, :]
 
-    print("input target shape:", target.shape)
     for _ in range(future_time_steps - 1):
         dim_a = target.shape[1]
         dim_b = inp.shape[1]

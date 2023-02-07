@@ -57,15 +57,15 @@ def get_model_pred(x, target, y):
     if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
         x = x.swapaxes(0, 1)  # want to put data in (seq, batches,num features)
         y = y.swapaxes(0, 1)
-        model_out, _ = model.forward(x)
+        model_out = model.forward(x)
     elif ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
         model_out = model.forward(x)
     elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
         # input mask: [prediction length, prediction length]
-        inp_mask = generate_mask(PREDICT, LOOKBACK)
+        inp_mask = generate_mask(PREDICT, LOOKBACK, DEVICE)
         # target mask: [prediction length, prediction length]
-        target_mask = generate_mask(PREDICT, PREDICT)
-        model_out = model.forward(x, target, inp_mask, target_mask)
+        target_mask = generate_mask(PREDICT, PREDICT, DEVICE)
+        model_out, _ = model.forward(x, target, inp_mask, target_mask)
     else:
         raise Exception("Bad model selected!")
     return model_out
