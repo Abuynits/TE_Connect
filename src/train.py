@@ -5,6 +5,7 @@ from saving_reading_data import *
 from seq2seq_arch import *
 from lstm_arch import *
 from time_transformer import *
+from eval import *
 from visualization import *
 
 print("reading data from files..")
@@ -118,6 +119,8 @@ def test_epoch(dl, epoch):
         y = y.squeeze()
 
         loss = loss_func(model_out, y)
+        all_abs_errors, all_accuracy, all_bias = calc_accuracy(prediction = model_out, actual = y)
+        print(all_abs_errors, all_accuracy, all_bias)
         epoch_test_loss += loss.item() * x.size(0)
         times_run += x.size(0)
 
@@ -140,8 +143,8 @@ if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
 start_time = time.time()
 
 for e in range(EPOCHS):
-    avg_train_loss = train_epoch(train_dl, e)
     avg_valid_loss = test_epoch(valid_dl, e)
+    avg_train_loss = train_epoch(train_dl, e)
 
     num_epochs_run += 1
     train_loss.append(avg_train_loss)
