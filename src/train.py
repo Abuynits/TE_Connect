@@ -119,8 +119,8 @@ def test_epoch(dl, epoch):
         y = y.squeeze()
 
         loss = loss_func(model_out, y)
-        all_abs_errors, all_accuracy, all_bias = calc_accuracy(prediction = model_out, actual = y)
-        print(all_abs_errors, all_accuracy, all_bias)
+        overall_acc, overall_bias, _ = calc_accuracy(prediction=model_out, actual=y)
+        print(overall_acc, overall_bias)
         epoch_test_loss += loss.item() * x.size(0)
         times_run += x.size(0)
 

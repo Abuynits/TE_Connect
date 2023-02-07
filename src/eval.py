@@ -1,6 +1,7 @@
 from visualization import *
 from saving_reading_data import *
 
+
 # dict_train_data, dict_valid_data, dict_test_data = read_dicts_from_fp()
 # input_transformations, output_transformations = read_transformations_from_fp()
 # model = read_model_from_fp()
@@ -37,15 +38,26 @@ def calc_accuracy(prediction, actual):
     all_abs_errors = 0.
     all_accuracy = 0.
     all_bias = 0.
-    print(prediction.shape)
-    print(actual.shape)
+    # print(prediction.shape)
+    # print(actual.shape)
     # am monkey bran - working with tensors, not actual matrices - need to finish up eval function
-    print(len(prediction))
-    print(len(actual))
-    for i in range(max_index):
-        current_abs_err = abs(actual[i] - prediction[i])
-        all_abs_errors += current_abs_err
-        all_accuracy += 1 - current_abs_err / actual[i]
-        all_bias += (prediction[i] - actual[i]) / actual[i]
-    return all_abs_errors, all_accuracy,all_bias
+    # print(len(prediction))
+    # print(len(actual))
 
+    ones = torch.ones(prediction.shape[0], prediction.shape[1])
+    # print(ones.shape)
+    # compute absolute error for each component
+    individual_abs_err = torch.abs(torch.sub(actual, prediction))
+    # compute accuracy for each component
+    individual_acc = torch.sub(ones, torch.div(individual_abs_err, actual))
+
+    individual_bias = torch.div((torch.sub(prediction, actual)), actual)
+
+    # compute all actual sales by taking the sum of a tensor
+    all_abs_error = torch.sum(individual_abs_err)
+    all_actual_sales = torch.sum(actual)
+    all_forcasted_sales = torch.sum(prediction)
+
+    overall_acc = 1 - all_abs_error / all_actual_sales
+    overall_bias = (all_forcasted_sales - all_actual_sales) / all_actual_sales
+    return overall_acc.item(), overall_bias.item(), (individual_acc, individual_bias, individual_abs_err)
