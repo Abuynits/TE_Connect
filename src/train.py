@@ -57,7 +57,7 @@ def get_model_pred(x, target, y):
     if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
         x = x.swapaxes(0, 1)  # want to put data in (seq, batches,num features)
         y = y.swapaxes(0, 1)
-        model_out,_ = model.forward(x)
+        model_out, _ = model.forward(x)
     elif ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
         model_out = model.forward(x)
     elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
@@ -108,8 +108,12 @@ def test_epoch(dl, epoch):
     times_run = 0
     # loop over testing batches
     for i, (x, target, y) in enumerate(dl):
-        #model_out = get_model_pred(x, target, y)
-        model_out = time_predict(model,x)
+        # model_out = get_model_pred(x, target, y)
+        if ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
+            model_out = time_predict(model, x)
+        else:
+            model_out = get_model_pred(x, target, y)
+
         model_out = model_out.squeeze()
         y = y.squeeze()
 
@@ -136,8 +140,9 @@ if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
 start_time = time.time()
 
 for e in range(EPOCHS):
-    avg_valid_loss = test_epoch(valid_dl, e)
     avg_train_loss = train_epoch(train_dl, e)
+    avg_valid_loss = test_epoch(valid_dl, e)
+
     num_epochs_run += 1
     train_loss.append(avg_train_loss)
     valid_loss.append(avg_valid_loss)

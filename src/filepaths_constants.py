@@ -62,6 +62,7 @@ OUTPUT_TRANSFORMATIONS_FILE_PATH = "data/transformations/output_transformations.
 
 MLFLOW_URL = "https://dagshub.com/Abuynits/TE_Connect.mlflow"
 
+
 class RUN_TYPE(Enum):
     MLFLOW_RUN = 0
     GIT_RUN = 1
