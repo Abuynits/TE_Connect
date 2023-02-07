@@ -146,6 +146,76 @@ def prep_data_for_model(data, past, future, input_data_cols, output_data_cols):
     return np.array(x), np.array(y)
 
 
+def check_test_train_val_percentages():
+    return PERCENT_TRAIN_DATA + PERCENT_TEST_DATA + PERCENT_VALID_DATA != 1
+
+
+def show_data_sample(x, target, y, data_type):
+    print(f"=======\n{data_type}=======")
+    print(x.shape)
+    print(x[0])
+    print(target.shape)
+    print(target[0])
+    print(y.shape)
+    print(y[0])
+
+
+def split_each_data_group(transformed_data, dict_train_data, dict_valid_data,
+                          dict_test_data, all_valid_data, all_train_data,
+                          all_test_data):
+    if check_test_train_val_percentages():
+        raise Exception("bad test train split percentages")
+    show_sample = True
+    for key, group in transformed_data.items():
+        start_train_data = 0
+        end_train_data = int(len(group) * PERCENT_TRAIN_DATA)
+
+        start_valid_data = end_train_data + 1
+        end_valid_data = start_valid_data + int(len(group) * PERCENT_VALID_DATA)
+
+        start_test_data = end_valid_data + 1
+        end_test_data = len(group)
+        all_x, all_target, all_y = prep_data_for_transformer_model(group,
+                                                                   LOOKBACK,
+                                                                   PREDICT,
+                                                                   INPUT_DATA_COLS,
+                                                                   OUTPUT_DATA_COLS)
+
+        train_x = all_x[start_train_data:end_train_data]
+        train_target = all_target[start_train_data:end_train_data]
+        train_y = all_y[start_train_data:end_train_data]
+
+        valid_x = all_x[start_valid_data:end_valid_data]
+        valid_target = all_target[start_valid_data:end_valid_data]
+        valid_y = all_y[start_valid_data:end_valid_data]
+
+        test_x = all_x[start_test_data:]
+        test_target = all_target[start_test_data:]
+        test_y = all_y[start_test_data:]
+
+        if len(train_x) != len(train_target) != len(train_y):
+            raise Exception("bad train data slip!!")
+        if len(test_x) != len(test_target) != len(test_y):
+            raise Exception("bad test data slip!!")
+        if len(valid_x) != len(valid_target) != len(valid_y):
+            raise Exception("bad validation data slip!!")
+
+        dict_train_data[key] = (train_x, train_target, train_y)
+        all_train_data.append((train_x, train_target, train_y))
+
+        dict_valid_data[key] = (valid_x, valid_target, valid_y)
+        all_valid_data.append((valid_x, valid_target, valid_y))
+
+        dict_test_data[key] = (test_x, test_target, test_y)
+        all_test_data.append((test_x, test_target, test_y))
+
+        if show_sample:
+            show_data_sample(train_x, train_target, train_y, "train")
+            show_data_sample(valid_x, valid_target, valid_y, "valid")
+            show_data_sample(test_x, test_target, test_y, "test")
+            show_sample = False
+
+
 def split_data(transformed_data, dict_train_data, dict_valid_data,
                dict_test_data, all_valid_data, all_train_data,
                all_test_data):
@@ -167,15 +237,7 @@ def split_data(transformed_data, dict_train_data, dict_valid_data,
                 all_train_data.append((train_x, train_target, train_y))
                 dict_train_data[key] = (train_x, train_target, train_y)
                 if show_sample:
-                    print("train:")
-                    print(train_x.shape)
-                    print(train_x[0])
-                    print(train_target.shape)
-                    print(train_target[0])
-                    print(train_y.shape)
-                    print(train_y[0])
-                    # print(y_train[0])
-                    # show_sample = False
+                    show_data_sample(train_x, train_target, train_y, "train")
             else:
                 x_valid, target_valid, y_valid = prep_data_for_transformer_model(group,
                                                                                  LOOKBACK,
@@ -185,15 +247,9 @@ def split_data(transformed_data, dict_train_data, dict_valid_data,
                 all_valid_data.append((x_valid, target_valid, y_valid))
                 dict_valid_data[key] = (x_valid, target_valid, y_valid)
                 if show_sample:
-                    print("valid:")
-                    print(x_valid.shape)
-                    print(x_valid[0])
-                    print(target_valid.shape)
-                    print(target_valid[0])
-                    print(y_valid.shape)
-                    print(y_valid[0])
-                    # print(y_valid[0])
-                    show_sample = False
+                    show_data_sample(x_valid, target_valid, y_valid, "validation")
+                # print(y_valid[0])
+                show_sample = False
         else:
             x_test, target_test, y_test = prep_data_for_transformer_model(group,
                                                                           LOOKBACK,
@@ -203,14 +259,7 @@ def split_data(transformed_data, dict_train_data, dict_valid_data,
             all_test_data.append((x_test, target_test, y_test))
             dict_test_data[key] = (x_test, target_test, y_test)
             if show_sample:
-                print("test:")
-                print(x_test.shape)
-                print(x_test[0])
-                print(target_test.shape)
-                print(target_test[0])
-                print(y_test.shape)
-                print(y_test[0])
-
+                show_data_sample(x_test, target_test, y_test, "test")
 
 def get_all_data_arr(all_data):
     tr = []
@@ -224,4 +273,4 @@ def get_all_data_arr(all_data):
             tr.append(x_tr[j])
             target.append(x_tg[j])
             te.append(x_te[j])
-    return np.array(tr), np.array(target),np.array(te)
+    return np.array(tr), np.array(target), np.array(te)

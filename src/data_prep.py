@@ -13,14 +13,22 @@ all_valid_data = []
 all_train_data = []
 all_test_data = []
 
-split_data(transformed_data,
-           dict_train_data,
-           dict_valid_data,
-           dict_test_data,
-           all_valid_data,
-           all_train_data,
-           all_test_data)
-
+if SPLIT_TYPE == DATA_SPLIT.ON_PRODUCT_CODES:
+    split_data(transformed_data,
+               dict_train_data,
+               dict_valid_data,
+               dict_test_data,
+               all_valid_data,
+               all_train_data,
+               all_test_data)
+else:
+    split_each_data_group(transformed_data,
+                          dict_train_data,
+                          dict_valid_data,
+                          dict_test_data,
+                          all_valid_data,
+                          all_train_data,
+                          all_test_data)
 display_train_test_valid_data(all_train_data, all_valid_data, all_test_data)
 
 valid_x, valid_tg, valid_y = get_all_data_arr(all_valid_data)

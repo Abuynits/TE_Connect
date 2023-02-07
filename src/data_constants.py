@@ -1,6 +1,7 @@
 from filepaths_constants import *
+
 # must contain each one of these labels
-DATA_FILTER = ["Asia Pacific & ANZ","Channel - Industrial"]
+DATA_FILTER = ["Asia Pacific & ANZ", "Channel - Industrial"]
 # data_filter = ["Asia Pacific & ANZ"]
 # collumns of interest
 INPUT_DATA_COLS = ["sales_amount", "sales_quantity",
@@ -10,9 +11,11 @@ OUTPUT_DATA_COLS = ["sales_amount"]
 OUTPUT_DATA_FEATURES = len(OUTPUT_DATA_COLS)
 INPUT_DATA_FEATURES = len(INPUT_DATA_COLS)
 TEST_TRAIN_SPLIT = 0.8  # test-train split percentage
+PERCENT_TRAIN_DATA = 0.7
+PERCENT_TEST_DATA = 0.1
+PERCENT_VALID_DATA = 1 - PERCENT_TRAIN_DATA - PERCENT_TEST_DATA
 LOOKBACK = 10  # number of units used to make prediction
 PREDICT = 5  # number of units that will be predicted
-
 
 DATA_PREP_DICT = {
     "GROUP_BY_PRODUCT_LINE": GROUP_BY_PRODUCT_LINE,
