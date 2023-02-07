@@ -40,7 +40,6 @@ TIME_DEC_DROP = 0.1
 TIME_ENC_DIM_VAL = 128# default: 512
 TIME_ENC_HEAD_COUNT = 2 # default: 4
 TIME_ENC_LAYER_COUNT = 2 # default: 4
-TIME_VERBOSE = True
 
 TIME_DEC_DIM_VAL = 128 #default: 512
 TIME_DEC_HEAD_COUNT = 2 # default: 4

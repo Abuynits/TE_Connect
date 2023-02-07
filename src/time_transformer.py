@@ -166,12 +166,12 @@ class time_decoder(pl.LightningModule):
             print(f"\tdec: decoder output: {dec_out.shape}")
         # get: [batch_size,target_seq_len,dim_val]
         # now pass through linear mapping to convert back to size of features to be used
-        mapped_dec_out = self.linear_output_mapping(dec_out) # the output mapping used as the final result
-        mapped_dec_inp = self.linear_input_mapping(dec_out) # use to feed back into the model
+        mapped_dec_out = self.linear_output_mapping(dec_out)  # the output mapping used as the final result
+        mapped_dec_inp = self.linear_input_mapping(dec_out)  # use to feed back into the model
         if TIME_VERBOSE:
             print(f"\tdec: mapped_dec output: {dec_out.shape}")
 
-        return mapped_dec_out,mapped_dec_inp
+        return mapped_dec_out, mapped_dec_inp
 
 
 # https://towardsdatascience.com/how-to-make-a-pytorch-transformer-for-time-series-forecasting-69e073d4061e
@@ -197,13 +197,13 @@ class time_transformer(pl.LightningModule):
         if TIME_VERBOSE:
             print(f"enc_out/dec_inp: {enc_out.shape}")
         dec_inp = enc_out
-        out,new_inp = self.dec(dec_inp, target, inp_mask, target_mask)
+        out, new_inp = self.dec(dec_inp, target, inp_mask, target_mask)
         if TIME_VERBOSE:
             print(f"out shape: {out.shape}")
-        return out,new_inp
+        return out, new_inp
 
 
-def generate_mask(dim1, dim2,device):
+def generate_mask(dim1, dim2, device):
     # dim1: for both input and output - is the target len
     # dim2: for src, this is encoder seq length
     #     : for target - this is target_seq length
@@ -222,7 +222,7 @@ def time_predict(model, inp, contain_batch=False, future_time_steps=PREDICT):
         print("processed inp shape:", inp.shape)
     # # Take the last value of the target variable in all batches in src and make it tgt
     target = inp[:, -1, :]  # in shape [batches,last unit]
-    target = target[:,None,:]
+    target = target[:, None, :]
 
     print("input target shape:", target.shape)
     for _ in range(future_time_steps - 1):
@@ -246,15 +246,15 @@ def time_predict(model, inp, contain_batch=False, future_time_steps=PREDICT):
         )
         if TIME_PRED_VERBOSE:
             print("input mask:", inp_mask.shape)
-        model_pred,next_model_inp = model(inp, target, inp_mask, target_mask)
+        model_pred, next_model_inp = model(inp, target, inp_mask, target_mask)
         if TIME_PRED_VERBOSE:
             print("All model prediction shape", model_pred.shape)
             print("All model next inp shape", next_model_inp.shape)
         # output from model is [batch_size,output_length]
         # need to unsqeeze to add in 3rd dim to make compatible with the currect dims
         last_next_inp_shape = next_model_inp[:, -1, :]
-        last_next_inp_shape = last_next_inp_shape[:,None,:]
-        #last_model_pred = model_pred[:, -1, :].unsqueeze(-1)
+        last_next_inp_shape = last_next_inp_shape[:, None, :]
+        # last_model_pred = model_pred[:, -1, :].unsqueeze(-1)
         if TIME_PRED_VERBOSE:
             """
             processed inp shape: torch.Size([2048, 10, 3])
@@ -265,7 +265,6 @@ def time_predict(model, inp, contain_batch=False, future_time_steps=PREDICT):
             print("last model new input shape", next_model_inp.shape)
             print("last model new input shape", last_next_inp_shape.shape)
         # now add on the prediction to target:
-        print("current target:",target.shape)
         target = torch.cat((target, last_next_inp_shape.detach()), 1)  # concatonate along batches dimensions
         if TIME_PRED_VERBOSE:
             print("target size:", target.shape)
@@ -292,7 +291,7 @@ def time_predict(model, inp, contain_batch=False, future_time_steps=PREDICT):
         print("final input mask:", final_inp_mask.shape)
     if TIME_PRED_VERBOSE:
         print("final input mask:", final_tgt_mask.shape)
-    final_prediction,_ = model(inp, target, final_inp_mask, final_tgt_mask)
+    final_prediction, _ = model(inp, target, final_inp_mask, final_tgt_mask)
     if TIME_PRED_VERBOSE:
         print("final prediction shape:", final_prediction.shape)
     return final_prediction
