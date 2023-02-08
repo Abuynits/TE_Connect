@@ -35,17 +35,17 @@ SEQ2SEQ_INPUT_SEQ_LENGTH = LOOKBACK  # length of input sequence to LSTM
 
 TIME_MAX_SEQ_LEN = 5000  # hyper parameter for initialization of positional encoder
 TIME_POS_ENC_DROP = 0.0
-TIME_ENC_DROP = 0.1
-TIME_DEC_DROP = 0.1
-TIME_ENC_DIM_VAL = 128  # default: 512
-TIME_ENC_HEAD_COUNT = 2  # default: 4
-TIME_ENC_LAYER_COUNT = 2  # default: 4
+TIME_ENC_DROP = 0.0  # default 0.1
+TIME_DEC_DROP = 0.0  # default 0.1
+TIME_ENC_DIM_VAL = 512  # default: 512
+TIME_ENC_HEAD_COUNT = 4  # default: 4
+TIME_ENC_LAYER_COUNT = 4  # default: 4
 
-TIME_DEC_DIM_VAL = 128  # default: 512
-TIME_DEC_HEAD_COUNT = 2  # default: 4
-TIME_DEC_LAYER_COUNT = 2  # default: 4
-TIME_DEC_DIM_FEED_FORWARD = 1024  # default: = 2048
-TIME_ENC_DIM_FEED_FORWARD = 1024  # default: = 2048
+TIME_DEC_DIM_VAL = 512  # default: 512
+TIME_DEC_HEAD_COUNT = 4  # default: 4
+TIME_DEC_LAYER_COUNT = 4  # default: 4
+TIME_DEC_DIM_FEED_FORWARD = 2048  # default: = 2048
+TIME_ENC_DIM_FEED_FORWARD = 2048  # default: = 2048
 
 MODEL_CHOICE_NAME = "lstm" if ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM else "seq2seq"
 
