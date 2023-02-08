@@ -45,6 +45,8 @@ def calc_accuracy(prediction, actual):
     # print(len(actual))
 
     ones = torch.ones(prediction.shape[0], prediction.shape[1])
+    if torch.cuda.is_available():
+        ones = ones.cuda()
     # print(ones.shape)
     # compute absolute error for each component
     individual_abs_err = torch.abs(torch.sub(actual, prediction))

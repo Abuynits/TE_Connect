@@ -120,14 +120,13 @@ def test_epoch(dl, epoch):
 
         loss = loss_func(model_out, y)
         overall_acc, overall_bias, _ = calc_accuracy(prediction=model_out, actual=y)
-        print(overall_acc, overall_bias)
         epoch_test_loss += loss.item() * x.size(0)
         times_run += x.size(0)
 
         if ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
             return epoch_test_loss / times_run, overall_acc, overall_bias
 
-    return epoch_test_loss / times_run
+    return epoch_test_loss / times_run, format(overall_acc, '.2f'),format(overall_bias, '.2f')
 
 
 run_ml_flow = EXPERIMENT_SOURCE
@@ -150,10 +149,14 @@ for e in range(EPOCHS):
 
     if ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
 
-        avg_valid_loss, overall_acc, overall_bias = test_epoch(valid_dl, e)
+        avg_valid_loss, valid_overall_acc, valid_overall_bias = test_epoch(valid_dl, e)
+        _, train_overall_acc, train_overall_bias = test_epoch(train_dl, e)
         if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
-            mlflow.log_metric("overall bias", overall_bias, step=e)
-            mlflow.log_metric("overall accuracy", overall_acc, step=e)
+            mlflow.log_metric("validation overall bias", valid_overall_bias, step=e)
+            mlflow.log_metric("validation overall accuracy", valid_overall_acc, step=e)
+
+            mlflow.log_metric("train overall bias", train_overall_bias, step=e)
+            mlflow.log_metric("train overall accuracy", train_overall_acc, step=e)
     else:
         avg_valid_loss = test_epoch(valid_dl, e)
 
@@ -165,7 +168,8 @@ for e in range(EPOCHS):
         mlflow.log_metric("avg train loss", avg_train_loss, step=e)
         mlflow.log_metric("avg validation loss", avg_valid_loss, step=e)
     print(f"epoch {e}: avg train loss: {avg_train_loss} avg val loss: {avg_valid_loss}")
-
+    print(f"\ttrain accuracy: {train_overall_acc}\tbias: {train_overall_bias}")
+    print(f"\tvalid accuracy: {valid_overall_acc}\tbias: {valid_overall_bias}")
 train_time = time.time() - start_time
 
 best_val_loss = min(train_loss)
