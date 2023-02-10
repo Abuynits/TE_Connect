@@ -70,12 +70,21 @@ stages:
   train_model:
     cmd: python3 src/train.py
     deps:
+    - path: data/dicts/test_dict.pkl
+      md5: 27e3dfe7ff08805cf36d40fe0cd29e69
+      size: 4209758
     - path: data/dicts/train_dict.pkl
       md5: 80e8f5f2ac2ad1edf121e7ef38e7860a
       size: 47069421
     - path: data/dicts/validation_dict.pkl
       md5: 81ff83b3b491cf47573f29a8fe280359
       size: 13409803
+    - path: data/model_io/test_x.pkl
+      md5: 0ca34b39e9de545330722b1cfb999e74
+      size: 2492804
+    - path: data/model_io/test_y.pkl
+      md5: f4f5f809a9f4e6f6f716a2fd79a433a0
+      size: 415604
     - path: data/model_io/train_x.pkl
       md5: 325744a610278fd672841669b8341647
       size: 28205926
@@ -126,11 +135,56 @@ stages:
       size: 6991
     outs:
     - path: data/model/model.pkl
-      md5: a92e1f25cb56dd9a2b38c94d529dca07
+      md5: f3a20b98157eb3736a37881ab7c23b5c
       size: 4840617
     - path: metrics/model_param.json
       md5: e5e3086d5c908291e964abeb678eff2f
       size: 383
     - path: metrics/train_metric.json
-      md5: cbc49191db15822aa6686db061ba40aa
-      size: 210
+      md5: 47f0ebf527950a366e07e57a7356c6cd
+      size: 209
+  eval_model:
+    cmd: python3 src/eval_model.py
+    deps:
+    - path: data/dicts/test_dict.pkl
+      md5: 27e3dfe7ff08805cf36d40fe0cd29e69
+      size: 4209758
+    - path: data/model/model.pkl
+      md5: f3a20b98157eb3736a37881ab7c23b5c
+      size: 4840617
+    - path: data/model_io/test_x.pkl
+      md5: 0ca34b39e9de545330722b1cfb999e74
+      size: 2492804
+    - path: data/model_io/test_y.pkl
+      md5: f4f5f809a9f4e6f6f716a2fd79a433a0
+      size: 415604
+    - path: data/regular_data.pkl
+      md5: e6cf62becf750b7871b57361affda49d
+      size: 13606724
+    - path: data/transformed_data.pkl
+      md5: 5087f10e22f07e6e20720fb15ab016f3
+      size: 13630785
+    - path: src/data_constants.py
+      md5: 31f3bee8e3d32d7e22d7e5a61c134a62
+      size: 1297
+    - path: src/data_processing.py
+      md5: 28a1f914dfb183a6d33330ec4204cd54
+      size: 11481
+    - path: src/dl_ds.py
+      md5: aba3029ffd702fc4b36dc1929af38304
+      size: 1867
+    - path: src/filepaths_constants.py
+      md5: 19a53915c558dfea2dfdaff8ef57f3d4
+      size: 4594
+    - path: src/model_constants.py
+      md5: 8df37e3fd20cc1e65d4160d9332eb91e
+      size: 2308
+    - path: src/saving_reading_data.py
+      md5: 902f247d9970b23197b838a463dbc0aa
+      size: 3927
+    - path: src/train.py
+      md5: b638bbaf488c5ab2fc26c4adbeed82d9
+      size: 6979
+    - path: src/visualization.py
+      md5: 9ede229b898ad2e766433fd1b2e80252
+      size: 6991

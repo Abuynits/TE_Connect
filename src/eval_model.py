@@ -12,7 +12,7 @@ test_dl = DataLoader(test_ds, batch_size=BATCH_SIZE, shuffle=False)
 print(f"batches in test dl: {len(test_dl)}")
 print(next(iter(test_dl))[0].shape)
 print(next(iter(test_dl))[1].shape)
-print(next(iter(test_dl))[1].shape)
+print(next(iter(test_dl))[2].shape)
 
 dict_train_data, dict_valid_data, dict_test_data = read_dicts_from_fp()
 input_transformations, output_transformations = read_transformations_from_fp()
