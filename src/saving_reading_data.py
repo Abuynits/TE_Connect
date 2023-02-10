@@ -68,9 +68,6 @@ def read_data_from_fp():
 
 
 def read_dicts_from_fp():
-    train_dict = {}
-    test_dict = {}
-    val_dict = {}
     with open(TRAIN_DICT_FILE_PATH, 'rb') as f:
         train_dict = pickle.load(f)
     with open(VAL_DICT_FILE_PATH, 'rb') as f:
@@ -80,44 +77,38 @@ def read_dicts_from_fp():
     return train_dict, val_dict, test_dict
 
 
-def read_arrs_from_fp():
-    train_x = []
-    train_y = []
-    train_tg = []
-    test_x = []
-    test_y = []
-    test_tg = []
-    valid_x = []
-    valid_y = []
-    valid_t = []
+def read_test_data_from_fp():
+    with open(TEST_X_FILE_PATH, 'rb') as f:
+        test_x = pickle.load(f)
+    with open(TEST_TARGET_FILE_PATH, 'rb') as f:
+        test_tg = pickle.load(f)
+    with open(TEST_Y_FILE_PATH, 'rb') as f:
+        test_y = pickle.load(f)
+    return test_x, test_tg, test_y
+
+
+def read_train_arrs_from_fp():
     with open(TRAIN_X_FILE_PATH, 'rb') as f:
         train_x = pickle.load(f)
     with open(VAL_X_FILE_PATH, 'rb') as f:
         valid_x = pickle.load(f)
-    with open(TEST_X_FILE_PATH, 'rb') as f:
-        test_x = pickle.load(f)
 
     with open(TRAIN_Y_FILE_PATH, 'rb') as f:
         train_y = pickle.load(f)
     with open(VAL_Y_FILE_PATH, 'rb') as f:
         valid_y = pickle.load(f)
-    with open(TEST_Y_FILE_PATH, 'rb') as f:
-        test_y = pickle.load(f)
 
     with open(TRAIN_TARGET_FILE_PATH, 'rb') as f:
         train_tg = pickle.load(f)
     with open(VAL_TARGET_FILE_PATH, 'rb') as f:
         valid_tg = pickle.load(f)
-    with open(TEST_TARGET_FILE_PATH, 'rb') as f:
-        test_tg = pickle.load(f)
 
-    return train_x, train_y, train_tg, test_x, test_y, test_tg, valid_x, valid_y, valid_tg
+    return train_x, train_y, train_tg, valid_x, valid_y, valid_tg
 
 
 def save_model(model):
     check_if_file_exists(MODEL_SAVE_PATH)
-    with open(MODEL_SAVE_PATH, 'wb') as f:
-        pickle.dump(model, f)
+    torch.save(model,MODEL_SAVE_PATH)
 
 
 def save_json(dict, filepath):
@@ -127,8 +118,7 @@ def save_json(dict, filepath):
 
 
 def read_model_from_fp():
-    with open(MODEL_SAVE_PATH) as f:
-        model = pickle.load(f)
+    model = torch.load(MODEL_SAVE_PATH)
     return model
 
 

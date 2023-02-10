@@ -9,10 +9,10 @@ from eval import *
 from visualization import *
 
 print("reading data from files..")
-train_x, train_y, train_tg, test_x, test_y, test_tg, valid_x, valid_y, valid_tg = read_arrs_from_fp()
+train_x, train_y, train_tg, valid_x, valid_y, valid_tg = read_train_arrs_from_fp()
 print("creating datasets...")
 train_ds = finance_data_set(train_x, train_tg, train_y)
-test_ds = finance_data_set(test_x, test_tg, test_y)
+
 valid_ds = finance_data_set(valid_x, valid_tg, valid_y)
 
 # create dataloader for train dataset
@@ -21,9 +21,7 @@ print(f"batches in train dl: {len(train_dl)}")
 # create dataloader for validation dataset
 valid_dl = DataLoader(valid_ds, batch_size=BATCH_SIZE, shuffle=True)
 print(f"batches in valid dl: {len(valid_dl)}")
-# create dataloader for test dataset
-test_dl = DataLoader(test_ds, batch_size=BATCH_SIZE, shuffle=False)
-print(f"batches in test dl: {len(test_dl)}")
+
 if CHECK_DL:
     check_data_loader(next(iter(train_dl))[0], next(iter(train_dl))[1])
 dl_unit = next(iter(train_dl))
@@ -32,9 +30,7 @@ print_data_loader(dl_unit[0], dl_unit[1], dl_unit[2], 2)
 print(next(iter(train_dl))[0].shape)
 print(next(iter(train_dl))[1].shape)
 print(next(iter(train_dl))[2].shape)
-print(next(iter(test_dl))[0].shape)
-print(next(iter(test_dl))[1].shape)
-print(next(iter(test_dl))[1].shape)
+
 train_loss = []  # track training loss
 valid_loss = []  # track validation loss
 

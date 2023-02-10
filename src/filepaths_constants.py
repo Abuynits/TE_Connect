@@ -90,6 +90,7 @@ LSTM_VERBOSE = False  # debug: check if you want to debug the LSTM model
 SEQ2SEQ_VERBOSE = False  # debug: check if you want to debug the seq2seq model
 TIME_PRED_VERBOSE = False
 TIME_VERBOSE = False
+VISUALIZATION_VERBOSE = False # verbose mode for visualization
 PREDICT_ALL_FORCAST = True  # prediction: check if you want to plot global predictions for all data points
 PREDICT_MODEL_FORCAST = False  # prediction: check if you want to plot prediction for each prediction sement
 PREDICT_RECURSIVELY = False  # control how you want to predict

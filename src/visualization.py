@@ -1,7 +1,11 @@
 from model_constants import *
-from data_processing import prep_data_for_model
+from data_processing import *
+from time_transformer import time_predict
+from visualization import *
 
 
+# TOOD: undo to the point where had the show_all model prediction working for seq2seq
+#
 def show_all_model_prediction(pred_dict, transformed_data, output_transformations, model, count=10):
     for key, val in enumerate(pred_dict):
         count -= 1
@@ -9,20 +13,20 @@ def show_all_model_prediction(pred_dict, transformed_data, output_transformation
             return  # account if a person wants to break out of trianing and evaluating
 
         print(val)
-        x, y = prep_data_for_model(transformed_data[val], LOOKBACK, PREDICT, INPUT_DATA_COLS,
-                                   OUTPUT_DATA_COLS)
+        x, _, y = prep_data_for_transformer_model(transformed_data[val], LOOKBACK, PREDICT, INPUT_DATA_COLS,
+                                                  OUTPUT_DATA_COLS)
         print(val)
         print(x.shape)
+        # print(trg.shape) not use lol
         print(y.shape)
         index_graphing = 0
 
         all_pred_data = np.squeeze(
-            output_transformations[val].inverse_transform(transformed_data[val][OUTPUT_DATA_COLS])[
-            0:LOOKBACK]).tolist()
-        all_actual_data = []
-        verbose = False
+            output_transformations[val].inverse_transform(
+                transformed_data[val][OUTPUT_DATA_COLS])[0:LOOKBACK]).tolist()
         all_actual_data = np.squeeze(
-            output_transformations[val].inverse_transform(transformed_data[val][OUTPUT_DATA_COLS])[0:len(x)])
+            output_transformations[val].inverse_transform(
+                transformed_data[val][OUTPUT_DATA_COLS])[0:len(x)])
 
         run_once = False
         # x_axis = np.array(transformed_data[val]["year_week_ordered"][i+len(x[1]):i+len(x[1])+Data_Prep.predict])
@@ -50,9 +54,11 @@ def show_all_model_prediction(pred_dict, transformed_data, output_transformation
 
                 pred = model(model_inp[None, :])
                 pred = torch.unsqueeze(pred, 1)
-            else:
+            elif ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
                 # pred = predict_tensor_seq_to_seq(model, model_inp, Data_Prep.predict)
                 pred = model.predict_seq(model_inp)
+            elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
+                pred = time_predict(model, x)
             # print(pred)
             # print("pred shape:", pred.shape)
             # print(output_transformations[val])
@@ -65,7 +71,7 @@ def show_all_model_prediction(pred_dict, transformed_data, output_transformation
             all_pred_data.append(np.squeeze(pred_inv_t, 1)[0])
             # all_actual_data.append(actual_in_t)
             # print(actual_in_t.shape)
-            if verbose:
+            if VISUALIZATION_VERBOSE:
                 print("actual pred data:", pred)
                 print("actual pred data:", pred_inv_t)
                 print("actual data:", actual_model_int_t)
@@ -116,6 +122,7 @@ def display_train_test_valid_data(all_train_data, all_valid_data, all_test_data)
     print("all_valid_data:", len(all_valid_data))
     print("all_train_data:", len(all_train_data))
     print("all_test_data:", len(all_test_data))
+
 
 def display_group_df(grouped_df, limit=5):
     count = 0
