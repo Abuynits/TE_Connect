@@ -24,7 +24,6 @@ print(f"batches in valid dl: {len(valid_dl)}")
 # create dataloader for test dataset
 test_dl = DataLoader(test_ds, batch_size=BATCH_SIZE, shuffle=False)
 print(f"batches in test dl: {len(test_dl)}")
-
 if CHECK_DL:
     check_data_loader(next(iter(train_dl))[0], next(iter(train_dl))[1])
 dl_unit = next(iter(train_dl))
@@ -90,6 +89,8 @@ def train_epoch(dl, epoch):
         # squeeze the tensors to account for 1 dim sizes
         model_out = model_out.squeeze()
         y = y.squeeze()
+        if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
+            y = torch.t(y)
         loss = loss_func(model_out, y)
         epoch_train_loss += loss.item() * x.size(0)
 
@@ -117,6 +118,8 @@ def test_epoch(dl, epoch):
 
         model_out = model_out.squeeze()
         y = y.squeeze()
+        if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
+            y = torch.t(y)
 
         loss = loss_func(model_out, y)
         overall_acc, overall_bias, _ = calc_accuracy(prediction=model_out, actual=y)
@@ -126,7 +129,7 @@ def test_epoch(dl, epoch):
         if ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
             return epoch_test_loss / times_run, overall_acc, overall_bias
 
-    return epoch_test_loss / times_run, format(overall_acc, '.2f'),format(overall_bias, '.2f')
+    return epoch_test_loss / times_run, format(overall_acc, '.2f'), format(overall_bias, '.2f')
 
 
 run_ml_flow = EXPERIMENT_SOURCE
@@ -145,20 +148,18 @@ if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
 start_time = time.time()
 
 for e in range(EPOCHS):
+
     avg_train_loss = train_epoch(train_dl, e)
 
-    if ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
+    avg_valid_loss, valid_overall_acc, valid_overall_bias = test_epoch(valid_dl, e)
 
-        avg_valid_loss, valid_overall_acc, valid_overall_bias = test_epoch(valid_dl, e)
-        _, train_overall_acc, train_overall_bias = test_epoch(train_dl, e)
-        if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
-            mlflow.log_metric("validation overall bias", valid_overall_bias, step=e)
-            mlflow.log_metric("validation overall accuracy", valid_overall_acc, step=e)
+    _, train_overall_acc, train_overall_bias = test_epoch(train_dl, e)
+    if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
+        mlflow.log_metric("validation overall bias", valid_overall_bias, step=e)
+        mlflow.log_metric("validation overall accuracy", valid_overall_acc, step=e)
 
-            mlflow.log_metric("train overall bias", train_overall_bias, step=e)
-            mlflow.log_metric("train overall accuracy", train_overall_acc, step=e)
-    else:
-        avg_valid_loss = test_epoch(valid_dl, e)
+        mlflow.log_metric("train overall bias", train_overall_bias, step=e)
+        mlflow.log_metric("train overall accuracy", train_overall_acc, step=e)
 
     num_epochs_run += 1
     train_loss.append(avg_train_loss)

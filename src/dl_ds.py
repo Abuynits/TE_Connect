@@ -64,3 +64,4 @@ class finance_data_set(Dataset):
         t = torch.from_numpy(self.t[i]).float()
         if torch.cuda.is_available():
           return x.cuda(), t.cuda(), y.cuda()
+        return x, t, y
