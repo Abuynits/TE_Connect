@@ -13,24 +13,24 @@ def calc_all_accuracy(prediction, actual):
     all_abs_errors = 0.
     all_accuracy = 0.
     all_bias = 0.
-    print(prediction.dim())
+    # print(prediction.dim())
     if prediction.dim() == 1:
-        prediction = prediction[None,:]
-        actual = actual[None,:]
-    print(prediction.shape)
-    print(actual.shape)
+        prediction = prediction[None, :]
+        actual = actual[None, :]
+    # print(prediction.shape)
+    # print(actual.shape)
     # am monkey bran - working with tensors, not actual matrices - need to finish up eval function
-    print(prediction.dim())
-    print(len(prediction))
-    print(len(actual))
+    # print(prediction.dim())
+    # print(len(prediction))
+    # print(len(actual))
     ones = torch.ones(prediction.shape[0], prediction.shape[1])
-    if torch.cuda.is_available():
-        ones = ones.cuda()
+    # if torch.cuda.is_available():
+    #     ones = ones.cuda()
     # print(ones.shape)
     # compute absolute error for each component
     individual_abs_err = torch.abs(torch.sub(actual, prediction))
     # compute accuracy for each component
-    individual_acc = torch.sub(ones, torch.div(individual_abs_err, actual))
+    individual_acc = torch.sub(ones, torch.div(individual_abs_err.detach().cpu(), actual.detach().cpu()))
 
     individual_bias = torch.div((torch.sub(prediction, actual)), actual)
 
@@ -42,17 +42,18 @@ def calc_all_accuracy(prediction, actual):
     overall_acc = 1 - all_abs_error / all_actual_sales
     overall_bias = (all_forcasted_sales - all_actual_sales) / all_actual_sales
     return overall_acc.item(), overall_bias.item(), \
-        (individual_acc.squeeze().numpy(), individual_bias.squeeze().numpy(), individual_abs_err.squeeze().numpy())
+        (individual_acc.detach().squeeze().cpu().numpy(), \
+         individual_bias.detach().squeeze().cpu().numpy(), \
+         individual_abs_err.detach().squeeze().cpu().numpy())
 
 
 def show_all_eval_data(pred_inv_t, actual_model_inv_t):
-    print("eval data len:",len(pred_inv_t))
+    print("eval data len:", len(pred_inv_t))
     print("actual data len:", len(actual_model_inv_t))
     overall_acc, overall_bias, \
         (individual_acc, individual_bias, individual_abs_err) = calc_all_accuracy(
         torch.FloatTensor(pred_inv_t), torch.FloatTensor(actual_model_inv_t))
     print(f"Accuracy: {format(overall_acc, '.4f')}, Bias: {format(overall_bias, '.2f')}")
-
 
     plt.plot(individual_acc, label="accuracy")
     plt.plot(individual_bias, label="bias")

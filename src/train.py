@@ -53,7 +53,7 @@ def get_model_pred(x, target, y):
     if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
         x = x.swapaxes(0, 1)  # want to put data in (seq, batches,num features)
         y = y.swapaxes(0, 1)
-        model_out = model.forward(x)
+        model_out = model.forward(x,target)
     elif ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
         model_out = model.forward(x)
     elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
