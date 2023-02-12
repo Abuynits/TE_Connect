@@ -32,6 +32,14 @@ SEQ2SEQ_HIDDEN_SIZE = 128  # number of lstm cells
 SEQ2SEQ_DROPOUT = 0.  # dropout
 SEQ2SEQ_LAYER_COUNT = 2  # number of layers in lstm cell
 SEQ2SEQ_INPUT_SEQ_LENGTH = LOOKBACK  # length of input sequence to LSTM
+SEQ2SEQ_MIXED_TEACHER_FORCING_RATIO = 0.5
+
+class SEQ2SEQ_TRAIN_OPTIONS(Enum):
+    GENERAL = 0
+    TEACHER_FORCING = 1
+    MIXED_TEACHER_FORCING = 2
+
+SEQ2SEQ_TRAIN_TYPE = SEQ2SEQ_TRAIN_OPTIONS.TEACHER_FORCING
 
 TIME_MAX_SEQ_LEN = 5000  # hyper parameter for initialization of positional encoder
 TIME_POS_ENC_DROP = 0.0
@@ -53,7 +61,6 @@ elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
     MODEL_CHOICE_NAME = "transformer"
 else:
     MODEL_CHOICE_NAME = "seq2seq"
-
 
 MODEL_PARAM_DICT = {
     "GAMMA": GAMMA,

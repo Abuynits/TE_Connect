@@ -1,3 +1,5 @@
+import random
+
 from dl_ds import print_model
 from model_constants import *
 
@@ -95,7 +97,7 @@ class seq2seq(pl.LightningModule):
     # self attention
     # AI coffee break
 
-    def forward(self, inp):
+    def forward(self, inp,target):
         outputs = torch.zeros(PREDICT, inp.size(1), self._out_size)
         enc_hidden = self._enc.init_hidden(inp.size(1))
 
@@ -125,7 +127,20 @@ class seq2seq(pl.LightningModule):
                 print(" seq2seq: dec_out", dec_out.shape)
                 print(" seq2seq: dec_hidden hn", dec_hidden[0].shape)
             outputs[p] = final_dec_out
-            dec_inp = dec_out
+            if SEQ2SEQ_TRAIN_TYPE == SEQ2SEQ_TRAIN_OPTIONS.TEACHER_FORCING:
+                if SEQ2SEQ_VERBOSE:
+                    print(target.shape)
+                    print(dec_out.shape)
+                dec_inp = target[:,p,:]  # target includes the previous lookback,
+                if SEQ2SEQ_VERBOSE:
+                    print(dec_inp.shape)
+            elif SEQ2SEQ_TRAIN_TYPE == SEQ2SEQ_TRAIN_OPTIONS.MIXED_TEACHER_FORCING:
+                if SEQ2SEQ_MIXED_TEACHER_FORCING_RATIO < random.random():
+                    dec_inp = target[:,p,:]  # target includes the previous lookback,
+                else:
+                    dec_inp = dec_out
+            elif SEQ2SEQ_TRAIN_TYPE == SEQ2SEQ_TRAIN_OPTIONS.GENERAL:
+                dec_inp = dec_out
         if SEQ2SEQ_VERBOSE:
             print("seq2seq: outputs", outputs.shape)
 
