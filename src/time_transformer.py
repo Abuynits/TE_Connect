@@ -217,6 +217,7 @@ def time_predict(model, inp, contain_batch=False, future_time_steps=PREDICT):
     # future_time_steps: the number of steps to predict into the future - can change them
     # the input should always be batch_first:
     if not contain_batch and inp.dim() != 3:
+        print("adding dim 1")
         inp = inp.unsqueeze(1)  # add in dim of 1 if asked to predict on single input
     if TIME_PRED_VERBOSE:
         print("processed inp shape:", inp.shape)

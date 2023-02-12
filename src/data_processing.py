@@ -50,11 +50,6 @@ def clean_dataset(df):
     return df
 
 
-# TODO: need to implement removal of outliers
-def removeOutliers(group, col):
-    return group
-
-
 def key_filter_match(name, data_filter):
     if len(data_filter) == 0:
         return True
@@ -151,7 +146,7 @@ def check_test_train_val_percentages():
 
 
 def show_data_sample(x, target, y, data_type):
-    print(f"=======\n{data_type}=======")
+    print(f"\n======={data_type}=======")
     print(x.shape)
     print(x[0])
     print(target.shape)

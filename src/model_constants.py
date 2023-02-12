@@ -37,15 +37,15 @@ TIME_MAX_SEQ_LEN = 5000  # hyper parameter for initialization of positional enco
 TIME_POS_ENC_DROP = 0.0
 TIME_ENC_DROP = 0.0  # default 0.1
 TIME_DEC_DROP = 0.0  # default 0.1
-TIME_ENC_DIM_VAL = 512  # default: 512
-TIME_ENC_HEAD_COUNT = 4  # default: 4
-TIME_ENC_LAYER_COUNT = 4  # default: 4
+TIME_ENC_DIM_VAL = 64  # default: 512
+TIME_ENC_HEAD_COUNT = 2  # default: 4
+TIME_ENC_LAYER_COUNT = 2  # default: 4
 
-TIME_DEC_DIM_VAL = 512  # default: 512
-TIME_DEC_HEAD_COUNT = 4  # default: 4
-TIME_DEC_LAYER_COUNT = 4  # default: 4
-TIME_DEC_DIM_FEED_FORWARD = 2048  # default: = 2048
-TIME_ENC_DIM_FEED_FORWARD = 2048  # default: = 2048
+TIME_DEC_DIM_VAL = 64  # default: 512
+TIME_DEC_HEAD_COUNT = 2  # default: 4
+TIME_DEC_LAYER_COUNT = 2  # default: 4
+TIME_DEC_DIM_FEED_FORWARD = 128  # default: = 2048
+TIME_ENC_DIM_FEED_FORWARD = 128  # default: = 2048
 
 if ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
     MODEL_CHOICE_NAME = "lstm"

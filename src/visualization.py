@@ -2,6 +2,7 @@ from model_constants import *
 from data_processing import *
 from time_transformer import time_predict
 from visualization import *
+from eval import *
 
 
 # TOOD: undo to the point where had the show_all model prediction working for seq2seq
@@ -27,7 +28,7 @@ def show_all_model_prediction(pred_dict, transformed_data, output_transformation
         all_actual_data = np.squeeze(
             output_transformations[val].inverse_transform(
                 transformed_data[val][OUTPUT_DATA_COLS])[0:len(x)])
-
+        all_pred_data = []
         run_once = False
         # x_axis = np.array(transformed_data[val]["year_week_ordered"][i+len(x[1]):i+len(x[1])+Data_Prep.predict])
         for i in range(len(x)):
@@ -58,23 +59,28 @@ def show_all_model_prediction(pred_dict, transformed_data, output_transformation
                 # pred = predict_tensor_seq_to_seq(model, model_inp, Data_Prep.predict)
                 pred = model.predict_seq(model_inp)
             elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
-                pred = time_predict(model, x)
-            # print(pred)
+                pred = time_predict(model, model_inp)
+                pred = torch.squeeze(pred)
+
             # print("pred shape:", pred.shape)
+            # print("val:",val)
             # print(output_transformations[val])
             pred_inv_t = output_transformations[val].inverse_transform(pred.detach().cpu())
-            actual_model_int_t = output_transformations[val].inverse_transform(actual_model_out.detach().cpu())
-            # print("pred inv shape:", pred_inv_t.shape)
+            actual_model_inv_t = output_transformations[val].inverse_transform(actual_model_out.detach().cpu())
 
             # actual_in_t = reg_data[val]["sales_amount"][i + len(x[1]):i+len(x[1])+Data_Prep.predict]
-
-            all_pred_data.append(np.squeeze(pred_inv_t, 1)[0])
+            if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
+                all_pred_data.append(np.squeeze(pred_inv_t, 1)[0])
+            if ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
+                squeezed_arr = np.squeeze(pred_inv_t)[0]
+                print(i, squeezed_arr.shape)
+                all_pred_data.append(squeezed_arr)
             # all_actual_data.append(actual_in_t)
             # print(actual_in_t.shape)
             if VISUALIZATION_VERBOSE:
                 print("actual pred data:", pred)
                 print("actual pred data:", pred_inv_t)
-                print("actual data:", actual_model_int_t)
+                print("actual data:", actual_model_inv_t)
                 print("shape", y[i].shape)
 
             # plt.plot(x_axis, pred_inv_t.T[0], label="pred 0")
@@ -87,16 +93,23 @@ def show_all_model_prediction(pred_dict, transformed_data, output_transformation
                 print("actual pred data:", pred)
                 print("actual pred data:", pred_inv_t)
                 print("shape", y[i].shape)
-                plt.plot(pred_inv_t, label="pred")
-                plt.plot(actual_model_int_t, label="actual")
+                x_axis = list(range(1, len(pred)))
+                x_axis_offset = list(range(1 + LOOKBACK, len(pred) + LOOKBACK))
+                show_all_eval_data(pred_inv_t, actual_model_inv_t)
+                plt.plot(x_axis_offset, pred_inv_t, label="pred")
+                plt.plot(x_axis, actual_model_inv_t, label="actual")
                 plt.legend()
                 plt.title(f"{INPUT_DATA_COLS[index_graphing]} predicted vs actual")
                 plt.ylabel(INPUT_DATA_COLS[index_graphing])
                 plt.xlabel("time steps")
                 plt.show()
         if PREDICT_ALL_FORCAST:
-            plt.plot(all_pred_data, label="pred")
-            plt.plot(all_actual_data, label="actual")
+            individual_abs_err = show_all_eval_data(all_pred_data, all_actual_data)
+            x_axis = list(range(0, len(individual_abs_err)))
+            x_axis_offset = list(range(PREDICT, len(individual_abs_err) + PREDICT))
+            plt.plot(x_axis_offset, all_pred_data, label="pred")
+            plt.plot(x_axis, all_actual_data, label="actual")
+            plt.plot(x_axis, individual_abs_err, label="abs err")
             plt.legend()
             plt.title(f"{INPUT_DATA_COLS[index_graphing]} predicted vs actual")
             plt.ylabel(INPUT_DATA_COLS[index_graphing])
@@ -119,8 +132,8 @@ def plot_train_val_loss(train_loss, valid_loss):
 
 
 def display_train_test_valid_data(all_train_data, all_valid_data, all_test_data):
-    print("all_valid_data:", len(all_valid_data))
     print("all_train_data:", len(all_train_data))
+    print("all_valid_data:", len(all_valid_data))
     print("all_test_data:", len(all_test_data))
 
 

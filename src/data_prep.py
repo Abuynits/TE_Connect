@@ -29,6 +29,7 @@ else:
                           all_valid_data,
                           all_train_data,
                           all_test_data)
+
 display_train_test_valid_data(all_train_data, all_valid_data, all_test_data)
 
 valid_x, valid_tg, valid_y = get_all_data_arr(all_valid_data)

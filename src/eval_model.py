@@ -33,3 +33,6 @@ show_all_model_prediction(dict_test_data, transformed_data, output_transformatio
 def eval_test_data():
     for key, val in enumerate(dict_test_data):
         print(val)
+
+# TODO: fix bug in data split with larger lookback and prediction values
+# TODO: add in evaluation for test data

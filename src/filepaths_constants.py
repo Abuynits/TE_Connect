@@ -32,6 +32,10 @@ import math
 # location of CSV file:
 # TRACKED BY DVC!!!!
 MODEL_SAVE_PATH = "data/model/model.pkl"
+# TODO: add model tracking with the fp below, not fp above
+SEQ2SEQ_SAVE_PATH = "data/model/seq2seq_model"
+TIME_TRANS_SAVE_PATH = "data/model/time_transformer"
+
 DATA_PARAM_FILE_PATH = "metrics/data_param.json"
 MODEL_PARAM_FILE_PATH = "metrics/model_param.json"
 MODEL_TRAIN_METRICS_FILE_PATH = "metrics/train_metric.json"
@@ -67,7 +71,7 @@ class DATA_SPLIT(Enum):
     ON_EACH_PRODUCT = 1 # get data from each product code
 
 
-SPLIT_TYPE = DATA_SPLIT.ON_EACH_PRODUCT
+SPLIT_TYPE = DATA_SPLIT.ON_PRODUCT_CODES
 
 class RUN_TYPE(Enum):
     MLFLOW_RUN = 0
@@ -94,7 +98,7 @@ VISUALIZATION_VERBOSE = False # verbose mode for visualization
 PREDICT_ALL_FORCAST = True  # prediction: check if you want to plot global predictions for all data points
 PREDICT_MODEL_FORCAST = False  # prediction: check if you want to plot prediction for each prediction sement
 PREDICT_RECURSIVELY = False  # control how you want to predict
-PERCENT_DISPLAY_MODEL_FORCAST = 0.9  # display if greater than 0.9
+PERCENT_DISPLAY_MODEL_FORCAST = 0.1  # display if greater than 0.9
 PREDICT_DISPLAY_COUNT = 10  # number of times you will display the data
 
 """

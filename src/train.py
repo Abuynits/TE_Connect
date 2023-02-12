@@ -118,7 +118,7 @@ def test_epoch(dl, epoch):
             y = torch.t(y)
 
         loss = loss_func(model_out, y)
-        overall_acc, overall_bias, _ = calc_accuracy(prediction=model_out, actual=y)
+        overall_acc, overall_bias, _ = calc_all_accuracy(prediction=model_out, actual=y)
         epoch_test_loss += loss.item() * x.size(0)
         times_run += x.size(0)
 
