@@ -47,7 +47,7 @@ def calc_all_accuracy(prediction, actual):
          individual_abs_err.detach().squeeze().cpu().numpy())
 
 
-def show_all_eval_data(pred_inv_t, actual_model_inv_t):
+def eval_data_prediction(pred_inv_t, actual_model_inv_t):
     print("eval data len:", len(pred_inv_t))
     print("actual data len:", len(actual_model_inv_t))
     overall_acc, overall_bias, \
@@ -55,10 +55,4 @@ def show_all_eval_data(pred_inv_t, actual_model_inv_t):
         torch.FloatTensor(pred_inv_t), torch.FloatTensor(actual_model_inv_t))
     print(f"Accuracy: {format(overall_acc, '.4f')}, Bias: {format(overall_bias, '.2f')}")
 
-    plt.plot(individual_acc, label="accuracy")
-    plt.plot(individual_bias, label="bias")
-    plt.legend()
-    plt.ylabel("percentage")
-    plt.xlabel("time steps")
-    plt.show()
-    return individual_abs_err
+    return overall_acc, overall_bias,individual_acc, individual_bias, individual_abs_err

@@ -90,35 +90,52 @@ def show_all_model_prediction(pred_dict, transformed_data, output_transformation
             # plt.plot(x_axis,pred_inv_t.T[2],label="pred 2")
             # plt.plot(x_axis,transformations[val].inverse_transform(y[i]).T[2],label = "act 2")
             if PREDICT_MODEL_FORCAST and random.random() > PERCENT_DISPLAY_MODEL_FORCAST:
-                print("actual pred data:", pred)
-                print("actual pred data:", pred_inv_t)
-                print("shape", y[i].shape)
-                x_axis = list(range(1, len(pred)))
-                x_axis_offset = list(range(1 + LOOKBACK, len(pred) + LOOKBACK))
-                show_all_eval_data(pred_inv_t, actual_model_inv_t)
-                plt.plot(x_axis_offset, pred_inv_t, label="pred")
-                plt.plot(x_axis, actual_model_inv_t, label="actual")
-                plt.legend()
-                plt.title(f"{INPUT_DATA_COLS[index_graphing]} predicted vs actual")
-                plt.ylabel(INPUT_DATA_COLS[index_graphing])
-                plt.xlabel("time steps")
-                plt.show()
+                eval_plot_acc_pred_bias(
+                    f'Individual acc/bias & prediction: {key}',
+                    pred_inv_t,
+                    actual_model_inv_t,
+                    file_name=f"indiv_acc_bias{key}",
+                    index_graphing=None)
         if PREDICT_ALL_FORCAST:
-            individual_abs_err = show_all_eval_data(all_pred_data, all_actual_data)
-            x_axis = list(range(0, len(individual_abs_err)))
-            x_axis_offset = list(range(PREDICT, len(individual_abs_err) + PREDICT))
-            plt.plot(x_axis_offset, all_pred_data, label="pred")
-            plt.plot(x_axis, all_actual_data, label="actual")
-            plt.plot(x_axis, individual_abs_err, label="abs err")
-            plt.legend()
-            plt.title(f"{INPUT_DATA_COLS[index_graphing]} predicted vs actual")
-            plt.ylabel(INPUT_DATA_COLS[index_graphing])
-            plt.xlabel("time steps")
-            plt.show()
+            eval_plot_acc_pred_bias(
+                f'Total acc/bias & prediction: {key}',
+                all_pred_data,
+                all_actual_data,
+                file_name=f"total_acc_bias{key}",
+                index_graphing=None)
 
-        # print(x.shape)
-        # print(y.shape)
-        # print(transformations[val])
+
+def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, index_graphing=None):
+    fig, (ax1, ax2) = plt.subplots(1, 2)
+    fig.set_size_inches(10, 8)
+    fig.suptitle(fig_title)
+
+    overall_acc, overall_bias,individual_acc, individual_bias, individual_abs_err = eval_data_prediction(pred_data, actual_data)
+    ax2.plot(individual_acc, label="accuracy")
+    ax2.plot(individual_bias, label="bias")
+    ax2.set_title(f"acc:{overall_acc:.4f}, bias:{overall_bias:.4f}")
+    ax2.legend()
+    ax2.set_ylabel("percentage")
+    ax2.set_xlabel("time steps")
+
+    x_axis = list(range(0, len(individual_abs_err)))
+    x_axis_offset = list(range(PREDICT, len(individual_abs_err) + PREDICT))
+    ax1.plot(x_axis_offset, pred_data, label="pred")
+    ax1.plot(x_axis, actual_data, label="actual")
+    ax1.plot(x_axis, individual_abs_err, label="abs err")
+    ax1.set_ylabel("price (in $)")
+    ax1.set_xlabel("time steps")
+    ax1.legend()
+
+    if index_graphing is not None:
+        ax1.set_title(f"{INPUT_DATA_COLS[index_graphing]} predicted vs actual")
+        ax1.set_ylabel(INPUT_DATA_COLS[index_graphing])
+    else:
+        ax1.set_title(f"predicted vs actual")
+    ax1.set_xlabel("time steps")
+    if SAVE_EVAL_PLOTS and file_name is not None:
+        plt.savefig(f'{EVAL_PLOTS_FILE_PATH}/{file_name}.png', dpi=EVAL_PLOTS_DPI, bbox_inches='tight')
+    plt.show()
 
 
 def plot_train_val_loss(train_loss, valid_loss):

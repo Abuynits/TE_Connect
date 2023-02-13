@@ -63,6 +63,7 @@ TEST_TARGET_FILE_PATH = "data/model_io/test_target.pkl";
 
 INPUT_TRANSFORMATIONS_FILE_PATH = "data/transformations/input_transformations.pkl"
 OUTPUT_TRANSFORMATIONS_FILE_PATH = "data/transformations/output_transformations.pkl"
+EVAL_PLOTS_FILE_PATH = "data/eval_plots"
 
 MLFLOW_URL = "https://dagshub.com/Abuynits/TE_Connect.mlflow"
 
@@ -100,6 +101,8 @@ PREDICT_MODEL_FORCAST = False  # prediction: check if you want to plot predictio
 PREDICT_RECURSIVELY = False  # control how you want to predict
 PERCENT_DISPLAY_MODEL_FORCAST = 0.1  # display if greater than 0.9
 PREDICT_DISPLAY_COUNT = 10  # number of times you will display the data
+SAVE_EVAL_PLOTS = True
+EVAL_PLOTS_DPI = 72 # 72 for web images, 300 for pdf report
 
 """
 4. have a constants file for evaluation part of the data
