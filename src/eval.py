@@ -14,12 +14,8 @@ def calc_all_accuracy(prediction, actual):
     # Bias = (Forecast - Actual) / Actual
 
     # will check only up to the max elements present
-    max_index = max(len(prediction), len(actual))
+    assert len(prediction) == len(actual), "something went very wrong"
     # get the absolution error for each element
-    all_abs_errors = 0.
-    all_accuracy = 0.
-    all_bias = 0.
-    # print(prediction.dim())
     if prediction.dim() == 1:
         prediction = prediction[None, :]
         actual = actual[None, :]
@@ -29,7 +25,7 @@ def calc_all_accuracy(prediction, actual):
     # print(prediction.dim())
     # print(len(prediction))
     # print(len(actual))
-    ones = torch.ones(prediction.shape[0], prediction.shape[1])
+    ones = torch.ones_like(prediction)
     # if torch.cuda.is_available():
     #     ones = ones.cuda()
     # print(ones.shape)
