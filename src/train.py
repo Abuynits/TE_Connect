@@ -53,7 +53,7 @@ def get_model_pred(x, target, y):
     if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
         x = x.swapaxes(0, 1)  # want to put data in (seq, batches,num features)
         y = y.swapaxes(0, 1)
-        model_out = model.forward(x,target)
+        model_out = model.forward(x, target)
     elif ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
         model_out = model.forward(x)
     elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
@@ -118,7 +118,7 @@ def test_epoch(dl, epoch):
             y = torch.t(y)
 
         loss = loss_func(model_out, y)
-        overall_acc, overall_bias, _ = calc_all_accuracy(prediction=model_out, actual=y)
+        overall_acc, overall_bias, _ = calc_all_accuracy(model_out, y)
         epoch_test_loss += loss.item() * x.size(0)
         times_run += x.size(0)
 
@@ -190,7 +190,12 @@ if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
     mlflow.log_params(MODEL_PARAM_DICT)
     print("saving model to MLflow...")
     model_uri = mlflow.get_registry_uri()
-    mlflow.pytorch.log_model(model, MODEL_SAVE_PATH)
+    if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
+        mlflow.pytorch.log_model(model, SEQ2SEQ_SAVE_PATH)
+    elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
+        mlflow.pytorch.log_model(model, TIME_TRANS_SAVE_PATH)
+    elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
+        mlflow.pytorch.log_model(model, LSTM_SAVE_PATH)
     mlflow.end_run()
     # mlflow.pytorch.save_model(model, MODEL_SAVE_PATH)
     # mlflow.register_model(f'runs:/{run_id}/{MODEL_CHOICE}', model)

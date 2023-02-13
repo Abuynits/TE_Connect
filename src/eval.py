@@ -4,8 +4,8 @@ from data_constants import *
 
 
 def calc_all_accuracy(prediction, actual):
-    prediction = torch.FloatTensor(prediction.numpy()[:-PREDICT])
-    actual = torch.FloatTensor(actual.numpy()[PREDICT:])
+    prediction = torch.FloatTensor(prediction.detach().cpu().numpy()[:-PREDICT])
+    actual = torch.FloatTensor(actual.detach().cpu().numpy()[PREDICT:])
     print(prediction.shape)
     print(actual.shape)
 

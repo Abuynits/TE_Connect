@@ -32,10 +32,6 @@ import math
 # location of CSV file:
 # TRACKED BY DVC!!!!
 MODEL_SAVE_PATH = "data/model/model.pkl"
-# TODO: add model tracking with the fp below, not fp above
-SEQ2SEQ_SAVE_PATH = "data/model/seq2seq_model"
-TIME_TRANS_SAVE_PATH = "data/model/time_transformer"
-
 DATA_PARAM_FILE_PATH = "metrics/data_param.json"
 MODEL_PARAM_FILE_PATH = "metrics/model_param.json"
 MODEL_TRAIN_METRICS_FILE_PATH = "metrics/train_metric.json"
@@ -102,7 +98,7 @@ PREDICT_RECURSIVELY = False  # control how you want to predict
 PERCENT_DISPLAY_MODEL_FORCAST = 0.1  # display if greater than 0.9
 PREDICT_DISPLAY_COUNT = 10  # number of times you will display the data
 SAVE_EVAL_PLOTS = True
-EVAL_PLOTS_DPI = 72 # 72 for web images, 300 for pdf report
+EVAL_PLOTS_DPI = 72
 
 """
 4. have a constants file for evaluation part of the data

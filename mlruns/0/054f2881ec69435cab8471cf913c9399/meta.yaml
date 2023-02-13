@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/054f2881ec69435cab8471cf913c9399/artifacts
+end_time: 1676256705657
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 054f2881ec69435cab8471cf913c9399
+run_name: flawless-dolphin-111
+run_uuid: 054f2881ec69435cab8471cf913c9399
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1676256705493
+status: 3
+tags: []
+user_id: abuynits

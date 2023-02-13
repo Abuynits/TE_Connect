@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/0101cdcaae8c4a7994850a789a1bad3d/artifacts
+end_time: 1676257421569
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 0101cdcaae8c4a7994850a789a1bad3d
+run_name: dashing-doe-430
+run_uuid: 0101cdcaae8c4a7994850a789a1bad3d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1676257421547
+status: 3
+tags: []
+user_id: abuynits

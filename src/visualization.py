@@ -1,8 +1,12 @@
+import mlflow
+
 from model_constants import *
 from data_processing import *
 from time_transformer import time_predict
 from visualization import *
 from eval import *
+
+run_ml_flow = True if mlflow.active_run() is True else False
 
 
 # TOOD: undo to the point where had the show_all model prediction working for seq2seq
@@ -89,6 +93,7 @@ def show_all_model_prediction(pred_dict, transformed_data, output_transformation
             # plt.plot(x_axis,transformations[val].inverse_transform(y[i]).T[1],label = "act 1")
             # plt.plot(x_axis,pred_inv_t.T[2],label="pred 2")
             # plt.plot(x_axis,transformations[val].inverse_transform(y[i]).T[2],label = "act 2")
+
             if PREDICT_MODEL_FORCAST and random.random() > PERCENT_DISPLAY_MODEL_FORCAST:
                 eval_plot_acc_pred_bias(
                     f'Individual acc/bias & prediction: {val}',
@@ -97,12 +102,15 @@ def show_all_model_prediction(pred_dict, transformed_data, output_transformation
                     file_name=f"indiv_acc_bias{val}",
                     index_graphing=None)
         if PREDICT_ALL_FORCAST:
-            eval_plot_acc_pred_bias(
+            overall_acc, overall_bias = eval_plot_acc_pred_bias(
                 f'Total acc/bias & prediction: {val}',
                 all_pred_data,
                 all_actual_data,
                 file_name=f"total_acc_bias{val}",
                 index_graphing=None)
+            if run_ml_flow:
+                mlflow.log_metric("overall accuracy:", overall_acc)
+                mlflow.log_metric("overall bias:", overall_bias)
 
 
 def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, index_graphing=None):
@@ -110,7 +118,8 @@ def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, i
     fig.set_size_inches(10, 8)
     fig.suptitle(fig_title)
 
-    overall_acc, overall_bias,individual_acc, individual_bias, individual_abs_err = eval_data_prediction(pred_data, actual_data)
+    overall_acc, overall_bias, individual_acc, individual_bias, individual_abs_err = eval_data_prediction(pred_data,
+                                                                                                          actual_data)
     ax2.plot(individual_acc, label="accuracy")
     ax2.plot(individual_bias, label="bias")
     ax2.set_title(f"acc:{overall_acc:.4f}, bias:{overall_bias:.4f}")
@@ -135,8 +144,13 @@ def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, i
         ax1.set_title(f"predicted vs actual")
     ax1.set_xlabel("time steps")
     if SAVE_EVAL_PLOTS and file_name is not None:
-        plt.savefig(f'{EVAL_PLOTS_FILE_PATH}/{file_name}.png', dpi=EVAL_PLOTS_DPI, bbox_inches='tight')
+        full_fp = f'{EVAL_PLOTS_FILE_PATH}/{file_name}.png'
+        plt.savefig(full_fp, dpi=EVAL_PLOTS_DPI, bbox_inches='tight')
+        if run_ml_flow:
+            full_fp = "data_pred.png"
+            mlflow.log_figure(plt, full_fp)
     plt.show()
+    return overall_acc, overall_bias
 
 
 def plot_train_val_loss(train_loss, valid_loss):

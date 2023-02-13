@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/efe1b36b81de4fc9ac6600c1894bec30/artifacts
+end_time: 1676257999187
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: efe1b36b81de4fc9ac6600c1894bec30
+run_name: powerful-whale-62
+run_uuid: efe1b36b81de4fc9ac6600c1894bec30
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1676257999166
+status: 3
+tags: []
+user_id: abuynits

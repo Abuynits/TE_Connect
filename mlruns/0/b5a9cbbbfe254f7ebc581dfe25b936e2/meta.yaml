@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/b5a9cbbbfe254f7ebc581dfe25b936e2/artifacts
+end_time: 1676256064971
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: b5a9cbbbfe254f7ebc581dfe25b936e2
+run_name: capricious-carp-14
+run_uuid: b5a9cbbbfe254f7ebc581dfe25b936e2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1676256064943
+status: 3
+tags: []
+user_id: abuynits

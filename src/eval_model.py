@@ -1,9 +1,13 @@
+import mlflow
+
 from dl_ds import *
 from filepaths_constants import *
 from saving_reading_data import *
 from model_constants import *
 from visualization import *
 
+# check if mlflow exists and can be run
+run_ml_flow = True if mlflow.active_run() is True else False
 # create dataloader for test dataset
 test_x, test_tg, test_y = read_test_data_from_fp()
 
@@ -28,7 +32,12 @@ print()
 for key, val in enumerate(dict_valid_data):
     print(val)
 
-show_all_model_prediction(dict_test_data, transformed_data, output_transformations, model, PREDICT_DISPLAY_COUNT)
+show_all_model_prediction(dict_test_data, transformed_data, output_transformations, model,
+                          PREDICT_DISPLAY_COUNT)
+
+if run_ml_flow:
+    mlflow.end_run()
+
 
 def eval_test_data():
     for key, val in enumerate(dict_test_data):
