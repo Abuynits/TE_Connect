@@ -91,17 +91,17 @@ def show_all_model_prediction(pred_dict, transformed_data, output_transformation
             # plt.plot(x_axis,transformations[val].inverse_transform(y[i]).T[2],label = "act 2")
             if PREDICT_MODEL_FORCAST and random.random() > PERCENT_DISPLAY_MODEL_FORCAST:
                 eval_plot_acc_pred_bias(
-                    f'Individual acc/bias & prediction: {key}',
+                    f'Individual acc/bias & prediction: {val}',
                     pred_inv_t,
                     actual_model_inv_t,
-                    file_name=f"indiv_acc_bias{key}",
+                    file_name=f"indiv_acc_bias{val}",
                     index_graphing=None)
         if PREDICT_ALL_FORCAST:
             eval_plot_acc_pred_bias(
-                f'Total acc/bias & prediction: {key}',
+                f'Total acc/bias & prediction: {val}',
                 all_pred_data,
                 all_actual_data,
-                file_name=f"total_acc_bias{key}",
+                file_name=f"total_acc_bias{val}",
                 index_graphing=None)
 
 
@@ -118,11 +118,12 @@ def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, i
     ax2.set_ylabel("percentage")
     ax2.set_xlabel("time steps")
 
-    x_axis = list(range(0, len(individual_abs_err)))
-    x_axis_offset = list(range(PREDICT, len(individual_abs_err) + PREDICT))
+    x_axis = list(range(0, len(actual_data)))
+    x_axis_offset = list(range(PREDICT, len(pred_data) + PREDICT))
+    cut_axis_offset = list(range(PREDICT, len(pred_data)))
     ax1.plot(x_axis_offset, pred_data, label="pred")
     ax1.plot(x_axis, actual_data, label="actual")
-    ax1.plot(x_axis, individual_abs_err, label="abs err")
+    ax1.plot(cut_axis_offset, individual_abs_err, label="abs err")
     ax1.set_ylabel("price (in $)")
     ax1.set_xlabel("time steps")
     ax1.legend()

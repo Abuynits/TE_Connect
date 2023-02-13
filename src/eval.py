@@ -1,8 +1,14 @@
 from visualization import *
 from saving_reading_data import *
+from data_constants import *
 
 
 def calc_all_accuracy(prediction, actual):
+    prediction = torch.FloatTensor(prediction.numpy()[:-PREDICT])
+    actual = torch.FloatTensor(actual.numpy()[PREDICT:])
+    print(prediction.shape)
+    print(actual.shape)
+
     # Abs.Error = absolute(actual – forecast)
     # Accuracy = 1 - (Abs.Error / Actual)
     # Bias = (Forecast - Actual) / Actual
@@ -55,4 +61,4 @@ def eval_data_prediction(pred_inv_t, actual_model_inv_t):
         torch.FloatTensor(pred_inv_t), torch.FloatTensor(actual_model_inv_t))
     print(f"Accuracy: {format(overall_acc, '.4f')}, Bias: {format(overall_bias, '.2f')}")
 
-    return overall_acc, overall_bias,individual_acc, individual_bias, individual_abs_err
+    return overall_acc, overall_bias, individual_acc, individual_bias, individual_abs_err
