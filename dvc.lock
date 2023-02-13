@@ -158,6 +158,9 @@ stages:
     - path: data/model/model.pkl
       md5: e91556288a9c81a1af00041be53b9be0
       size: 9478749
+    - path: data/model_io/test_target.pkl
+      md5: 2b1837dfed860c66026327968e05cc6e
+      size: 22118564
     - path: data/model_io/test_x.pkl
       md5: 4b7b9ef457dff355e43d5542a4580213
       size: 44236964
