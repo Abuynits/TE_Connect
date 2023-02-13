@@ -48,12 +48,8 @@ stages:
   train_model:
     cmd: python3 src/train.py
     deps:
-      - data/dicts/test_dict.pkl
       - data/dicts/train_dict.pkl
       - data/dicts/validation_dict.pkl
-      - data/model_io/test_x.pkl
-      - data/model_io/test_y.pkl
-      - data/model_io/test_target.pkl
       - data/model_io/train_x.pkl
       - data/model_io/train_y.pkl
       - data/model_io/train_target.pkl

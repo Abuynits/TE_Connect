@@ -79,24 +79,12 @@ stages:
   train_model:
     cmd: python3 src/train.py
     deps:
-    - path: data/dicts/test_dict.pkl
-      md5: 752a4479021fb909d9e5bcc13fa8f843
-      size: 73740125
     - path: data/dicts/train_dict.pkl
       md5: 3348a25a83af795e3cd8b078255caf4d
       size: 269867190
     - path: data/dicts/validation_dict.pkl
       md5: 144730ac751113093bcd1e9fd8575676
       size: 72756251
-    - path: data/model_io/test_target.pkl
-      md5: 2b1837dfed860c66026327968e05cc6e
-      size: 22118564
-    - path: data/model_io/test_x.pkl
-      md5: 4b7b9ef457dff355e43d5542a4580213
-      size: 44236964
-    - path: data/model_io/test_y.pkl
-      md5: a2c92a9f61214c670c72308639756ca0
-      size: 7372964
     - path: data/model_io/train_target.pkl
       md5: 0149a63fcb3f341bedce6608ea57a5ef
       size: 80947366
@@ -137,8 +125,8 @@ stages:
       md5: 0d58e173347fbf0f63731542ad327894
       size: 1618
     - path: src/model_constants.py
-      md5: 72a46f98ba5642cf5ca537604ec53af8
-      size: 2532
+      md5: ea2782a4c0d52a82e21ce39e7fe99899
+      size: 2529
     - path: src/saving_reading_data.py
       md5: d25a73b8cbf2205527002650bd590b1b
       size: 3928
@@ -153,13 +141,13 @@ stages:
       size: 8981
     outs:
     - path: data/model/model.pkl
-      md5: ad42182d7e0ba37c356198e703508528
-      size: 258973
+      md5: e91556288a9c81a1af00041be53b9be0
+      size: 9478749
     - path: metrics/model_param.json
-      md5: 91ec700d89d787b779fa15ba76dcf575
-      size: 382
+      md5: 9358fbec0166635c7d42b784d056dfbb
+      size: 384
     - path: metrics/train_metric.json
-      md5: 6a3080cf763b33655c7d5249a72e15ef
+      md5: 85726ad8de5d0217c6ead4bf0a98e361
       size: 211
   eval_model:
     cmd: python3 src/eval_model.py
@@ -168,8 +156,8 @@ stages:
       md5: 752a4479021fb909d9e5bcc13fa8f843
       size: 73740125
     - path: data/model/model.pkl
-      md5: ad42182d7e0ba37c356198e703508528
-      size: 258973
+      md5: e91556288a9c81a1af00041be53b9be0
+      size: 9478749
     - path: data/model_io/test_x.pkl
       md5: 4b7b9ef457dff355e43d5542a4580213
       size: 44236964
@@ -195,8 +183,8 @@ stages:
       md5: c7dab28f00e02bba4e301d451ad06194
       size: 4683
     - path: src/model_constants.py
-      md5: 72a46f98ba5642cf5ca537604ec53af8
-      size: 2532
+      md5: ea2782a4c0d52a82e21ce39e7fe99899
+      size: 2529
     - path: src/saving_reading_data.py
       md5: d25a73b8cbf2205527002650bd590b1b
       size: 3928
@@ -208,6 +196,6 @@ stages:
       size: 8981
     outs:
     - path: data/eval_plots/
-      md5: 664437bcb7f587a890eee63e3d63a097.dir
-      size: 683539
+      md5: b0da56b1714288b45b30dfca9fe4dbad.dir
+      size: 701535
       nfiles: 9
