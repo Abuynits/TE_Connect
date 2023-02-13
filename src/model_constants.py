@@ -10,6 +10,7 @@ EPOCHS = 1
 GAMMA = 0.99
 
 
+# control the type of model used for forcasting
 class MODEL_CHOICE(Enum):
     SEQ2SEQ = 0
     BASIC_LSTM = 1

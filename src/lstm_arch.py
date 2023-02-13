@@ -1,6 +1,7 @@
 from dl_ds import print_model
 from model_constants import *
 
+
 class lstm(pl.LightningModule):
     def __init__(self, inp_size=INPUT_DATA_FEATURES, out_size=INPUT_DATA_FEATURES, hidden_size=LSTM_HIDDEN_SIZE,
                  layer_count=LSTM_LAYER_COUNT, seq_len=LOOKBACK, dropout=0):

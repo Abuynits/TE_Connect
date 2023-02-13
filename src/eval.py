@@ -6,8 +6,8 @@ from data_constants import *
 def calc_all_accuracy(prediction, actual):
     prediction = torch.FloatTensor(prediction.detach().cpu().numpy()[:-PREDICT])
     actual = torch.FloatTensor(actual.detach().cpu().numpy()[PREDICT:])
-    print(prediction.shape)
-    print(actual.shape)
+    # print(prediction.shape)
+    # print(actual.shape)
 
     # Abs.Error = absolute(actual – forecast)
     # Accuracy = 1 - (Abs.Error / Actual)

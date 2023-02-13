@@ -97,7 +97,7 @@ class seq2seq(pl.LightningModule):
     # self attention
     # AI coffee break
 
-    def forward(self, inp,target):
+    def forward(self, inp, target):
         outputs = torch.zeros(PREDICT, inp.size(1), self._out_size)
         enc_hidden = self._enc.init_hidden(inp.size(1))
 
@@ -131,12 +131,12 @@ class seq2seq(pl.LightningModule):
                 if SEQ2SEQ_VERBOSE:
                     print(target.shape)
                     print(dec_out.shape)
-                dec_inp = target[:,p,:]  # target includes the previous lookback,
+                dec_inp = target[:, p, :]  # target includes the previous lookback,
                 if SEQ2SEQ_VERBOSE:
                     print(dec_inp.shape)
             elif SEQ2SEQ_TRAIN_TYPE == SEQ2SEQ_TRAIN_OPTIONS.MIXED_TEACHER_FORCING:
                 if SEQ2SEQ_MIXED_TEACHER_FORCING_RATIO < random.random():
-                    dec_inp = target[:,p,:]  # target includes the previous lookback,
+                    dec_inp = target[:, p, :]  # target includes the previous lookback,
                 else:
                     dec_inp = dec_out
             elif SEQ2SEQ_TRAIN_TYPE == SEQ2SEQ_TRAIN_OPTIONS.GENERAL:

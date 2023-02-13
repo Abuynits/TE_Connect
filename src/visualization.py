@@ -145,6 +145,9 @@ def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, i
     ax1.set_xlabel("time steps")
     if SAVE_EVAL_PLOTS and file_name is not None:
         full_fp = f'{EVAL_PLOTS_FILE_PATH}/{file_name}.png'
+        if not os.path.exists(EVAL_PLOTS_FILE_PATH):
+            os.mkdir(EVAL_PLOTS_FILE_PATH)
+
         plt.savefig(full_fp, dpi=EVAL_PLOTS_DPI, bbox_inches='tight')
         if run_ml_flow:
             full_fp = "data_pred.png"

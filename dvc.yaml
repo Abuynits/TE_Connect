@@ -36,6 +36,12 @@ stages:
           persist: true
       - data/transformed_data.pkl:
           persist: true
+      - data/model_io/validation_target.pkl:
+          persist: true
+      - data/model_io/train_target.pkl:
+          persist: true
+      - data/model_io/test_target.pkl:
+          persist: true
     metrics:
       - metrics/data_param.json:
           cache: false
@@ -47,9 +53,12 @@ stages:
       - data/dicts/validation_dict.pkl
       - data/model_io/test_x.pkl
       - data/model_io/test_y.pkl
+      - data/model_io/test_target.pkl
       - data/model_io/train_x.pkl
       - data/model_io/train_y.pkl
+      - data/model_io/train_target.pkl
       - data/model_io/validation_x.pkl
+      - data/model_io/validation_target.pkl
       - data/model_io/validation_y.pkl
       - data/regular_data.pkl
       - data/transformed_data.pkl
@@ -87,3 +96,5 @@ stages:
       - src/train.py
       - src/visualization.py
       - data/model/model.pkl
+    outs:
+      - data/eval_plots/

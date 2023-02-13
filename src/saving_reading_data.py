@@ -108,7 +108,7 @@ def read_train_arrs_from_fp():
 
 def save_model(model):
     check_if_file_exists(MODEL_SAVE_PATH)
-    torch.save(model,MODEL_SAVE_PATH)
+    torch.save(model, MODEL_SAVE_PATH)
 
 
 def save_json(dict, filepath):

@@ -27,7 +27,6 @@ from sklearn.preprocessing import MinMaxScaler
 import random as andom
 import math
 
-
 # DATA INFO
 # location of CSV file:
 # TRACKED BY DVC!!!!
@@ -63,12 +62,14 @@ EVAL_PLOTS_FILE_PATH = "data/eval_plots"
 
 MLFLOW_URL = "https://dagshub.com/Abuynits/TE_Connect.mlflow"
 
+
 class DATA_SPLIT(Enum):
-    ON_PRODUCT_CODES = 0 # split into test,validation, training for each product code
-    ON_EACH_PRODUCT = 1 # get data from each product code
+    ON_PRODUCT_CODES = 0  # split into test,validation, training for each product code
+    ON_EACH_PRODUCT = 1  # get data from each product code
 
 
 SPLIT_TYPE = DATA_SPLIT.ON_PRODUCT_CODES
+
 
 class RUN_TYPE(Enum):
     MLFLOW_RUN = 0
@@ -91,7 +92,7 @@ LSTM_VERBOSE = False  # debug: check if you want to debug the LSTM model
 SEQ2SEQ_VERBOSE = False  # debug: check if you want to debug the seq2seq model
 TIME_PRED_VERBOSE = False
 TIME_VERBOSE = False
-VISUALIZATION_VERBOSE = False # verbose mode for visualization
+VISUALIZATION_VERBOSE = False  # verbose mode for visualization
 PREDICT_ALL_FORCAST = True  # prediction: check if you want to plot global predictions for all data points
 PREDICT_MODEL_FORCAST = False  # prediction: check if you want to plot prediction for each prediction sement
 PREDICT_RECURSIVELY = False  # control how you want to predict

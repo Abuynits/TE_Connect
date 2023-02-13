@@ -256,6 +256,7 @@ def split_data(transformed_data, dict_train_data, dict_valid_data,
             if show_sample:
                 show_data_sample(x_test, target_test, y_test, "test")
 
+
 def get_all_data_arr(all_data):
     tr = []
     target = []
