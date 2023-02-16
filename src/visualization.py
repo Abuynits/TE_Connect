@@ -132,7 +132,7 @@ def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, i
     cut_axis_offset = list(range(PREDICT, len(pred_data)))
     ax1.plot(x_axis_offset, pred_data, label="pred")
     ax1.plot(x_axis, actual_data, label="actual")
-    ax1.plot(cut_axis_offset, individual_abs_err, label="abs err")
+    ax1.plot(x_axis, individual_abs_err, label="abs err")
     ax1.set_ylabel("price (in $)")
     ax1.set_xlabel("time steps")
     ax1.legend()
