@@ -6,8 +6,10 @@ def calc_all_accuracy(prediction, actual):
     print(actual.shape)
     prediction = prediction.squeeze()
     actual = actual.squeeze()
-    #prediction = prediction[-PREDICT]
-    #actual = actual[PREDICT]
+    prediction = prediction[:-PREDICT]
+    actual = actual[PREDICT:]
+    print(prediction.shape)
+    print(actual.shape)
     #prediction = torch.FloatTensor(prediction.detach().cpu().numpy()[-PREDICT:])
     #actual = torch.FloatTensor(actual.detach().cpu().numpy()[PREDICT:])
     #print(prediction.shape)

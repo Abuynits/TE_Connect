@@ -190,12 +190,7 @@ if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
     mlflow.log_params(MODEL_PARAM_DICT)
     print("saving model to MLflow...")
     model_uri = mlflow.get_registry_uri()
-    if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
-        mlflow.pytorch.log_model(model, SEQ2SEQ_SAVE_PATH)
-    elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
-        mlflow.pytorch.log_model(model, TIME_TRANS_SAVE_PATH)
-    elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
-        mlflow.pytorch.log_model(model, LSTM_SAVE_PATH)
+    mlflow.pytorch.log_model(model, MODEL_SAVE_PATH)
     mlflow.end_run()
     # mlflow.pytorch.save_model(model, MODEL_SAVE_PATH)
     # mlflow.register_model(f'runs:/{run_id}/{MODEL_CHOICE}', model)
