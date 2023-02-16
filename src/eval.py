@@ -1,6 +1,8 @@
 from visualization import *
 from saving_reading_data import *
 from data_constants import *
+
+
 def calc_all_accuracy(prediction, actual):
     print(prediction.shape)
     print(actual.shape)
@@ -10,10 +12,10 @@ def calc_all_accuracy(prediction, actual):
     actual = actual[PREDICT:]
     print(prediction.shape)
     print(actual.shape)
-    #prediction = torch.FloatTensor(prediction.detach().cpu().numpy()[-PREDICT:])
-    #actual = torch.FloatTensor(actual.detach().cpu().numpy()[PREDICT:])
-    #print(prediction.shape)
-    #print(actual.shape)
+    # prediction = torch.FloatTensor(prediction.detach().cpu().numpy()[-PREDICT:])
+    # actual = torch.FloatTensor(actual.detach().cpu().numpy()[PREDICT:])
+    # print(prediction.shape)
+    # print(actual.shape)
     # Abs.Error = absolute(actual – forecast)
     # Accuracy = 1 - (Abs.Error / Actual)
     # Bias = (Forecast - Actual) / Actual
@@ -42,6 +44,7 @@ def calc_all_accuracy(prediction, actual):
     if torch.cuda.is_available():
         ones = ones.cuda()
 
+    assert actual.shape == prediction.shape, "shapes are different!"
     # print(ones.shape)
     # compute absolute error for each component
     individual_abs_err = torch.abs(torch.sub(actual, prediction))
@@ -66,17 +69,16 @@ def calc_all_accuracy(prediction, actual):
          individual_abs_err.detach().squeeze().cpu().numpy())
 
 
-
 def calc_train_accuracy(prediction, actual):
     if prediction.dim() == 1:
-       prediction = prediction[None, :]
-       actual = actual[None, :]
-    #print(prediction.shape)
-    #print(actual.shape)
+        prediction = prediction[None, :]
+        actual = actual[None, :]
+    # print(prediction.shape)
+    # print(actual.shape)
     # prediction = torch.FloatTensor(prediction.detach().cpu().numpy()[-PREDICT:])
     # actual = torch.FloatTensor(actual.detach().cpu().numpy()[PREDICT:])
-    #print(prediction.shape)
-    #print(actual.shape)
+    # print(prediction.shape)
+    # print(actual.shape)
 
     # Abs.Error = absolute(actual – forecast)
     # Accuracy = 1 - (Abs.Error / Actual)
@@ -88,34 +90,34 @@ def calc_train_accuracy(prediction, actual):
     # if prediction.dim() == 1:
     #     prediction = prediction[None, :]
     #     actual = actual[None, :]
-    #print(prediction.shape)
-    #print(actual.shape)
+    # print(prediction.shape)
+    # print(actual.shape)
     # am monkey bran - working with tensors, not actual matrices - need to finish up eval function
-    #print(prediction.dim())
-    #print(len(prediction))
-    #print(len(actual))
+    # print(prediction.dim())
+    # print(len(prediction))
+    # print(len(actual))
     prediction = prediction.squeeze()
     actual = actual.squeeze()
-    
-    if torch.cuda.is_available():
-      actual = actual.cuda()
-      prediction = prediction.cuda()
 
-    #print(prediction.is_cuda)
-    #print(actual.is_cuda)
-    ones = torch.ones_like(prediction)
-    
     if torch.cuda.is_available():
-      ones = ones.cuda()
-    
-    #print(ones.shape)
+        actual = actual.cuda()
+        prediction = prediction.cuda()
+
+    # print(prediction.is_cuda)
+    # print(actual.is_cuda)
+    ones = torch.ones_like(prediction)
+
+    if torch.cuda.is_available():
+        ones = ones.cuda()
+
+    # print(ones.shape)
     # compute absolute error for each component
     individual_abs_err = torch.abs(torch.sub(actual, prediction))
     # compute accuracy for each component
     if torch.cuda.is_available():
-      individual_acc = torch.sub(ones, torch.div(individual_abs_err, actual))
+        individual_acc = torch.sub(ones, torch.div(individual_abs_err, actual))
     else:
-      individual_acc = torch.sub(ones, torch.div(individual_abs_err.detach().cpu(), actual.detach().cpu()))
+        individual_acc = torch.sub(ones, torch.div(individual_abs_err.detach().cpu(), actual.detach().cpu()))
     individual_bias = torch.div((torch.sub(prediction, actual)), actual)
 
     # compute all actual sales by taking the sum of a tensor

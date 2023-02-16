@@ -77,7 +77,7 @@ def show_all_model_prediction(pred_dict, transformed_data, output_transformation
                 all_pred_data.append(np.squeeze(pred_inv_t, 1)[0])
             if ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
                 squeezed_arr = np.squeeze(pred_inv_t)[0]
-                print(i, squeezed_arr.shape)
+                # print(i, squeezed_arr.shape)
                 all_pred_data.append(squeezed_arr)
             # all_actual_data.append(actual_in_t)
             # print(actual_in_t.shape)
@@ -117,7 +117,8 @@ def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, i
     fig, (ax1, ax2) = plt.subplots(1, 2)
     fig.set_size_inches(10, 8)
     fig.suptitle(fig_title)
-
+    if ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
+        pred_data = pred_data[-1]
     overall_acc, overall_bias, individual_acc, individual_bias, individual_abs_err = eval_data_prediction(pred_data,
                                                                                                           actual_data)
     ax2.plot(individual_acc, label="accuracy")

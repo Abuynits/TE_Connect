@@ -125,7 +125,7 @@ def test_epoch(dl, epoch):
         if ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
             return epoch_test_loss / times_run, overall_acc, overall_bias
 
-    return epoch_test_loss / times_run, format(overall_acc, '.2f'), format(overall_bias, '.2f')
+    return epoch_test_loss / times_run, format(overall_acc, '.4f'), format(overall_bias, '.4f')
 
 
 run_ml_flow = EXPERIMENT_SOURCE
@@ -164,9 +164,16 @@ for e in range(EPOCHS):
     if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
         mlflow.log_metric("avg train loss", avg_train_loss, step=e)
         mlflow.log_metric("avg validation loss", avg_valid_loss, step=e)
-    print(f"epoch {e}: avg train loss: {avg_train_loss} avg val loss: {avg_valid_loss}")
+
+    print('-' * 80)
+    print('| end of epoch {:3d} | time: {:5.2f}s | lr: {:5.2f} | train loss {:.f}| valid loss: {:.f}'.format(e,
+                                                                                                             (time.time() - start_time),
+                                                                                                             scheduler.get_last_lr(),
+                                                                                                             avg_train_loss,
+                                                                                                             avg_valid_loss))
     print(f"\ttrain accuracy: {train_overall_acc}\tbias: {train_overall_bias}")
     print(f"\tvalid accuracy: {valid_overall_acc}\tbias: {valid_overall_bias}")
+    print('-' * 80)
 train_time = time.time() - start_time
 
 best_val_loss = min(train_loss)
