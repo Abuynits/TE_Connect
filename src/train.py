@@ -166,13 +166,13 @@ for e in range(EPOCHS):
         mlflow.log_metric("avg validation loss", avg_valid_loss, step=e)
 
     print('-' * 80)
-    print('| end of epoch {:3d} | time: {:5.2f}s | lr: {:5.2f} | train loss {:.f}| valid loss: {:.f}'.format(e,
+    print('| end of epoch {:3d} | time: {:5.2f}s | lr: {:5.6f} | train loss {:.4f}| valid loss: {:.4f}'.format(e,
                                                                                                              (time.time() - start_time),
-                                                                                                             scheduler.get_last_lr(),
+                                                                                                             scheduler.get_last_lr()[-1],
                                                                                                              avg_train_loss,
                                                                                                              avg_valid_loss))
-    print(f"\ttrain accuracy: {train_overall_acc}\tbias: {train_overall_bias}")
-    print(f"\tvalid accuracy: {valid_overall_acc}\tbias: {valid_overall_bias}")
+    print("\ttrain accuracy: {:.6f}\ntrain bias: {:.6f}".format(train_overall_acc,train_overall_bias))
+    print("\tvalid accuracy: {:.6f}\nvalid bias: {:.6f}".format(valid_overall_acc, valid_overall_bias))
     print('-' * 80)
 train_time = time.time() - start_time
 

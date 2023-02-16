@@ -4,8 +4,7 @@ from filepaths_constants import *
 DATA_FILTER = ["Asia Pacific & ANZ", "Channel - Industrial"]
 # data_filter = ["Asia Pacific & ANZ"]
 # collumns of interest
-INPUT_DATA_COLS = ["sales_amount", "sales_quantity",
-                   "Price"]  # add features to end to make itself predict the output col - lstm not limit to 1 feature
+INPUT_DATA_COLS = ["sales_amount", "sales_quantity", "Price"]  # add features to end to make itself predict the output col - lstm not limit to 1 feature
 # input_data_cols = ["sales_amount"]
 OUTPUT_DATA_COLS = ["sales_amount"]
 OUTPUT_DATA_FEATURES = len(OUTPUT_DATA_COLS)

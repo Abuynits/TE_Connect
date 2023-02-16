@@ -118,7 +118,9 @@ def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, i
     fig.set_size_inches(10, 8)
     fig.suptitle(fig_title)
     if ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
-        pred_data = pred_data[-1]
+        pred_data = pred_data.squeeze() # TODO: need to fix visualization for transformer model
+    print(pred_data.shape)
+    print(actual_data.shape)
     overall_acc, overall_bias, individual_acc, individual_bias, individual_abs_err = eval_data_prediction(pred_data,
                                                                                                           actual_data)
     ax2.plot(individual_acc, label="accuracy")
