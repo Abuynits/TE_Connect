@@ -1,0 +1,25 @@
+channels:
+- conda-forge
+dependencies:
+- python=3.8.10
+- pip<=22.0.4
+- pip:
+  - mlflow<3,>=2.1
+  - astunparse==1.6.3
+  - attrs==22.2.0
+  - cffi==1.15.1
+  - cloudpickle==2.2.1
+  - dagshub==0.2.12
+  - defusedxml==0.7.1
+  - dill==0.3.6
+  - ipykernel==5.3.4
+  - ipython-genutils==0.2.0
+  - omegaconf==2.3.0
+  - opt-einsum==3.3.0
+  - pathlib==1.0.1
+  - psutil==5.9.4
+  - pytorch-lightning==1.9.2
+  - regex==2022.6.2
+  - torch==1.13.1
+  - torchvision==0.14.1
+name: mlflow-env
