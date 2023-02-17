@@ -261,7 +261,7 @@ def display_multiple_factors_comparison(all_data,
                                                                              avg_bias)
         fig.suptitle(sum_title_str)
         fig.tight_layout(pad=2.0)
-        leg = plt.legend(loc='upper center')
+        leg = plt.legend(loc='upper right')
         plt.show()
 
 
