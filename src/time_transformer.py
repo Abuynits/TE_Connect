@@ -64,14 +64,14 @@ class time_encoder(pl.LightningModule):
         self.drop = TIME_ENC_DROP
 
         self.enc_inp_layer = nn.Linear(  # converts the data to the dimensions for the encoder
-            in_features=self.input_features,
-            out_features=self.dim_val
+            in_features=self.input_features, # number of input vars
+            out_features=self.dim_val # the dim of model - all sublayers produce this dim
         )
 
         self.pos_enc = Pos_Encoder()
         # encoder input layers produces output size dim_val (512)
 
-        # create encoders wiht n.TransfoermerEncoderLayer
+        # create encoders with n.TransformerEncoderLayer
         # will automatically have attention, feed forward and add and normalize layer
         self.enc_block = nn.TransformerEncoderLayer(
             d_model=self.dim_val,
@@ -82,7 +82,9 @@ class time_encoder(pl.LightningModule):
         )
         # then need to pass this block to create multiple coppies in an encoder
         # norm: optional param - need to pass in null as enc_block already normalizes it
-        self.enc = nn.TransformerEncoder(self.enc_block, num_layers=self.layer_count, norm=None)
+        self.enc = nn.TransformerEncoder(self.enc_block,
+                                         num_layers=self.layer_count,
+                                         norm=None)
 
     def forward(self, inp):
         # pass through input for the decoder
@@ -107,7 +109,7 @@ class time_encoder(pl.LightningModule):
 class time_decoder(pl.LightningModule):
     def __init__(self):
         super(time_decoder, self).__init__()
-        self.input_features = INPUT_DATA_FEATURES
+        self.input_features = OUTPUT_DATA_FEATURES
         self.dim_val = TIME_DEC_DIM_VAL
         self.nheads = TIME_DEC_HEAD_COUNT
         self.dec_layer_count = TIME_DEC_LAYER_COUNT
@@ -141,6 +143,7 @@ class time_decoder(pl.LightningModule):
             in_features=self.dim_val,
             out_features=OUTPUT_DATA_FEATURES
         )
+        # multiply dim_val by OUTPUT_DATA_COL to account for final mapping
         self.linear_input_mapping = nn.Linear(
             in_features=self.dim_val,
             out_features=INPUT_DATA_FEATURES
@@ -189,6 +192,7 @@ class time_transformer(pl.LightningModule):
         # target is the target output but shifted over by 1
         # if you get [1,2,3,4,5] as src, then that target should be [2,3,4,5,6]
         if TIME_VERBOSE:
+            print()
             print(f"input: {inp.shape}")
             print(f"target: {target.shape}")
             print(f"input mask: {inp_mask.shape}")
@@ -211,8 +215,9 @@ def generate_mask(dim1, dim2, device):
 
 
 def time_predict(model, inp, contain_batch=False, future_time_steps=PREDICT):
+
     if TIME_PRED_VERBOSE:
-        print("original inp:", inp.shape)
+        print("\noriginal inp:", inp.shape)
     # model: the model being used
     # future_time_steps: the number of steps to predict into the future - can change them
     # the input should always be batch_first:

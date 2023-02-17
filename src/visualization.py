@@ -64,8 +64,13 @@ def show_all_model_prediction(pred_dict, transformed_data, output_transformation
                 # pred = predict_tensor_seq_to_seq(model, model_inp, Data_Prep.predict)
                 pred = model.predict_seq(model_inp)
             elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
+                model_inp = model_inp.unsqueeze(0)
+                # print("old imp shape:", model_inp.shape)
+                # model_inp = torch.swapaxes(model_inp, 1, 2)
+                # print("new imp shape:", model_inp.shape)
                 pred = time_predict(model, model_inp)
                 pred = torch.squeeze(pred)
+                pred = pred.reshape(-1, 1)
 
             # print("pred shape:", pred.shape)
             # print("val:",val)
@@ -95,8 +100,7 @@ def show_all_model_prediction(pred_dict, transformed_data, output_transformation
             # plt.plot(x_axis,pred_inv_t.T[2],label="pred 2")
             # plt.plot(x_axis,transformations[val].inverse_transform(y[i]).T[2],label = "act 2")
 
-            # if PREDICT_MODEL_FORCAST and random.random() > PERCENT_DISPLAY_MODEL_FORCAST:
-            if True:
+            if PREDICT_MODEL_FORCAST and random.random() > PERCENT_DISPLAY_MODEL_FORCAST:
                 eval_plot_acc_pred_bias(
                     f'Individual acc/bias & prediction: {val}',
                     pred_inv_t,
@@ -104,6 +108,8 @@ def show_all_model_prediction(pred_dict, transformed_data, output_transformation
                     file_name=f"indiv_acc_bias{val}",
                     index_graphing=None)
         if PREDICT_ALL_FORCAST:
+            all_pred_data = torch.Tensor(all_pred_data)
+            all_actual_data = torch.Tensor(all_actual_data)
             overall_acc, overall_bias = eval_plot_acc_pred_bias(
                 f'Total acc/bias & prediction: {val}',
                 all_pred_data,

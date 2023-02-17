@@ -44,17 +44,18 @@ SEQ2SEQ_TRAIN_TYPE = SEQ2SEQ_TRAIN_OPTIONS.TEACHER_FORCING
 
 TIME_MAX_SEQ_LEN = 5000  # hyper parameter for initialization of positional encoder
 TIME_POS_ENC_DROP = 0.0
+
 TIME_ENC_DROP = 0.0  # default 0.1
-TIME_DEC_DROP = 0.0  # default 0.1
-TIME_ENC_DIM_VAL = 32  # default: 512
+TIME_ENC_DIM_VAL = 16  # default: 512
 TIME_ENC_HEAD_COUNT = 2  # default: 4
 TIME_ENC_LAYER_COUNT = 2  # default: 4
+TIME_ENC_DIM_FEED_FORWARD = 32  # default: = 2048
 
-TIME_DEC_DIM_VAL = 32  # default: 512
+TIME_DEC_DROP = 0.0  # default 0.1
+TIME_DEC_DIM_VAL = 16  # default: 512
 TIME_DEC_HEAD_COUNT = 2  # default: 4
 TIME_DEC_LAYER_COUNT = 2  # default: 4
-TIME_DEC_DIM_FEED_FORWARD = 16  # default: = 2048
-TIME_ENC_DIM_FEED_FORWARD = 16  # default: = 2048
+TIME_DEC_DIM_FEED_FORWARD = 32  # default: = 2048
 
 if ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
     MODEL_CHOICE_NAME = "lstm"
