@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import mlflow
 
 from model_constants import *
@@ -94,7 +95,8 @@ def show_all_model_prediction(pred_dict, transformed_data, output_transformation
             # plt.plot(x_axis,pred_inv_t.T[2],label="pred 2")
             # plt.plot(x_axis,transformations[val].inverse_transform(y[i]).T[2],label = "act 2")
 
-            if PREDICT_MODEL_FORCAST and random.random() > PERCENT_DISPLAY_MODEL_FORCAST:
+            # if PREDICT_MODEL_FORCAST and random.random() > PERCENT_DISPLAY_MODEL_FORCAST:
+            if True:
                 eval_plot_acc_pred_bias(
                     f'Individual acc/bias & prediction: {val}',
                     pred_inv_t,
@@ -117,8 +119,8 @@ def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, i
     fig, (ax1, ax2) = plt.subplots(1, 2)
     fig.set_size_inches(10, 8)
     fig.suptitle(fig_title)
-    if ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
-        pred_data = pred_data.squeeze() # TODO: need to fix visualization for transformer model
+    # if ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
+    #     pred_data = pred_data.squeeze() # TODO: need to fix visualization for transformer model
     print(pred_data.shape)
     print(actual_data.shape)
     overall_acc, overall_bias, individual_acc, individual_bias, individual_abs_err = eval_data_prediction(pred_data,
@@ -185,6 +187,78 @@ def display_group_df(grouped_df, limit=5):
         count = count + 1
         if count == limit:
             break
+
+
+def display_factor_comparison(key, value, y1_var, y2_var):
+    plt.title(key)
+    plt.ylabel("standard difference")
+    plt.xlabel("weekly timestep")
+    plt.plot(value[y1_var], label=y1_var)
+    plt.plot(value[y2_var], label=y2_var)
+    plt.show()
+
+
+def display_multiple_factors_comparison(all_data,
+                                        y1_var,
+                                        y2_var,
+                                        display_rows,
+                                        display_cols,
+                                        figure_width,
+                                        figure_height):
+    plt.rc('xtick', labelsize=6)  # fontsize of the tick labels
+    plt.rc('ytick', labelsize=6)
+    fig, axs = plt.subplots(nrows=display_rows, ncols=display_cols, figsize=(figure_width, figure_height))
+
+    # loop through tickers and axes
+    x_loc, y_loc = 0, 0
+    iteration_count = 0
+    all_accuracy = []
+    all_bias = []
+    for key, val in all_data.items():
+        if iteration_count != 0:
+            if iteration_count == display_cols * (display_rows):
+                y_loc = 0
+                x_loc = 0
+                iteration_count = 0
+                plt.xticks(fontsize=6)
+                avg_acc = sum(all_accuracy) / len(all_accuracy)
+                avg_bias = sum(all_bias) / len(all_bias)
+                sum_title_str = "{} vs {}\navg acc:{:.4f}    avg bias:{:.4f}".format(y1_var, y2_var,
+                                                                                     avg_acc,
+                                                                                     avg_bias)
+                fig.suptitle(sum_title_str)
+                fig.tight_layout(pad=2.0)
+                plt.show()
+                fig, axs = plt.subplots(nrows=display_rows, ncols=display_cols, figsize=(figure_width, figure_height))
+            elif iteration_count % (display_rows) == 0:
+                x_loc = 0
+                y_loc += 1
+        eval_data_prediction
+        y1 = val[y1_var]
+        y2 = val[y2_var]
+        actual_tensor = y1.values
+        pred_tensor = y2.values
+        overall_acc, overall_bias, _, _, _ = eval_data_prediction(pred_tensor, actual_tensor)
+        all_accuracy.append(overall_acc)
+        all_bias.append(overall_bias)
+        axs[x_loc, y_loc].plot(y1)
+        axs[x_loc, y_loc].plot(y2)
+        title_str = "{}\nacc:{:.4f}    bias:{:.4f}".format(key, overall_acc, overall_bias)
+        axs[x_loc, y_loc].set_title(title_str, fontsize=6)
+        # logic for iteration
+
+        iteration_count += 1
+        x_loc += 1
+    if iteration_count != 0:
+        plt.xticks(fontsize=6)
+        avg_acc = sum(all_accuracy) / len(all_accuracy)
+        avg_bias = sum(all_bias) / len(all_bias)
+        sum_title_str = "{} vs {}\navg acc:{:.4f}    avg bias:{:.4f}".format(y1_var, y2_var,
+                                                                             avg_acc,
+                                                                             avg_bias)
+        fig.suptitle(sum_title_str)
+        fig.tight_layout(pad=2.0)
+        plt.show()
 
 
 def check_data_transformations(check_transforms_key, reg_data, transformed_data, output_transformations):

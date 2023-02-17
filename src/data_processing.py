@@ -97,7 +97,7 @@ def transform_norm_rem_out(grouped_df, input_data_cols, output_data_cols, data_f
             reg_data[name] = group.copy()
             input_transformations[name] = scalar1.fit(group[input_data_cols])
             output_transformations[name] = scalar2.fit(group[output_data_cols])
-            group[data_cols] = scalar1.fit_transform(group[input_data_cols])
+            group[data_cols] = scalar1.fit_transform(group[data_cols])
             transformed_data[name] = group
             if display_once:
                 print("\n")
