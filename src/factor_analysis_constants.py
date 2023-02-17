@@ -7,7 +7,6 @@ from data_constants import OUTPUT_DATA_COLS
 
 OUTPUT_DATA_COL = OUTPUT_DATA_COLS[0]
 # filter based on what you want to compare and view
-DATA_FILTER = ["Asia Pacific & ANZ", "Channel - Industrial"]
 # the external indicator used
 EXTERNAL_FACTOR = "sales_quantity"
 # determine whether to analyze plots in batches or individually

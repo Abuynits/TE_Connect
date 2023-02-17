@@ -213,6 +213,7 @@ def generate_mask(dim1, dim2, device):
     #     : for target - this is target_seq length
     return torch.triu(torch.ones(dim1, dim2) * float('-inf'), diagonal=1).to(device)
 
+# TODO: go over code and make it work better
 
 def time_predict(model, inp, contain_batch=False, future_time_steps=PREDICT):
 
@@ -265,7 +266,6 @@ def time_predict(model, inp, contain_batch=False, future_time_steps=PREDICT):
             """
             processed inp shape: torch.Size([2048, 10, 3])
             input target shape: torch.Size([2048, 1, 3])
-
             """
             print("last model prediciton shape", model_pred.shape)
             print("last model new input shape", next_model_inp.shape)
