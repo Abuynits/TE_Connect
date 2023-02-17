@@ -228,21 +228,24 @@ def display_multiple_factors_comparison(all_data,
                                                                                      avg_bias)
                 fig.suptitle(sum_title_str)
                 fig.tight_layout(pad=2.0)
+                leg = plt.legend(loc='upper right')
                 plt.show()
                 fig, axs = plt.subplots(nrows=display_rows, ncols=display_cols, figsize=(figure_width, figure_height))
             elif iteration_count % (display_rows) == 0:
                 x_loc = 0
                 y_loc += 1
-        eval_data_prediction
         y1 = val[y1_var]
         y2 = val[y2_var]
         actual_tensor = y1.values
         pred_tensor = y2.values
-        overall_acc, overall_bias, _, _, _ = eval_data_prediction(pred_tensor, actual_tensor)
+        overall_acc, overall_bias, (individual_acc, individual_bias, individual_abs_err) = calc_feature_similarity(
+            pred_tensor,
+            actual_tensor)
         all_accuracy.append(overall_acc)
         all_bias.append(overall_bias)
-        axs[x_loc, y_loc].plot(y1)
-        axs[x_loc, y_loc].plot(y2)
+        axs[x_loc, y_loc].plot(y1, label="output")
+        axs[x_loc, y_loc].plot(y2, label="external")
+        axs[x_loc, y_loc].plot(individual_abs_err, label="abs err")
         title_str = "{}\nacc:{:.4f}    bias:{:.4f}".format(key, overall_acc, overall_bias)
         axs[x_loc, y_loc].set_title(title_str, fontsize=6)
         # logic for iteration
@@ -258,6 +261,7 @@ def display_multiple_factors_comparison(all_data,
                                                                              avg_bias)
         fig.suptitle(sum_title_str)
         fig.tight_layout(pad=2.0)
+        leg = plt.legend(loc='upper center')
         plt.show()
 
 

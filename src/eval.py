@@ -69,6 +69,47 @@ def calc_all_accuracy(prediction, actual):
          individual_abs_err.detach().squeeze().cpu().numpy())
 
 
+def calc_feature_similarity(prediction, actual):
+    prediction = torch.tensor(prediction).squeeze()
+    actual = torch.tensor(actual).squeeze()
+
+    # will check only up to the max elements present
+    assert len(prediction) == len(actual), "something went very wrong"
+
+    if torch.cuda.is_available():
+        actual = actual.cuda()
+        prediction = prediction.cuda()
+
+    ones = torch.ones_like(prediction)
+
+    if torch.cuda.is_available():
+        ones = ones.cuda()
+
+    assert actual.shape == prediction.shape, "shapes are different!"
+    # print(ones.shape)
+    # compute absolute error for each component
+    individual_abs_err = torch.abs(torch.sub(actual, prediction))
+    # compute accuracy for each component
+    if torch.cuda.is_available():
+        individual_acc = torch.sub(ones, torch.div(individual_abs_err, actual))
+    else:
+        individual_acc = torch.sub(ones, torch.div(individual_abs_err.detach().cpu(), actual.detach().cpu()))
+    individual_bias = torch.div((torch.sub(prediction, actual)), actual)
+
+    # compute all actual sales by taking the sum of a tensor
+    all_abs_error = torch.sum(individual_abs_err)
+    all_actual_sales = torch.sum(actual)
+    all_forcasted_sales = torch.sum(prediction)
+
+    overall_acc = 1 - all_abs_error / all_actual_sales
+    overall_bias = (all_forcasted_sales - all_actual_sales) / all_actual_sales
+
+    return overall_acc.item(), overall_bias.item(), \
+        (individual_acc.detach().squeeze().cpu().numpy(), \
+         individual_bias.detach().squeeze().cpu().numpy(), \
+         individual_abs_err.detach().squeeze().cpu().numpy())
+
+
 def calc_train_accuracy(prediction, actual):
     if prediction.dim() == 1:
         prediction = prediction[None, :]
