@@ -1,5 +1,4 @@
 import mlflow
-
 from dl_ds import *
 from saving_reading_data import *
 from seq2seq_arch import *
@@ -42,8 +41,13 @@ elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
     model = time_transformer().to(DEVICE)
 else:
     raise Exception("bad model selected!")
-loss_func = nn.MSELoss()
-optim = optimizer.Adam(model.parameters(), lr=LEARNING_RATE)
+
+if ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
+    optim = optimizer.SGD(model.parameters(), lr=LEARNING_RATE)
+    loss_func = nn.CrossEntropyLoss()
+else:
+    optim = optimizer.Adam(model.parameters(), lr=LEARNING_RATE)
+    loss_func = nn.MSELoss()
 scheduler = ExponentialLR(optim, gamma=GAMMA)
 
 num_epochs_run = 0
@@ -88,14 +92,14 @@ def train_epoch(dl, epoch):
         if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
             y = torch.t(y)
         loss = loss_func(model_out, y)
-        epoch_train_loss += loss.item() * x.size(0)
-
-        times_run += x.size(0)
-
         # compute the loss
         loss.backward()
         # step the optimizer
         optim.step()
+        epoch_train_loss += loss.item() * x.size(0)
+        times_run += x.size(0)
+
+
 
     return epoch_train_loss / times_run
 
@@ -171,8 +175,8 @@ for e in range(EPOCHS):
                                                                                                              scheduler.get_last_lr()[-1],
                                                                                                              avg_train_loss,
                                                                                                              avg_valid_loss))
-    print("\ttrain accuracy: {:.6f}\ntrain bias: {:.6f}".format(train_overall_acc,train_overall_bias))
-    print("\tvalid accuracy: {:.6f}\nvalid bias: {:.6f}".format(valid_overall_acc, valid_overall_bias))
+    print("\ttrain accuracy: {:.6f}\ttrain bias: {:.6f}".format(train_overall_acc,train_overall_bias))
+    print("\tvalid accuracy: {:.6f}\tvalid bias: {:.6f}".format(valid_overall_acc, valid_overall_bias))
     print('-' * 80)
 train_time = time.time() - start_time
 

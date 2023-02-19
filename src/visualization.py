@@ -99,8 +99,8 @@ def show_all_model_prediction(pred_dict, transformed_data, output_transformation
             # plt.plot(x_axis,transformations[val].inverse_transform(y[i]).T[1],label = "act 1")
             # plt.plot(x_axis,pred_inv_t.T[2],label="pred 2")
             # plt.plot(x_axis,transformations[val].inverse_transform(y[i]).T[2],label = "act 2")
-
-            if PREDICT_MODEL_FORCAST and random.random() > PERCENT_DISPLAY_MODEL_FORCAST:
+            if True:
+            #if PREDICT_MODEL_FORCAST and random.random() > PERCENT_DISPLAY_MODEL_FORCAST:
                 eval_plot_acc_pred_bias(
                     f'Individual acc/bias & prediction: {val}',
                     pred_inv_t,

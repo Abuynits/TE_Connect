@@ -64,8 +64,8 @@ class time_encoder(pl.LightningModule):
         self.drop = TIME_ENC_DROP
 
         self.enc_inp_layer = nn.Linear(  # converts the data to the dimensions for the encoder
-            in_features=self.input_features, # number of input vars
-            out_features=self.dim_val # the dim of model - all sublayers produce this dim
+            in_features=self.input_features,  # number of input vars
+            out_features=self.dim_val  # the dim of model - all sublayers produce this dim
         )
 
         self.pos_enc = Pos_Encoder()
@@ -110,6 +110,7 @@ class time_decoder(pl.LightningModule):
     def __init__(self):
         super(time_decoder, self).__init__()
         self.input_features = OUTPUT_DATA_FEATURES
+        self.target_input_features = INPUT_DATA_FEATURES
         self.dim_val = TIME_DEC_DIM_VAL
         self.nheads = TIME_DEC_HEAD_COUNT
         self.dec_layer_count = TIME_DEC_LAYER_COUNT
@@ -118,7 +119,7 @@ class time_decoder(pl.LightningModule):
         # will be passing in the variables as input to the decoder - need to get them to size 512
         # this way match output of encoder
         self.dec_inp_layer = nn.Linear(
-            in_features=self.input_features,
+            in_features=self.target_input_features,
             out_features=self.dim_val
         )
 
@@ -172,7 +173,8 @@ class time_decoder(pl.LightningModule):
         mapped_dec_out = self.linear_output_mapping(dec_out)  # the output mapping used as the final result
         mapped_dec_inp = self.linear_input_mapping(dec_out)  # use to feed back into the model
         if TIME_VERBOSE:
-            print(f"\tdec: mapped_dec output: {dec_out.shape}")
+            print(f"\tdec: mapped_dec output: {mapped_dec_out.shape}")
+            print(f"\tdec: mapped_dec input: {mapped_dec_inp.shape}")
 
         return mapped_dec_out, mapped_dec_inp
 
@@ -213,10 +215,10 @@ def generate_mask(dim1, dim2, device):
     #     : for target - this is target_seq length
     return torch.triu(torch.ones(dim1, dim2) * float('-inf'), diagonal=1).to(device)
 
+
 # TODO: go over code and make it work better
 
 def time_predict(model, inp, contain_batch=False, future_time_steps=PREDICT):
-
     if TIME_PRED_VERBOSE:
         print("\noriginal inp:", inp.shape)
     # model: the model being used
@@ -230,25 +232,27 @@ def time_predict(model, inp, contain_batch=False, future_time_steps=PREDICT):
         print("processed inp shape:", inp.shape)
     # # Take the last value of the target variable in all batches in src and make it tgt
     target = inp[:, -1, :]  # in shape [batches,last unit]
-    target = target[:, None, :]
+    target = target[:, None, :]  # add in single dim -> [batches,1,last unit]
+    if TIME_PRED_VERBOSE:
+        print("target shape:", target.shape)
 
+    inp_mask_dim = inp.shape[1]
     for _ in range(future_time_steps - 1):
-        dim_a = target.shape[1]
-        dim_b = inp.shape[1]
+        tgt_mask_dim = target.shape[1]
         if TIME_PRED_VERBOSE:
-            print(f"dim_a:{dim_a},dim_b:{dim_b}")
+            print(f"dim_a:{tgt_mask_dim},dim_b:{inp_mask_dim}")
         # [target sequence length, target sequence length]
         target_mask = generate_mask(
-            dim1=dim_a,
-            dim2=dim_a,
+            dim1=tgt_mask_dim,
+            dim2=tgt_mask_dim,
             device=DEVICE
         )
         if TIME_PRED_VERBOSE:
             print("input mask:", target_mask.shape)
         # [target sequence length, encoder sequence length]
         inp_mask = generate_mask(
-            dim1=dim_a,
-            dim2=dim_b,
+            dim1=tgt_mask_dim,
+            dim2=inp_mask_dim,
             device=DEVICE
         )
         if TIME_PRED_VERBOSE:
