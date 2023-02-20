@@ -142,12 +142,12 @@ class time_decoder(pl.LightningModule):
         # need to map from the hidden sequence length (dim_val) to the prediction sequence
         self.linear_output_mapping = nn.Linear(
             in_features=self.dim_val,
-            out_features=OUTPUT_DATA_FEATURES
+            out_features=self.input_features
         )
         # multiply dim_val by OUTPUT_DATA_COL to account for final mapping
         self.linear_input_mapping = nn.Linear(
             in_features=self.dim_val,
-            out_features=INPUT_DATA_FEATURES
+            out_features=self.target_input_features
         )
 
     def forward(self, enc_out, target, input_mask, target_mask):
@@ -179,7 +179,6 @@ class time_decoder(pl.LightningModule):
         return mapped_dec_out, mapped_dec_inp
 
 
-# https://towardsdatascience.com/how-to-make-a-pytorch-transformer-for-time-series-forecasting-69e073d4061e
 class time_transformer(pl.LightningModule):
     def __init__(self):
         super(time_transformer, self).__init__()

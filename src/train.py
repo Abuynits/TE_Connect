@@ -89,6 +89,7 @@ def train_epoch(dl, epoch):
         # squeeze the tensors to account for 1 dim sizes
         model_out = model_out.squeeze()
         y = y.squeeze()
+        # account for swapping batch and seq count dimensions
         if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
             y = torch.t(y)
         loss = loss_func(model_out, y)
@@ -98,8 +99,6 @@ def train_epoch(dl, epoch):
         optim.step()
         epoch_train_loss += loss.item() * x.size(0)
         times_run += x.size(0)
-
-
 
     return epoch_train_loss / times_run
 
@@ -125,9 +124,6 @@ def test_epoch(dl, epoch):
         overall_acc, overall_bias, _ = calc_train_accuracy(model_out, y)
         epoch_test_loss += loss.item() * x.size(0)
         times_run += x.size(0)
-
-        if ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
-            return epoch_test_loss / times_run, overall_acc, overall_bias
 
     return epoch_test_loss / times_run, format(overall_acc, '.4f'), format(overall_bias, '.4f')
 
@@ -171,12 +167,12 @@ for e in range(EPOCHS):
 
     print('-' * 80)
     print('| end of epoch {:3d} | time: {:5.2f}s | lr: {:5.6f} | train loss {:.4f}| valid loss: {:.4f}'.format(e,
-                                                                                                             (time.time() - start_time),
-                                                                                                             scheduler.get_last_lr()[-1],
-                                                                                                             avg_train_loss,
-                                                                                                             avg_valid_loss))
-    print("\ttrain accuracy: {:.6f}\ttrain bias: {:.6f}".format(train_overall_acc,train_overall_bias))
-    print("\tvalid accuracy: {:.6f}\tvalid bias: {:.6f}".format(valid_overall_acc, valid_overall_bias))
+                                                                                                               (time.time() - start_time),
+                                                                                                               scheduler.get_last_lr()[-1],
+                                                                                                               avg_train_loss,
+                                                                                                               avg_valid_loss))
+    print(f"\ttrain accuracy: {train_overall_acc}\ttrain bias: {train_overall_bias}")
+    print(f"\tvalid accuracy: {valid_overall_acc}\tvalid bias: {valid_overall_bias}")
     print('-' * 80)
 train_time = time.time() - start_time
 
