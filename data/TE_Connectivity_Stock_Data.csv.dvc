@@ -1,0 +1,4 @@
+outs:
+- md5: f1277d50e3a852f7955d55524977aa4d
+  size: 28336
+  path: TE_Connectivity_Stock_Data.csv
