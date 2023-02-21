@@ -59,16 +59,23 @@ def key_filter_match(name, data_filter):
     return True
 
 
-def transform_norm_rem_out(grouped_df, input_data_cols, output_data_cols, data_filter):
+def transform_norm_rem_out(grouped_df, input_data_cols, output_data_cols=None, data_filter=None):
     transformed_data = {}
     reg_data = {}
     input_transformations = {}
     output_transformations = {}
     display_once = True
     count = 0
-    data_cols = input_data_cols + list(set(output_data_cols) - set(input_data_cols))
-    print(input_data_cols)
-    print(output_data_cols)
+    if output_data_cols is None:
+        data_cols = input_data_cols
+        print("using simple df cols",data_cols)
+        scalar1 = MinMaxScaler()
+        grouped_df[data_cols] = scalar1.fit_transform(grouped_df[data_cols])
+        # will return a single value which is the transformed data
+        return grouped_df
+    else:
+        data_cols = input_data_cols + list(set(output_data_cols) - set(input_data_cols))
+        print("using join df cols:",data_cols)
 
     save_first_name = False
     check_transforms_key = ""

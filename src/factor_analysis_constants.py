@@ -15,3 +15,7 @@ ROWS_DISPLAY = 2
 COLS_DISPLAY = 2
 FIGURE_WIDTH = 10
 FIGURE_HEIGHT = 6
+
+CMP_EXTERNAL_DF = True # specify if variable is in external or current df
+EXTERNAL_DF_FP = "data/TE_Connectivity_Stock_Data.csv"
+EXTARNAL_DF_VAR = "High"

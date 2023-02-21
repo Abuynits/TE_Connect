@@ -100,7 +100,7 @@ def show_all_model_prediction(pred_dict, transformed_data, output_transformation
             # plt.plot(x_axis,pred_inv_t.T[2],label="pred 2")
             # plt.plot(x_axis,transformations[val].inverse_transform(y[i]).T[2],label = "act 2")
             if True:
-            #if PREDICT_MODEL_FORCAST and random.random() > PERCENT_DISPLAY_MODEL_FORCAST:
+                # if PREDICT_MODEL_FORCAST and random.random() > PERCENT_DISPLAY_MODEL_FORCAST:
                 eval_plot_acc_pred_bias(
                     f'Individual acc/bias & prediction: {val}',
                     pred_inv_t,
@@ -210,7 +210,8 @@ def display_multiple_factors_comparison(all_data,
                                         display_rows,
                                         display_cols,
                                         figure_width,
-                                        figure_height):
+                                        figure_height,
+                                        external_df=None):
     plt.rc('xtick', labelsize=6)  # fontsize of the tick labels
     plt.rc('ytick', labelsize=6)
     fig, axs = plt.subplots(nrows=display_rows, ncols=display_cols, figsize=(figure_width, figure_height))
@@ -241,7 +242,11 @@ def display_multiple_factors_comparison(all_data,
                 x_loc = 0
                 y_loc += 1
         y1 = val[y1_var]
-        y2 = val[y2_var]
+        # account for external factors
+        if external_df is not None:
+            y2 = external_df[y2_var]
+        else:
+            y2 = val[y2_var]
         actual_tensor = y1.values
         pred_tensor = y2.values
         overall_acc, overall_bias, (individual_acc, individual_bias, individual_abs_err) = calc_feature_similarity(
