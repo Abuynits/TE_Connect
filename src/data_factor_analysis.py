@@ -38,9 +38,9 @@ Generate all of the data that is used
 only care about the transformed input cols and output cols
 """
 if CMP_EXTERNAL_DF:
-    print(f"comparing external variable: {EXTARNAL_DF_VAR} from df at {EXTERNAL_DF_FP}!")
+    print(f"comparing external variable: {EXTERNAL_DF_VAR} from df at {EXTERNAL_DF_FP}!")
     external_df = pd.read_csv(EXTERNAL_DF_FP)  # only has a single variable
-    transformed_external_data = transform_norm_rem_out(external_df, [EXTARNAL_DF_VAR])
+    transformed_external_data = transform_norm_rem_out(external_df, [EXTERNAL_DF_VAR])
 
 _, transformed_data, _, _, _ = transform_norm_rem_out(
     grouped_df, [OUTPUT_DATA_COL], [EXTERNAL_FACTOR], DATA_FILTER)
@@ -66,7 +66,7 @@ else:
     else:
         display_multiple_factors_comparison(transformed_data,
                                             [OUTPUT_DATA_COL],
-                                            [EXTARNAL_DF_VAR],
+                                            [EXTERNAL_DF_VAR],
                                             ROWS_DISPLAY,
                                             COLS_DISPLAY,
                                             FIGURE_WIDTH,

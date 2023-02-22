@@ -37,25 +37,47 @@ def _calc_tensor_acc(prediction, actual):
 
     if torch.cuda.is_available():
         ones = ones.cuda()
-
+    if EVAL_VERBOSE:
+        print("actual_shape:", actual.shape)
+        print(actual)
+        print("prediction_shape:", prediction.shape)
+        print(prediction)
     # print(ones.shape)
     # compute absolute error for each component
     individual_abs_err = torch.abs(torch.sub(actual, prediction))
+    if EVAL_VERBOSE:
+        print("indiv abs err shape", individual_abs_err.shape)
+        print(individual_abs_err)
     # compute accuracy for each component
     if torch.cuda.is_available():
         individual_acc = torch.sub(ones, torch.div(individual_abs_err, actual))
     else:
         individual_acc = torch.sub(ones, torch.div(individual_abs_err.detach().cpu(), actual.detach().cpu()))
+    # WORKAROUND BC BAD ACCURACY
+    torch.nn.functional.relu(individual_acc, inplace=True)
+    if EVAL_VERBOSE:
+        print("indiv acc shape", individual_acc.shape)
+        print(individual_acc)
     individual_bias = torch.div((torch.sub(prediction, actual)), actual)
-
+    if EVAL_VERBOSE:
+        print("indiv bias shape", individual_bias.shape)
+        print(individual_bias)
     # compute all actual sales by taking the sum of a tensor
     all_abs_error = torch.sum(individual_abs_err)
+    if EVAL_VERBOSE:
+        print("all abs err:", all_abs_error)
+    torch.nn.functional.relu(actual, inplace=True)
     all_actual_sales = torch.sum(actual)
+    if EVAL_VERBOSE:
+        print("all actual sales:", all_actual_sales)
     all_forcasted_sales = torch.sum(prediction)
-
+    if EVAL_VERBOSE:
+        print("all forcasted sales:", all_forcasted_sales)
     overall_acc = 1 - all_abs_error / all_actual_sales
     overall_bias = (all_forcasted_sales - all_actual_sales) / all_actual_sales
-
+    if EVAL_VERBOSE:
+        print(overall_acc)
+        print(overall_bias)
     return overall_acc.item(), overall_bias.item(), \
         (individual_acc.detach().squeeze().cpu().numpy(), \
          individual_bias.detach().squeeze().cpu().numpy(), \

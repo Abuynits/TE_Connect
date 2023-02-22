@@ -148,8 +148,11 @@ for e in range(EPOCHS):
     avg_train_loss = train_epoch(train_dl, e)
 
     avg_valid_loss, valid_overall_acc, valid_overall_bias = test_epoch(valid_dl, e)
+    if EVAL_TRAIN_ACC:
+        _, train_overall_acc, train_overall_bias = test_epoch(train_dl, e)
+    else:
+        train_overall_acc = "-"
 
-    _, train_overall_acc, train_overall_bias = test_epoch(train_dl, e)
     if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
         mlflow.log_metric("validation overall bias", valid_overall_bias, step=e)
         mlflow.log_metric("validation overall accuracy", valid_overall_acc, step=e)
