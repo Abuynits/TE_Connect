@@ -37,38 +37,50 @@ grouped_df = group_by_unique(df,
 Generate all of the data that is used
 only care about the transformed input cols and output cols
 """
-if CMP_EXTERNAL_DF:
-    print(f"comparing external variable: {EXTERNAL_DF_VAR} from df at {EXTERNAL_DF_FP}!")
-    external_df = pd.read_csv(EXTERNAL_DF_FP)  # only has a single variable
-    transformed_external_data = transform_norm_rem_out(external_df, [EXTERNAL_DF_VAR])
-
 _, transformed_data, _, _, _ = transform_norm_rem_out(
-    grouped_df, [OUTPUT_DATA_COL], [EXTERNAL_FACTOR], DATA_FILTER)
+    grouped_df, [OUTPUT_DATA_COL], [OUTPUT_DATA_COL], DATA_FILTER)
 # only care about transformed data as it contains all values need for comparison
 assert len(transformed_data) != 0, "no elements detected for filter!"
 print(len(transformed_data))
-# visual comparison display:
-if PLOT_INDIVIDUALLY:
-    for key, value in transformed_data.items():
-        if not CMP_EXTERNAL_DF:
-            display_factor_comparison(key, value, OUTPUT_DATA_COL, EXTERNAL_FACTOR)
-        else:
-            raise Exception("comparison with other frames for individual plots not supported!")
+
+if CMP_ALL_EXTERNAL_DF:
+    print(f"comparing all external variables at {EXTERNAL_DF_FP}")
+    external_df = pd.read_csv(EXTERNAL_DF_FP)
+    all_external_indicators = external_df.columns.values
+    all_transformed_external_data = transform_norm_rem_out(external_df, all_external_indicators)
+    factor_to_product, product_to_factor = get_all_factor_comparison(transformed_data,
+                                                                     [OUTPUT_DATA_COL],
+                                                                     all_transformed_external_data)
+    print(factor_to_product.keys())
+    print(product_to_factor.keys())
 else:
-    if not CMP_EXTERNAL_DF:
-        display_multiple_factors_comparison(transformed_data,
-                                            [OUTPUT_DATA_COL],
-                                            [EXTERNAL_FACTOR],
-                                            ROWS_DISPLAY,
-                                            COLS_DISPLAY,
-                                            FIGURE_WIDTH,
-                                            FIGURE_HEIGHT)
+    if CMP_EXTERNAL_DF:
+        print(f"comparing external variable: {EXTERNAL_DF_VAR} from df at {EXTERNAL_DF_FP}!")
+        external_df = pd.read_csv(EXTERNAL_DF_FP)  # only has a single variable
+        transformed_external_data = transform_norm_rem_out(external_df, [EXTERNAL_DF_VAR])
+
+    # visual comparison display:
+    if PLOT_INDIVIDUALLY:
+        for key, value in transformed_data.items():
+            if not CMP_EXTERNAL_DF:
+                display_factor_comparison(key, value, OUTPUT_DATA_COL, EXTERNAL_FACTOR)
+            else:
+                raise Exception("comparison with other frames for individual plots not supported!")
     else:
-        display_multiple_factors_comparison(transformed_data,
-                                            [OUTPUT_DATA_COL],
-                                            [EXTERNAL_DF_VAR],
-                                            ROWS_DISPLAY,
-                                            COLS_DISPLAY,
-                                            FIGURE_WIDTH,
-                                            FIGURE_HEIGHT,
-                                            transformed_external_data)
+        if not CMP_EXTERNAL_DF:
+            display_multiple_factors_comparison(transformed_data,
+                                                [OUTPUT_DATA_COL],
+                                                [EXTERNAL_FACTOR],
+                                                ROWS_DISPLAY,
+                                                COLS_DISPLAY,
+                                                FIGURE_WIDTH,
+                                                FIGURE_HEIGHT)
+        else:
+            display_multiple_factors_comparison(transformed_data,
+                                                [OUTPUT_DATA_COL],
+                                                [EXTERNAL_DF_VAR],
+                                                ROWS_DISPLAY,
+                                                COLS_DISPLAY,
+                                                FIGURE_WIDTH,
+                                                FIGURE_HEIGHT,
+                                                transformed_external_data)
