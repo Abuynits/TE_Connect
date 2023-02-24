@@ -1,0 +1,4 @@
+outs:
+- md5: 0dee913c12fa9bf676bf3cc6300d9940
+  size: 269822
+  path: external_indicators.csv
