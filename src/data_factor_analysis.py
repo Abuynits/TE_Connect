@@ -1,6 +1,4 @@
 from factor_analysis_constants import *
-from filepaths_constants import *
-from saving_reading_data import *
 from data_processing import *
 from visualization import *
 

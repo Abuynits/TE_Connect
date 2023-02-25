@@ -1,5 +1,3 @@
-import random
-
 from dl_ds import print_model
 from model_constants import *
 

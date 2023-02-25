@@ -1,38 +1,7 @@
-import matplotlib.pyplot as plt
-import mlflow
-
-from model_constants import *
-from data_processing import *
-from time_transformer import time_predict
-from visualization import *
 from eval import *
 from collections import defaultdict
 
 run_ml_flow = True if mlflow.active_run() is True else False
-
-
-# TOOD: undo to the point where had the show_all model prediction working for seq2seq
-#
-def get_model_prediction(model, model_inp):
-    if ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
-
-        pred = model(model_inp[None, :])
-        pred = torch.unsqueeze(pred, 1)
-    elif ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
-        # pred = predict_tensor_seq_to_seq(model, model_inp, Data_Prep.predict)
-        pred = model.predict_seq(model_inp)
-    elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
-        model_inp = model_inp.unsqueeze(0)
-        # print("old imp shape:", model_inp.shape)
-        # model_inp = torch.swapaxes(model_inp, 1, 2)
-        # print("new imp shape:", model_inp.shape)
-        pred = time_predict(model, model_inp)
-        pred = torch.squeeze(pred)
-        pred = pred.reshape(-1, 1)
-    else:
-        raise Exception("error: invalid model selected")
-    return pred
-
 
 def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, index_graphing=None):
     fig, (ax1, ax2) = plt.subplots(1, 2)
@@ -122,32 +91,6 @@ def multi_dict(k, type):
         return defaultdict(type)
     else:
         return defaultdict(lambda: multi_dict(k - 1, type))
-
-
-def get_all_factor_comparison(all_data,
-                              output_var,
-                              external_data):
-    product_to_indicator, indicator_to_product = multi_dict(3, str), multi_dict(3, str)
-
-    for indicator in external_data:
-        pred_tensor = external_data[indicator].values
-        for key, val in all_data.items():
-            actual_tensor = val[output_var].values
-            if len(actual_tensor) < len(pred_tensor):
-                pred_tensor = pred_tensor[0: len(actual_tensor)]
-            elif len(actual_tensor) > len(pred_tensor):
-                actual_tensor = actual_tensor[0: len(pred_tensor)]
-
-            overall_acc, overall_bias, (_, _, _) = calc_feature_similarity(pred_tensor, actual_tensor)
-            indicator_to_product[indicator][key]['overall_acc'] = overall_acc
-            indicator_to_product[indicator][key]['overall_bias'] = overall_bias
-
-            product_to_indicator[key][indicator]['overall_acc'] = overall_acc
-            product_to_indicator[key][indicator]['overall_bias'] = overall_bias
-
-    return product_to_indicator, indicator_to_product
-
-
 def display_multiple_factors_comparison(all_data,
                                         y1_var,
                                         y2_var,
