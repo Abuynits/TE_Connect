@@ -51,6 +51,8 @@ else:
 scheduler = ExponentialLR(optim, gamma=GAMMA)
 
 num_epochs_run = 0
+lowest_epoch = 0
+all_valid_epoch_acc = []
 
 
 def get_model_pred(x, target, y):
@@ -125,7 +127,7 @@ def test_epoch(dl, epoch):
         epoch_test_loss += loss.item() * x.size(0)
         times_run += x.size(0)
 
-    return epoch_test_loss / times_run, format(overall_acc, '.4f'), format(overall_bias, '.4f')
+    return epoch_test_loss / times_run, overall_acc, overall_bias
 
 
 run_ml_flow = EXPERIMENT_SOURCE
@@ -148,6 +150,7 @@ for e in range(EPOCHS):
     avg_train_loss = train_epoch(train_dl, e)
 
     avg_valid_loss, valid_overall_acc, valid_overall_bias = test_epoch(valid_dl, e)
+    all_valid_epoch_acc.append(valid_overall_acc)
     if EVAL_TRAIN_ACC:
         _, train_overall_acc, train_overall_bias = test_epoch(train_dl, e)
     else:
@@ -156,9 +159,9 @@ for e in range(EPOCHS):
     if run_ml_flow == RUN_TYPE.MLFLOW_RUN:
         mlflow.log_metric("validation overall bias", valid_overall_bias, step=e)
         mlflow.log_metric("validation overall accuracy", valid_overall_acc, step=e)
-
-        mlflow.log_metric("train overall bias", train_overall_bias, step=e)
-        mlflow.log_metric("train overall accuracy", train_overall_acc, step=e)
+        if EVAL_TRAIN_ACC:
+            mlflow.log_metric("train overall bias", train_overall_bias, step=e)
+            mlflow.log_metric("train overall accuracy", train_overall_acc, step=e)
 
     num_epochs_run += 1
     train_loss.append(avg_train_loss)
@@ -170,13 +173,23 @@ for e in range(EPOCHS):
 
     print('-' * 80)
     print('| end of epoch {:3d} | time: {:5.2f}s | lr: {:5.6f} | train loss {:.4f}| valid loss: {:.4f}'.format(e,
-                                                                                                               (time.time() - start_time),
-                                                                                                               scheduler.get_last_lr()[-1],
+                                                                                                               (
+                                                                                                                           time.time() - start_time),
+                                                                                                               scheduler.get_last_lr()[
+                                                                                                                   -1],
                                                                                                                avg_train_loss,
                                                                                                                avg_valid_loss))
-    print(f"\ttrain accuracy: {train_overall_acc}\ttrain bias: {train_overall_bias}")
+    if EVAL_TRAIN_ACC:
+        print(f"\ttrain accuracy: {train_overall_acc}\ttrain bias: {train_overall_bias}")
     print(f"\tvalid accuracy: {valid_overall_acc}\tvalid bias: {valid_overall_bias}")
     print('-' * 80)
+    if num_epochs_run > EARLY_STOP_MIN_EPOCH:
+        if all_valid_epoch_acc[-EARLY_STOP_MIN_EPOCH] - valid_overall_acc > EARLY_STOP_DELTA:
+            print("Validation acc has not increased from epoch %d:%.4f to epoch %d:%.4f ".format(num_epochs_run-EARLY_STOP_MIN_EPOCH,
+                                                                                                 all_valid_epoch_acc[-EARLY_STOP_MIN_EPOCH],
+                                                                                                 num_epochs_run,
+                                                                                                 valid_overall_acc
+                                                                                                 ))
 train_time = time.time() - start_time
 
 best_val_loss = min(train_loss)

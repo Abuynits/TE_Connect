@@ -13,108 +13,25 @@ run_ml_flow = True if mlflow.active_run() is True else False
 
 # TOOD: undo to the point where had the show_all model prediction working for seq2seq
 #
-def show_all_model_prediction(pred_dict, transformed_data, output_transformations, model):
-    for key, val in enumerate(pred_dict):
-        print(val)
-        x, _, y = prep_data_for_transformer_model(transformed_data[val], LOOKBACK, PREDICT, INPUT_DATA_COLS,
-                                                  OUTPUT_DATA_COLS)
-        print(val)
-        print(x.shape)
-        # print(trg.shape) not use lol
-        print(y.shape)
+def get_model_prediction(model, model_inp):
+    if ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
 
-        all_pred_data = np.squeeze(
-            output_transformations[val].inverse_transform(
-                transformed_data[val][OUTPUT_DATA_COLS])[0:LOOKBACK]).tolist()
-        all_actual_data = np.squeeze(
-            output_transformations[val].inverse_transform(
-                transformed_data[val][OUTPUT_DATA_COLS])[0:len(x)])
-        all_pred_data = []
-        run_once = False
-        # x_axis = np.array(transformed_data[val]["year_week_ordered"][i+len(x[1]):i+len(x[1])+Data_Prep.predict])
-        for i in range(len(x)):
-
-            if PREDICT_RECURSIVELY:
-                if not run_once:
-                    print("run once")
-                    model_inp = torch.from_numpy(x[i]).float().to(DEVICE)
-                    run_once = True
-                else:
-                    print("caution might be broken lol")
-                    print("concatenating")
-                    model_inp = np.concatenate(model_inp.detach().numpy(), pred.detach().numpy())
-                    print(model_inp)
-                    model_inp = model_inp[PREDICT:]
-                    print(model_inp)
-            else:
-                model_inp = torch.from_numpy(x[i]).float().to(DEVICE)
-
-            actual_model_out = torch.from_numpy(y[i]).float().to(DEVICE)
-
-            # print(model_inp.shape)
-            if ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
-
-                pred = model(model_inp[None, :])
-                pred = torch.unsqueeze(pred, 1)
-            elif ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
-                # pred = predict_tensor_seq_to_seq(model, model_inp, Data_Prep.predict)
-                pred = model.predict_seq(model_inp)
-            elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
-                model_inp = model_inp.unsqueeze(0)
-                # print("old imp shape:", model_inp.shape)
-                # model_inp = torch.swapaxes(model_inp, 1, 2)
-                # print("new imp shape:", model_inp.shape)
-                pred = time_predict(model, model_inp)
-                pred = torch.squeeze(pred)
-                pred = pred.reshape(-1, 1)
-
-            # print("pred shape:", pred.shape)
-            # print("val:",val)
-            # print(output_transformations[val])
-            pred_inv_t = output_transformations[val].inverse_transform(pred.detach().cpu())
-            actual_model_inv_t = output_transformations[val].inverse_transform(actual_model_out.detach().cpu())
-
-            # actual_in_t = reg_data[val]["sales_amount"][i + len(x[1]):i+len(x[1])+Data_Prep.predict]
-            if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
-                all_pred_data.append(np.squeeze(pred_inv_t, 1)[0])
-            if ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
-                squeezed_arr = np.squeeze(pred_inv_t)[0]
-                # print(i, squeezed_arr.shape)
-                all_pred_data.append(squeezed_arr)
-            # all_actual_data.append(actual_in_t)
-            # print(actual_in_t.shape)
-            if VISUALIZATION_VERBOSE:
-                print("actual pred data:", pred)
-                print("actual pred data:", pred_inv_t)
-                print("actual data:", actual_model_inv_t)
-                print("shape", y[i].shape)
-
-            # plt.plot(x_axis, pred_inv_t.T[0], label="pred 0")
-            # plt.plot(x_axis, input_transformations[val].inverse_transform(y[i]).T[0], label="act 0")
-            # plt.plot(x_axis,pred_inv_t.T[1],label="pred 1")
-            # plt.plot(x_axis,transformations[val].inverse_transform(y[i]).T[1],label = "act 1")
-            # plt.plot(x_axis,pred_inv_t.T[2],label="pred 2")
-            # plt.plot(x_axis,transformations[val].inverse_transform(y[i]).T[2],label = "act 2")
-            if True:
-                # if PREDICT_MODEL_FORCAST and random.random() > PERCENT_DISPLAY_MODEL_FORCAST:
-                eval_plot_acc_pred_bias(
-                    f'Individual acc/bias & prediction: {val}',
-                    pred_inv_t,
-                    actual_model_inv_t,
-                    file_name=f"indiv_acc_bias{val}",
-                    index_graphing=None)
-        if PREDICT_ALL_FORCAST:
-            all_pred_data = torch.Tensor(all_pred_data)
-            all_actual_data = torch.Tensor(all_actual_data)
-            overall_acc, overall_bias = eval_plot_acc_pred_bias(
-                f'Total acc/bias & prediction: {val}',
-                all_pred_data,
-                all_actual_data,
-                file_name=f"total_acc_bias{val}",
-                index_graphing=None)
-            if run_ml_flow:
-                mlflow.log_metric("overall accuracy:", overall_acc)
-                mlflow.log_metric("overall bias:", overall_bias)
+        pred = model(model_inp[None, :])
+        pred = torch.unsqueeze(pred, 1)
+    elif ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
+        # pred = predict_tensor_seq_to_seq(model, model_inp, Data_Prep.predict)
+        pred = model.predict_seq(model_inp)
+    elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
+        model_inp = model_inp.unsqueeze(0)
+        # print("old imp shape:", model_inp.shape)
+        # model_inp = torch.swapaxes(model_inp, 1, 2)
+        # print("new imp shape:", model_inp.shape)
+        pred = time_predict(model, model_inp)
+        pred = torch.squeeze(pred)
+        pred = pred.reshape(-1, 1)
+    else:
+        raise Exception("error: invalid model selected")
+    return pred
 
 
 def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, index_graphing=None):
@@ -199,15 +116,18 @@ def display_factor_comparison(key, value, y1_var, y2_var):
     plt.plot(value[y2_var], label=y2_var)
     plt.show()
 
+
 def multi_dict(k, type):
     if k == 1:
         return defaultdict(type)
     else:
-        return defaultdict(lambda: multi_dict(k-1, type))
+        return defaultdict(lambda: multi_dict(k - 1, type))
+
+
 def get_all_factor_comparison(all_data,
                               output_var,
                               external_data):
-    product_to_indicator, indicator_to_product = multi_dict(3,str), multi_dict(3,str)
+    product_to_indicator, indicator_to_product = multi_dict(3, str), multi_dict(3, str)
 
     for indicator in external_data:
         pred_tensor = external_data[indicator].values
