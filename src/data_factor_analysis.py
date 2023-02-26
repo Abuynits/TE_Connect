@@ -1,3 +1,5 @@
+import pickle
+
 from factor_analysis_constants import *
 from data_processing import *
 from visualization import *
@@ -51,6 +53,10 @@ if CMP_ALL_EXTERNAL_DF:
                                                                      all_transformed_external_data)
     print(factor_to_product.keys())
     print(product_to_factor.keys())
+    with open(FACTOR_TO_PRODUCT_DICT_FP, "w") as outfile:
+        json.dump(factor_to_product, outfile)
+    with open(PRODUCT_TO_FACTOR_DICT_FP, "w") as outfile:
+        json.dump(product_to_factor, outfile)
 else:
     if CMP_EXTERNAL_DF:
         print(f"comparing external variable: {EXTERNAL_DF_VAR} from df at {EXTERNAL_DF_FP}!")

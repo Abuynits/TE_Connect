@@ -86,11 +86,11 @@ def display_factor_comparison(key, value, y1_var, y2_var):
     plt.show()
 
 
-def multi_dict(k, type):
+def multi_dict(k, t):
     if k == 1:
-        return defaultdict(type)
+        return defaultdict(t)
     else:
-        return defaultdict(lambda: multi_dict(k - 1, type))
+        return defaultdict(lambda: multi_dict(k - 1, t))
 def display_multiple_factors_comparison(all_data,
                                         y1_var,
                                         y2_var,

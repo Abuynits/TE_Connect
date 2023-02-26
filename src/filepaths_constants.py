@@ -60,6 +60,8 @@ INPUT_TRANSFORMATIONS_FILE_PATH = "data/transformations/input_transformations.pk
 OUTPUT_TRANSFORMATIONS_FILE_PATH = "data/transformations/output_transformations.pkl"
 EVAL_PLOTS_FILE_PATH = "data/eval_plots"
 
+FACTOR_TO_PRODUCT_DICT_FP = "data/factor_to_product.json"
+PRODUCT_TO_FACTOR_DICT_FP = "data/product_to_factor.json"
 MLFLOW_URL = "https://dagshub.com/Abuynits/TE_Connect.mlflow"
 
 

@@ -1,6 +1,10 @@
 from visualization import *
 from model_constants import *
+from visualization import *
+from collections import defaultdict
 from time_transformer import *
+
+
 def calc_all_accuracy(prediction, actual):
     # print(prediction.shape)
     # print(actual.shape)
@@ -17,6 +21,8 @@ def calc_feature_similarity(prediction, actual):
     actual = torch.tensor(actual).squeeze()
 
     return _calc_tensor_acc(prediction, actual)
+
+
 def get_model_prediction(model, model_inp):
     if ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
 
@@ -36,11 +42,17 @@ def get_model_prediction(model, model_inp):
     else:
         raise Exception("error: invalid model selected")
     return pred
+def multi_dict(k, t):
+    if k == 1:
+        return defaultdict(t)
+    else:
+        return defaultdict(lambda: multi_dict(k - 1, t))
 
 def get_all_factor_comparison(all_data,
                               output_var,
                               external_data):
-    product_to_indicator, indicator_to_product = multi_dict(3, str), multi_dict(3, str)
+    product_to_indicator = multi_dict(3, str)
+    indicator_to_product = multi_dict(3, str)
 
     for indicator in external_data:
         pred_tensor = external_data[indicator].values
@@ -50,7 +62,7 @@ def get_all_factor_comparison(all_data,
                 pred_tensor = pred_tensor[0: len(actual_tensor)]
             elif len(actual_tensor) > len(pred_tensor):
                 actual_tensor = actual_tensor[0: len(pred_tensor)]
-
+            key = ','.join(key)
             overall_acc, overall_bias, (_, _, _) = calc_feature_similarity(pred_tensor, actual_tensor)
             indicator_to_product[indicator][key]['overall_acc'] = overall_acc
             indicator_to_product[indicator][key]['overall_bias'] = overall_bias
