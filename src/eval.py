@@ -78,7 +78,8 @@ def _calc_tensor_acc(prediction, actual):
 
     prediction = prediction.squeeze()
     actual = actual.squeeze()
-
+    actual = torch.nan_to_num(actual, nan=0, posinf=0,neginf=0)
+    prediction = torch.nan_to_num(prediction, nan=0, posinf=0,neginf=0)
     if torch.cuda.is_available():
         actual = actual.cuda()
         prediction = prediction.cuda()
@@ -86,7 +87,6 @@ def _calc_tensor_acc(prediction, actual):
     # print(prediction.is_cuda)
     # print(actual.is_cuda)
     ones = torch.ones_like(prediction)
-
     if torch.cuda.is_available():
         ones = ones.cuda()
     if EVAL_VERBOSE:
@@ -102,11 +102,11 @@ def _calc_tensor_acc(prediction, actual):
         print(individual_abs_err)
     # compute accuracy for each component
     if torch.cuda.is_available():
-        individual_acc = torch.sub(ones, torch.div(individual_abs_err, actual))
+        individual_acc = torch.sub(ones, torch.div(individual_abs_err, torch.abs(actual)))
     else:
-        individual_acc = torch.sub(ones, torch.div(individual_abs_err.detach().cpu(), actual.detach().cpu()))
+        individual_acc = torch.sub(ones, torch.div(individual_abs_err.detach().cpu(), torch.abs(actual).detach().cpu()))
     # WORKAROUND BC BAD ACCURACY
-    torch.nn.functional.relu(individual_acc, inplace=True)
+    individual_acc = torch.nan_to_num(individual_acc, nan=0, posinf=0, neginf=0)
     if EVAL_VERBOSE:
         print("indiv acc shape", individual_acc.shape)
         print(individual_acc)
@@ -118,7 +118,6 @@ def _calc_tensor_acc(prediction, actual):
     all_abs_error = torch.sum(individual_abs_err)
     if EVAL_VERBOSE:
         print("all abs err:", all_abs_error)
-    torch.nn.functional.relu(actual, inplace=True)
     all_actual_sales = torch.sum(actual)
     if EVAL_VERBOSE:
         print("all actual sales:", all_actual_sales)
