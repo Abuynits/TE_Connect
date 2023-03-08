@@ -12,7 +12,8 @@ from torchvision import datasets, transforms
 import random as random
 from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, FunctionTransformer
+
 from torch.autograd import Variable
 import pickle
 from torch.optim.lr_scheduler import ExponentialLR
@@ -26,6 +27,7 @@ import pytorch_lightning as pl
 from sklearn.preprocessing import MinMaxScaler
 import random as andom
 import math
+from sklearn.compose import ColumnTransformer
 
 # DATA INFO
 # location of CSV file:
@@ -96,6 +98,7 @@ TIME_PRED_VERBOSE = False
 TIME_VERBOSE = False
 EVAL_VERBOSE = False
 EVAL_TRAIN_ACC = False
+APPLY_LOG_TRANSFORM = True
 VISUALIZATION_VERBOSE = False  # verbose mode for visualization
 PREDICT_ALL_FORCAST = True  # prediction: check if you want to plot global predictions for all data points
 PREDICT_MODEL_FORCAST = False  # prediction: check if you want to plot prediction for each prediction sement

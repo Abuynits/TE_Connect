@@ -1,4 +1,5 @@
-from data_constants import *
+from visualization import *
+from sklearn.compose import make_column_transformer
 
 
 def get_raw_data(filtered_df, business_unit_group_name=None, company_region_name_level1=None, product_line_code=None):
@@ -59,6 +60,14 @@ def key_filter_match(name, data_filter):
     return True
 
 
+def apply_log_transform(group, data_cols):
+    group[data_cols] = group[data_cols].astype(float)
+    group[data_cols] = np.log(group[data_cols])
+    scalar1 = MinMaxScaler()
+    group[data_cols] = scalar1.fit(group[data_cols])
+    return group
+
+
 def transform_norm_rem_out(grouped_df, input_data_cols, output_data_cols=None, data_filter=None):
     transformed_data = {}
     reg_data = {}
@@ -66,16 +75,19 @@ def transform_norm_rem_out(grouped_df, input_data_cols, output_data_cols=None, d
     output_transformations = {}
     display_once = True
     count = 0
+
     if output_data_cols is None:
         data_cols = input_data_cols
-        print("using simple df cols",data_cols)
+        print("using simple df cols", data_cols)
         scalar1 = MinMaxScaler()
+        if APPLY_LOG_TRANSFORM:
+            return apply_log_transform(grouped_df, data_cols)
         grouped_df[data_cols] = scalar1.fit_transform(grouped_df[data_cols])
         # will return a single value which is the transformed data
         return grouped_df
     else:
         data_cols = input_data_cols + list(set(output_data_cols) - set(input_data_cols))
-        print("using join df cols:",data_cols)
+        print("using join df cols:", data_cols)
 
     save_first_name = False
     check_transforms_key = ""
@@ -94,17 +106,23 @@ def transform_norm_rem_out(grouped_df, input_data_cols, output_data_cols=None, d
                 # interpolate the mission values
 
             scalar1 = MinMaxScaler()
-            scalar2 = MinMaxScaler()
-            # group[data_cols] = clean_dataset(group[data_cols]) # this line
+
             for i in range(0, len(group.columns)):
                 group.iloc[:, i].interpolate(inplace=True)
-            group = group.replace((np.inf, -np.inf, np.nan),
-                                  0).reset_index(drop=True)
 
             reg_data[name] = group.copy()
-            input_transformations[name] = scalar1.fit(group[input_data_cols])
-            output_transformations[name] = scalar2.fit(group[output_data_cols])
-            group[data_cols] = scalar1.fit_transform(group[data_cols])
+            group = group.replace((np.inf, -np.inf, np.nan, 0),
+                                  1).reset_index(drop=True)
+            group.fillna(0)
+            if APPLY_LOG_TRANSFORM:
+                input_transformations[name] = apply_log_transform(group.copy(), input_data_cols)
+                output_transformations[name] = apply_log_transform(group.copy(), output_data_cols)
+                group = apply_log_transform(group.copy(), data_cols)
+            else:
+                input_transformations[name] = scalar1.fit(group[input_data_cols])
+                output_transformations[name] = scalar1.fit(group[output_data_cols])
+                group[data_cols] = scalar1.fit_transform(group[data_cols])
+
             transformed_data[name] = group
             if display_once:
                 print("\n")
@@ -134,32 +152,8 @@ def prep_data_for_transformer_model(data, past, future, input_data_cols, output_
     return np.array(x), np.array(target), np.array(y)
 
 
-def prep_data_for_model(data, past, future, input_data_cols, output_data_cols):
-    x, y = list(), list()
-    inp_data_arr = data[input_data_cols].to_numpy()
-    out_data_arr = data[output_data_cols].to_numpy()
-    for i in range(min(len(inp_data_arr), len(out_data_arr))):
-        lag_end = i + past
-        forcast_end = lag_end + future
-        if forcast_end > len(data):
-            break
-        x.append(inp_data_arr[i:lag_end])
-        y.append(out_data_arr[lag_end:forcast_end])
-    return np.array(x), np.array(y)
-
-
 def check_test_train_val_percentages():
     return PERCENT_TRAIN_DATA + PERCENT_TEST_DATA + PERCENT_VALID_DATA != 1
-
-
-def show_data_sample(x, target, y, data_type):
-    print(f"\n======={data_type}=======")
-    print(x.shape)
-    print(x[0])
-    print(target.shape)
-    print(target[0])
-    print(y.shape)
-    print(y[0])
 
 
 def split_each_data_group(transformed_data, dict_train_data, dict_valid_data,

@@ -1,5 +1,4 @@
 # load in the data and mount it on the drive
-from src.filepaths_constants import *
 from data_processing import *
 from visualization import *
 from saving_reading_data import *
