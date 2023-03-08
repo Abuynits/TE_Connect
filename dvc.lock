@@ -13,66 +13,60 @@ stages:
       md5: 60f694f0a440a3c93a3d50d376fa1fb0
       size: 1790
     - path: src/data_processing.py
-      md5: b0802e58aad24db48e64b3048d43c2a4
-      size: 11385
+      md5: 73cfd33b1fb9d11401c089fe9b8922e7
+      size: 11650
     - path: src/filepaths_constants.py
-      md5: c7dab28f00e02bba4e301d451ad06194
-      size: 4683
+      md5: bad1df26a5d23b0bfb8595a62ff38746
+      size: 4210
     - path: src/saving_reading_data.py
       md5: d25a73b8cbf2205527002650bd590b1b
       size: 3928
     - path: src/visualization.py
-      md5: 527ba12f1f7323c4015d077540cafe88
-      size: 9187
+      md5: 1f5ac8ab9cf5a03097511da743482af4
+      size: 8069
     outs:
     - path: data/dicts/test_dict.pkl
-      md5: cc5fc1f088b6e51ba6074cd0b0a3447a
-      size: 87866193
+      md5: f0c3061106f7e458f914f166eb81a613
+      size: 5791665
     - path: data/dicts/train_dict.pkl
-      md5: a52279959f0d5ad132cfff420d77b15e
-      size: 258974054
+      md5: f3faa69fd47dcbbbd35cc9a69af52016
+      size: 42204655
     - path: data/dicts/validation_dict.pkl
-      md5: e9923c1368afa3ff1b66e68cdcc8c4f5
-      size: 69523409
+      md5: ba0e71ab4c0e36d2a7ed4eb1f090d3b6
+      size: 11792160
     - path: data/model_io/test_target.pkl
-      md5: dcc3e6e04821195893ab3ffb25eaa349
-      size: 26355764
+      md5: 0f06f0d12fb118c32323799c5532a894
+      size: 1735364
     - path: data/model_io/test_x.pkl
-      md5: ba47d7db886d3c9bfd2562b2769584f4
-      size: 52711364
+      md5: bddc5286bdff2bbfb22667354427b56c
+      size: 3470564
     - path: data/model_io/test_y.pkl
-      md5: 7d0d2271ef00f39b3f9d03f1bcc876e1
-      size: 8785364
+      md5: f310c77ce929d4359772b1b92a994297
+      size: 578564
     - path: data/model_io/train_target.pkl
-      md5: 9dec4fca44b61e6d297b56e8677c76c9
-      size: 77679764
+      md5: 9c37a4dc494688aa660c0a3ddccd5ce2
+      size: 12658964
     - path: data/model_io/train_x.pkl
-      md5: 821eab1bfc3791d808829779e1480707
-      size: 155359364
+      md5: f87c33807311ab91691a1e4c4ab91220
+      size: 25317764
     - path: data/model_io/train_y.pkl
-      md5: 1ef820353108d62427c24292780c53e5
-      size: 25893364
+      md5: 5fba31b4e3ab9f8e08e8009291c40303
+      size: 4219764
     - path: data/model_io/validation_target.pkl
-      md5: 270c00d53c848e6625881b5b92d5d21b
-      size: 20853764
+      md5: 4afe7c01306ed6c0400f7691cf55a3d1
+      size: 3535364
     - path: data/model_io/validation_x.pkl
-      md5: 9b5c2f196b0009de56d96b3223586086
-      size: 41707364
+      md5: 780d3e5ef40d2d8266da87d3b85c2f13
+      size: 7070564
     - path: data/model_io/validation_y.pkl
-      md5: e1961306c6b12521006e943cabf4f755
-      size: 6951364
-    - path: data/regular_data.pkl
-      md5: e6cf62becf750b7871b57361affda49d
-      size: 13606724
+      md5: 5e721a5a92758c6e250113875116be41
+      size: 1178564
     - path: data/transformations/input_transformations.pkl
-      md5: c77c67899a922817cca270f5d1a4073c
-      size: 159063
+      md5: 333bb369b4f22991769970f2412ea2b8
+      size: 20804
     - path: data/transformations/output_transformations.pkl
-      md5: c37438adc9edfff1db448a37dc4b9fa1
-      size: 122143
-    - path: data/transformed_data.pkl
-      md5: 5087f10e22f07e6e20720fb15ab016f3
-      size: 13630785
+      md5: 2238fec4c3893c242e74c58c70fc72c9
+      size: 16023
     - path: metrics/data_param.json
       md5: 6a07b44fa99ad39c166ec0e8b8cd35ed
       size: 371
@@ -202,3 +196,22 @@ stages:
       md5: aa99ef38edd4fb7d355faf4a997f4510.dir
       size: 835345
       nfiles: 9
+  data_generation:
+    cmd: python3 src/generate_all_data.py
+    deps:
+    - path: src/data_processing.py
+      md5: 73cfd33b1fb9d11401c089fe9b8922e7
+      size: 11650
+    - path: src/saving_reading_data.py
+      md5: d25a73b8cbf2205527002650bd590b1b
+      size: 3928
+    - path: src/visualization.py
+      md5: 1f5ac8ab9cf5a03097511da743482af4
+      size: 8069
+    outs:
+    - path: data/regular_data.pkl
+      md5: 55d55d88054edb1004dcc0b92f8b43f2
+      size: 2021198
+    - path: data/transformed_data.pkl
+      md5: f07671d84d0cb7354ce79bbf699e7a5f
+      size: 1841972

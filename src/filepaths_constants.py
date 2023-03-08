@@ -66,7 +66,6 @@ FACTOR_TO_PRODUCT_DICT_FP = "data/factor_to_product.json"
 PRODUCT_TO_FACTOR_DICT_FP = "data/product_to_factor.json"
 MLFLOW_URL = "https://dagshub.com/Abuynits/TE_Connect.mlflow"
 
-
 class DATA_SPLIT(Enum):
     ON_PRODUCT_CODES = 0  # split into test,validation, training for each product code
     ON_EACH_PRODUCT = 1  # get data from each product code
@@ -107,21 +106,3 @@ PERCENT_DISPLAY_MODEL_FORCAST = 0.1  # display if greater than 0.9
 PREDICT_DISPLAY_COUNT = 10  # number of times you will display the data
 SAVE_EVAL_PLOTS = True
 EVAL_PLOTS_DPI = 72
-
-"""
-4. have a constants file for evaluation part of the data
-^^ done in order to prevent having to rerun everything after changing one constants file
-===============
-5. add eval.py and find a way of computing accuracy between graphs and predictions
-
-6. add a way of saving plots in the library
-7. add a boolean to control whether i use git for saving, mlflow, or both (dont know why)
-- also need to add in mlflow integration and ease of use
-
-
-8. need to update pipeline to save data processing parameters
-- maybe add another step in pipeline - one to load data and have it ready, another to split it based on cols, features
-
-9. need to add mlflow experiments to control the data available and the factors being studied
-
-"""

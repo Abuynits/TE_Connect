@@ -1,4 +1,15 @@
 stages:
+  data_generation:
+    cmd: python3 src/generate_all_data.py
+    deps:
+      - src/data_processing.py
+      - src/visualization.py
+      - src/saving_reading_data.py
+    outs:
+      - data/regular_data.pkl:
+          persist: true
+      - data/transformed_data.pkl:
+          persist: true
   data_prep:
     cmd: python3 src/data_prep.py
     deps:
@@ -28,13 +39,9 @@ stages:
           persist: true
       - data/model_io/validation_y.pkl:
           persist: true
-      - data/regular_data.pkl:
-          persist: true
       - data/transformations/input_transformations.pkl:
           persist: true
       - data/transformations/output_transformations.pkl:
-          persist: true
-      - data/transformed_data.pkl:
           persist: true
       - data/model_io/validation_target.pkl:
           persist: true
