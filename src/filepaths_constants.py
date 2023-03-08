@@ -72,7 +72,7 @@ class DATA_SPLIT(Enum):
     ON_EACH_PRODUCT = 1  # get data from each product code
 
 
-SPLIT_TYPE = DATA_SPLIT.ON_PRODUCT_CODES
+SPLIT_TYPE = DATA_SPLIT.ON_EACH_PRODUCT
 
 
 class RUN_TYPE(Enum):

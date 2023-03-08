@@ -64,8 +64,8 @@ def apply_log_transform(group, data_cols):
     group[data_cols] = group[data_cols].astype(float)
     group[data_cols] = np.log(group[data_cols])
     scalar1 = MinMaxScaler()
-    group[data_cols] = scalar1.fit(group[data_cols])
-    return group
+    group[data_cols] = scalar1.fit_transform(group[data_cols])
+    return group, scalar1
 
 
 def transform_norm_rem_out(grouped_df, input_data_cols, output_data_cols=None, data_filter=None):
@@ -81,7 +81,8 @@ def transform_norm_rem_out(grouped_df, input_data_cols, output_data_cols=None, d
         print("using simple df cols", data_cols)
         scalar1 = MinMaxScaler()
         if APPLY_LOG_TRANSFORM:
-            return apply_log_transform(grouped_df, data_cols)
+            data, _ = apply_log_transform(grouped_df, data_cols)
+            return data
         grouped_df[data_cols] = scalar1.fit_transform(grouped_df[data_cols])
         # will return a single value which is the transformed data
         return grouped_df
@@ -102,23 +103,20 @@ def transform_norm_rem_out(grouped_df, input_data_cols, output_data_cols=None, d
 
                 if len(group[col]) == 0:
                     raise Exception("Collumn does not exist!")
-                # removeOutliers(group[col],col)
-                # interpolate the mission values
-
-            scalar1 = MinMaxScaler()
-
-            for i in range(0, len(group.columns)):
-                group.iloc[:, i].interpolate(inplace=True)
 
             reg_data[name] = group.copy()
             group = group.replace((np.inf, -np.inf, np.nan, 0),
                                   1).reset_index(drop=True)
-            group.fillna(0)
+
+            for i in range(0, len(group.columns)):
+                group.iloc[:, i].interpolate(inplace=True)
+
             if APPLY_LOG_TRANSFORM:
-                input_transformations[name] = apply_log_transform(group.copy(), input_data_cols)
-                output_transformations[name] = apply_log_transform(group.copy(), output_data_cols)
-                group = apply_log_transform(group.copy(), data_cols)
+                _, input_transformations[name] = apply_log_transform(group.copy(), input_data_cols)
+                _, output_transformations[name] = apply_log_transform(group.copy(), output_data_cols)
+                group, _ = apply_log_transform(group.copy(), data_cols)
             else:
+                scalar1 = MinMaxScaler()
                 input_transformations[name] = scalar1.fit(group[input_data_cols])
                 output_transformations[name] = scalar1.fit(group[output_data_cols])
                 group[data_cols] = scalar1.fit_transform(group[data_cols])
@@ -163,19 +161,20 @@ def split_each_data_group(transformed_data, dict_train_data, dict_valid_data,
         raise Exception("bad test train split percentages")
     show_sample = True
     for key, group in transformed_data.items():
-        start_train_data = 0
-        end_train_data = int(len(group) * PERCENT_TRAIN_DATA)
-
-        start_valid_data = end_train_data + 1
-        end_valid_data = start_valid_data + int(len(group) * PERCENT_VALID_DATA)
-
-        start_test_data = end_valid_data + 1
-        end_test_data = len(group)
         all_x, all_target, all_y = prep_data_for_transformer_model(group,
                                                                    LOOKBACK,
                                                                    PREDICT,
                                                                    INPUT_DATA_COLS,
                                                                    OUTPUT_DATA_COLS)
+        calc_len = min(np.shape(all_x)[0], np.shape(all_target)[0], np.shape(all_y)[0])
+        end_test_data = calc_len
+        start_test_data = end_test_data - int(calc_len * PERCENT_TEST_DATA)
+
+        end_valid_data = start_test_data
+        start_valid_data = end_valid_data - int(calc_len * PERCENT_VALID_DATA)
+
+        end_train_data = start_valid_data
+        start_train_data = 0
 
         train_x = all_x[start_train_data:end_train_data]
         train_target = all_target[start_train_data:end_train_data]

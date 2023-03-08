@@ -1,7 +1,9 @@
 from eval import *
 from collections import defaultdict
 from filepaths_constants import *
+
 run_ml_flow = True if mlflow.active_run() is True else False
+
 
 def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, index_graphing=None):
     fig, (ax1, ax2) = plt.subplots(1, 2)
@@ -49,6 +51,16 @@ def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, i
     return overall_acc, overall_bias
 
 
+def show_data_sample(x, target, y, data_type):
+    print(f"\n======={data_type}=======")
+    print(x.shape)
+    print(x[0])
+    print(target.shape)
+    print(target[0])
+    print(y.shape)
+    print(y[0])
+
+
 def plot_train_val_loss(train_loss, valid_loss):
     plt.plot(range(0, len(train_loss)), train_loss, label="train loss")
     plt.plot(range(0, len(train_loss)), valid_loss, label="validation loss")
@@ -91,6 +103,8 @@ def multi_dict(k, t):
         return defaultdict(t)
     else:
         return defaultdict(lambda: multi_dict(k - 1, t))
+
+
 def display_multiple_factors_comparison(all_data,
                                         y1_var,
                                         y2_var,
