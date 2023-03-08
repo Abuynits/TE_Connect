@@ -42,11 +42,14 @@ def get_model_prediction(model, model_inp):
     else:
         raise Exception("error: invalid model selected")
     return pred
+
+
 def multi_dict(k, t):
     if k == 1:
         return defaultdict(t)
     else:
         return defaultdict(lambda: multi_dict(k - 1, t))
+
 
 def get_all_factor_comparison(all_data,
                               output_var,
@@ -78,8 +81,8 @@ def _calc_tensor_acc(prediction, actual):
 
     prediction = prediction.squeeze()
     actual = actual.squeeze()
-    actual = torch.nan_to_num(actual, nan=0, posinf=0,neginf=0)
-    prediction = torch.nan_to_num(prediction, nan=0, posinf=0,neginf=0)
+    actual = torch.nan_to_num(actual, nan=0, posinf=0, neginf=0)
+    prediction = torch.nan_to_num(prediction, nan=0, posinf=0, neginf=0)
     if torch.cuda.is_available():
         actual = actual.cuda()
         prediction = prediction.cuda()
@@ -105,7 +108,9 @@ def _calc_tensor_acc(prediction, actual):
         individual_acc = torch.sub(ones, torch.div(individual_abs_err, torch.abs(actual)))
     else:
         individual_acc = torch.sub(ones, torch.div(individual_abs_err.detach().cpu(), torch.abs(actual).detach().cpu()))
-    # WORKAROUND BC BAD ACCURACY
+    individual_acc = torch.max(individual_acc, torch.tensor([0.]))
+
+    # clean up accuracy calculation
     individual_acc = torch.nan_to_num(individual_acc, nan=0, posinf=0, neginf=0)
     if EVAL_VERBOSE:
         print("indiv acc shape", individual_acc.shape)
@@ -114,6 +119,7 @@ def _calc_tensor_acc(prediction, actual):
     if EVAL_VERBOSE:
         print("indiv bias shape", individual_bias.shape)
         print(individual_bias)
+
     # compute all actual sales by taking the sum of a tensor
     all_abs_error = torch.sum(individual_abs_err)
     if EVAL_VERBOSE:
@@ -129,7 +135,7 @@ def _calc_tensor_acc(prediction, actual):
     if EVAL_VERBOSE:
         print(overall_acc)
         print(overall_bias)
-    return overall_acc.item(), overall_bias.item(), \
+    return max(overall_acc.item(), 0.), overall_bias.item(), \
         (individual_acc.detach().squeeze().cpu().numpy(),
          individual_bias.detach().squeeze().cpu().numpy(),
          individual_abs_err.detach().squeeze().cpu().numpy())
@@ -149,3 +155,10 @@ def eval_data_prediction(pred_inv_t, actual_model_inv_t):
     # print(f"Accuracy: {format(overall_acc, '.4f')}, Bias: {format(overall_bias, '.2f')}")
 
     return overall_acc, overall_bias, individual_acc, individual_bias, individual_abs_err
+
+
+def test_eval():
+    EVAL_VERBOSE = True
+    pred = [1, 10, 3, -10]
+    actual = [1, 2, 3, 4]
+    print(calc_feature_similarity(pred, actual))
