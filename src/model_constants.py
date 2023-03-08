@@ -5,7 +5,7 @@ ML_FLOW_EXPERIMENT_NAME = "testing"
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 BATCH_SIZE = 1024
 LEARNING_RATE = 1e-3
-EPOCHS = 100
+EPOCHS = 5
 
 GAMMA = 0.95
 
@@ -30,8 +30,8 @@ LSTM_LAYER_COUNT = 2  # number of layers in lstm cell
 
 SEQ2SEQ_ENCODER_DROPOUT = 0.10#0.25
 SEQ2SEQ_DECODER_DROPOUT = 0.10#0.25
-SEQ2SEQ_HIDDEN_SIZE = 512  # number of lstm cells
-SEQ2SEQ_LAYER_COUNT = 8  # number of layers in lstm cell
+SEQ2SEQ_HIDDEN_SIZE = 4 # 512  # number of lstm cells
+SEQ2SEQ_LAYER_COUNT = 2 # 8  # number of layers in lstm cell
 SEQ2SEQ_INPUT_SEQ_LENGTH = LOOKBACK  # length of input sequence to LSTM
 SEQ2SEQ_MIXED_TEACHER_FORCING_RATIO = 0.5
 

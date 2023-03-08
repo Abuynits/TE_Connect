@@ -9,8 +9,7 @@ def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, i
     fig, (ax1, ax2) = plt.subplots(1, 2)
     fig.set_size_inches(10, 8)
     fig.suptitle(fig_title)
-    # if ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
-    #     pred_data = pred_data.squeeze() # TODO: need to fix visualization for transformer model
+
     print(pred_data.shape)
     print(actual_data.shape)
     overall_acc, overall_bias, individual_acc, individual_bias, individual_abs_err = eval_data_prediction(pred_data,
@@ -187,8 +186,6 @@ def check_data_transformations(check_transforms_key, reg_data, transformed_data,
     transform = output_transformations[check_transforms_key]
     plt.title("un-Normalized Transform Data")
     inv_t_data = transform.inverse_transform(transformed_data[check_transforms_key][OUTPUT_DATA_COLS])
-    # display(inv_t_data)
-    # print(np.asarray(inv_t_data).shape)
     plt.plot(inv_t_data)
     plt.show()
 

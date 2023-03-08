@@ -143,8 +143,6 @@ def calc_train_accuracy(prediction, actual):
 
 
 def eval_data_prediction(pred_inv_t, actual_model_inv_t):
-    # print("eval data len:", len(pred_inv_t))
-    # print("actual data len:", len(actual_model_inv_t))
     overall_acc, overall_bias, \
         (individual_acc, individual_bias, individual_abs_err) = calc_all_accuracy(
         torch.FloatTensor(pred_inv_t), torch.FloatTensor(actual_model_inv_t))

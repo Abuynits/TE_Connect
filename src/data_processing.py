@@ -150,6 +150,10 @@ def prep_data_for_transformer_model(data, past, future, input_data_cols, output_
     return np.array(x), np.array(target), np.array(y)
 
 
+def take_exponent(x, tgt=None, y=None):
+    return np.exp(x), np.exp(tgt) if tgt is not None else None, np.exp(y) if y is not None else None
+
+
 def check_test_train_val_percentages():
     return PERCENT_TRAIN_DATA + PERCENT_TEST_DATA + PERCENT_VALID_DATA != 1
 

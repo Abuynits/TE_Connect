@@ -26,43 +26,43 @@ stages:
       size: 8069
     outs:
     - path: data/dicts/test_dict.pkl
-      md5: f0c3061106f7e458f914f166eb81a613
+      md5: 51b2a9b530e9c755a44f9bfd7670be35
       size: 5791665
     - path: data/dicts/train_dict.pkl
-      md5: f3faa69fd47dcbbbd35cc9a69af52016
+      md5: 4edbfe541a12b5a9ae54a1a0145d8339
       size: 42204655
     - path: data/dicts/validation_dict.pkl
-      md5: ba0e71ab4c0e36d2a7ed4eb1f090d3b6
+      md5: 9985334c72bdd5b53b34d3f166e59cf5
       size: 11792160
     - path: data/model_io/test_target.pkl
-      md5: 0f06f0d12fb118c32323799c5532a894
+      md5: e86d75535b289f486c2a2248c40dfef0
       size: 1735364
     - path: data/model_io/test_x.pkl
-      md5: bddc5286bdff2bbfb22667354427b56c
+      md5: 6f0e5aaa966641e12f11b7ec7f57f8d6
       size: 3470564
     - path: data/model_io/test_y.pkl
       md5: f310c77ce929d4359772b1b92a994297
       size: 578564
     - path: data/model_io/train_target.pkl
-      md5: 9c37a4dc494688aa660c0a3ddccd5ce2
+      md5: 53f619783457f06f75a1dbfa809cfb63
       size: 12658964
     - path: data/model_io/train_x.pkl
-      md5: f87c33807311ab91691a1e4c4ab91220
+      md5: d395a690d7cecb49b12f0365489d2f8e
       size: 25317764
     - path: data/model_io/train_y.pkl
       md5: 5fba31b4e3ab9f8e08e8009291c40303
       size: 4219764
     - path: data/model_io/validation_target.pkl
-      md5: 4afe7c01306ed6c0400f7691cf55a3d1
+      md5: 45e2106c229ebaeb1a9d3a90671dd161
       size: 3535364
     - path: data/model_io/validation_x.pkl
-      md5: 780d3e5ef40d2d8266da87d3b85c2f13
+      md5: 66802e2c8b014dcd4716afff047ed1c1
       size: 7070564
     - path: data/model_io/validation_y.pkl
       md5: 5e721a5a92758c6e250113875116be41
       size: 1178564
     - path: data/transformations/input_transformations.pkl
-      md5: 333bb369b4f22991769970f2412ea2b8
+      md5: 2e1303d54fbfc9b4f9a9c8c3fc521b63
       size: 20804
     - path: data/transformations/output_transformations.pkl
       md5: 2238fec4c3893c242e74c58c70fc72c9
@@ -74,75 +74,75 @@ stages:
     cmd: python3 src/train.py
     deps:
     - path: data/dicts/train_dict.pkl
-      md5: a52279959f0d5ad132cfff420d77b15e
-      size: 258974054
+      md5: 4edbfe541a12b5a9ae54a1a0145d8339
+      size: 42204655
     - path: data/dicts/validation_dict.pkl
-      md5: e9923c1368afa3ff1b66e68cdcc8c4f5
-      size: 69523409
+      md5: 9985334c72bdd5b53b34d3f166e59cf5
+      size: 11792160
     - path: data/model_io/train_target.pkl
-      md5: 9dec4fca44b61e6d297b56e8677c76c9
-      size: 77679764
+      md5: 53f619783457f06f75a1dbfa809cfb63
+      size: 12658964
     - path: data/model_io/train_x.pkl
-      md5: 821eab1bfc3791d808829779e1480707
-      size: 155359364
+      md5: d395a690d7cecb49b12f0365489d2f8e
+      size: 25317764
     - path: data/model_io/train_y.pkl
-      md5: 1ef820353108d62427c24292780c53e5
-      size: 25893364
+      md5: 5fba31b4e3ab9f8e08e8009291c40303
+      size: 4219764
     - path: data/model_io/validation_target.pkl
-      md5: 270c00d53c848e6625881b5b92d5d21b
-      size: 20853764
+      md5: 45e2106c229ebaeb1a9d3a90671dd161
+      size: 3535364
     - path: data/model_io/validation_x.pkl
-      md5: 9b5c2f196b0009de56d96b3223586086
-      size: 41707364
+      md5: 66802e2c8b014dcd4716afff047ed1c1
+      size: 7070564
     - path: data/model_io/validation_y.pkl
-      md5: e1961306c6b12521006e943cabf4f755
-      size: 6951364
+      md5: 5e721a5a92758c6e250113875116be41
+      size: 1178564
     - path: data/regular_data.pkl
-      md5: e6cf62becf750b7871b57361affda49d
-      size: 13606724
+      md5: 55d55d88054edb1004dcc0b92f8b43f2
+      size: 2021198
     - path: data/transformed_data.pkl
-      md5: 5087f10e22f07e6e20720fb15ab016f3
-      size: 13630785
+      md5: f07671d84d0cb7354ce79bbf699e7a5f
+      size: 1841972
     - path: src/data_constants.py
       md5: 1bc6dad04bf13db063ed62770dbf50fb
       size: 1280
     - path: src/data_processing.py
-      md5: b0802e58aad24db48e64b3048d43c2a4
-      size: 11385
+      md5: 73cfd33b1fb9d11401c089fe9b8922e7
+      size: 11650
     - path: src/dl_ds.py
       md5: e503e3ed05e5cec789385c26c60da92f
       size: 1869
     - path: src/filepaths_constants.py
-      md5: c7dab28f00e02bba4e301d451ad06194
-      size: 4683
+      md5: bad1df26a5d23b0bfb8595a62ff38746
+      size: 4210
     - path: src/lstm_arch.py
       md5: 0d58e173347fbf0f63731542ad327894
       size: 1618
     - path: src/model_constants.py
-      md5: cea6aaa5b285a0f27fd5a0769c734636
-      size: 2546
+      md5: 69854687bb4e05d750318f47c900a67b
+      size: 2575
     - path: src/saving_reading_data.py
       md5: d25a73b8cbf2205527002650bd590b1b
       size: 3928
     - path: src/seq2seq_arch.py
-      md5: 9accea13bd0d9d366eb23e48a3fbaa36
-      size: 7241
+      md5: 30600783f7f7660c48778d92cd42d44a
+      size: 7226
     - path: src/train.py
-      md5: b61a7325ae7a133cc3f7e241c79247cc
-      size: 7614
+      md5: c5d8be1da3ace94714821bf80c7862a4
+      size: 8841
     - path: src/visualization.py
-      md5: 527ba12f1f7323c4015d077540cafe88
-      size: 9187
+      md5: 1f5ac8ab9cf5a03097511da743482af4
+      size: 8069
     outs:
     - path: data/model/model.pkl
-      md5: 3d7a613bfe00207637b8e5bbf758ec19
-      size: 869436
+      md5: 2747e340e9aeb572468fc5ee0937c389
+      size: 128157
     - path: metrics/model_param.json
-      md5: f8ae3137933baa7915fe31443e935cc5
-      size: 387
+      md5: b48e2bba2256a59414837fa3623dc836
+      size: 381
     - path: metrics/train_metric.json
-      md5: e150791313662f16d8834a9daa667ea3
-      size: 209
+      md5: 60f2b713583abd259388e73124bb1af4
+      size: 214
   eval_model:
     cmd: python3 src/eval_model.py
     deps:
