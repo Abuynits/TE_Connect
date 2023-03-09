@@ -112,3 +112,4 @@ class ESN(nn.Module):
         self.XTX = None
         self.XTy = None
         self.X = None
+

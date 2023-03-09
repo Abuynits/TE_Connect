@@ -1,7 +1,7 @@
 from filepaths_constants import *
 
 # must contain each one of these labels
-DATA_FILTER = ["Asia Pacific & ANZ", "Channel - Industrial"]
+DATA_FILTER = []
 # data_filter = ["Asia Pacific & ANZ"]
 # collumns of interest
 INPUT_DATA_COLS = ["sales_amount", "sales_quantity", "Price"]  # add features to end to make itself predict the output col - lstm not limit to 1 feature
