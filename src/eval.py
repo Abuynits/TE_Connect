@@ -106,9 +106,10 @@ def _calc_tensor_acc(prediction, actual):
     # compute accuracy for each component
     if torch.cuda.is_available():
         individual_acc = torch.sub(ones, torch.div(individual_abs_err, torch.abs(actual)))
+        individual_acc = torch.max(individual_acc, torch.tensor([0.]).cuda())
     else:
         individual_acc = torch.sub(ones, torch.div(individual_abs_err.detach().cpu(), torch.abs(actual).detach().cpu()))
-    individual_acc = torch.max(individual_acc, torch.tensor([0.]))
+        individual_acc = torch.max(individual_acc, torch.tensor([0.]).cuda())
 
     # clean up accuracy calculation
     individual_acc = torch.nan_to_num(individual_acc, nan=0, posinf=0, neginf=0)

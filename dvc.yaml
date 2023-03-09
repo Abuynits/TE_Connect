@@ -2,6 +2,7 @@ stages:
   data_generation:
     cmd: python3 src/generate_all_data.py
     deps:
+      - src/filepaths_constants.py
       - src/data_processing.py
       - src/visualization.py
       - src/saving_reading_data.py
