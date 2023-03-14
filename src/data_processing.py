@@ -116,10 +116,16 @@ def transform_norm_rem_out(grouped_df, input_data_cols, output_data_cols=None, d
                 _, output_transformations[name] = apply_log_transform(group.copy(), output_data_cols)
                 group, _ = apply_log_transform(group.copy(), data_cols)
             else:
-                scalar1 = MinMaxScaler()
-                input_transformations[name] = scalar1.fit(group[input_data_cols])
-                output_transformations[name] = scalar1.fit(group[output_data_cols])
-                group[data_cols] = scalar1.fit_transform(group[data_cols])
+                inp_scalar = MinMaxScaler()
+                inp_scalar.fit(group[input_data_cols])
+                input_transformations[name] = inp_scalar
+
+                out_scalar = MinMaxScaler()
+                out_scalar.fit(group[output_data_cols])
+                output_transformations[name] = out_scalar
+
+                all_scalar = MinMaxScaler()
+                group[data_cols] = all_scalar.fit_transform(group[data_cols])
 
             transformed_data[name] = group
             if display_once:

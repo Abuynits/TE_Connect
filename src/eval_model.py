@@ -42,6 +42,7 @@ for key, val in enumerate(dict_test_data):
     print(y.shape)
     # take inverse transformation
     all_pred_data = []
+    print(transformed_data[val][OUTPUT_DATA_COLS].shape)
     all_actual_data = np.squeeze(
         output_transformations[val].inverse_transform(
             transformed_data[val][OUTPUT_DATA_COLS])[0:len(x)])
