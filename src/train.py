@@ -172,9 +172,8 @@ for e in range(EPOCHS):
     print('-' * 80)
     print('| end of epoch {:3d} | time: {:5.2f}s | lr: {:5.6f} | train loss {:.4f}| valid loss: {:.4f}'.format(e,
                                                                                                                (
-                                                                                                                           time.time() - start_time),
-                                                                                                               scheduler.get_last_lr()[
-                                                                                                                   -1],
+                                                                                                               time.time() - start_time),
+                                                                                                               scheduler.get_last_lr()[-1],
                                                                                                                avg_train_loss,
                                                                                                                avg_valid_loss))
     if EVAL_TRAIN_ACC:
@@ -188,6 +187,7 @@ for e in range(EPOCHS):
                                                                                                  num_epochs_run,
                                                                                                  valid_overall_acc
                                                                                                  ))
+            break
 train_time = time.time() - start_time
 
 best_val_loss = min(train_loss)

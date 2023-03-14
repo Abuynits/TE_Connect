@@ -22,8 +22,8 @@ def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, i
     ax2.set_xlabel("time steps")
 
     x_axis = list(range(0, len(actual_data)))
-    x_axis_offset = list(range(PREDICT, len(pred_data) + PREDICT))
-    cut_axis_offset = list(range(PREDICT, len(pred_data)))
+    x_axis_offset = list(range(LOOKBACK, len(pred_data) + LOOKBACK))
+    cut_axis_offset = list(range(LOOKBACK, len(actual_data)))
     ax1.plot(x_axis_offset, pred_data, label="pred")
     ax1.plot(x_axis, actual_data, label="actual")
     ax1.plot(cut_axis_offset, individual_abs_err, label="abs err")
