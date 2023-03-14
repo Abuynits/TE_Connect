@@ -1,7 +1,11 @@
 from visualization import *
 from sklearn.compose import make_column_transformer
 
-
+def get_scalar():
+    if SCALAR_CHOICE == SCALAR.MINMAX:
+        return MinMaxScaler()
+    elif SCALAR_CHOICE == SCALAR.STANDARD:
+        return StandardScaler()
 def get_raw_data(filtered_df, business_unit_group_name=None, company_region_name_level1=None, product_line_code=None):
     if business_unit_group_name is not None:
         filtered_df = filtered_df[filtered_df['business_unit_group_name']
@@ -63,7 +67,7 @@ def key_filter_match(name, data_filter):
 def apply_log_transform(group, data_cols):
     group[data_cols] = group[data_cols].astype(float)
     group[data_cols] = np.log(group[data_cols])
-    scalar1 = MinMaxScaler()
+    scalar1 = get_scalar()
     group[data_cols] = scalar1.fit_transform(group[data_cols])
     return group, scalar1
 
@@ -79,7 +83,7 @@ def transform_norm_rem_out(grouped_df, input_data_cols, output_data_cols=None, d
     if output_data_cols is None:
         data_cols = input_data_cols
         print("using simple df cols", data_cols)
-        scalar1 = MinMaxScaler()
+        scalar1 = get_scalar()
         if APPLY_LOG_TRANSFORM:
             data, _ = apply_log_transform(grouped_df, data_cols)
             return data
@@ -116,15 +120,15 @@ def transform_norm_rem_out(grouped_df, input_data_cols, output_data_cols=None, d
                 _, output_transformations[name] = apply_log_transform(group.copy(), output_data_cols)
                 group, _ = apply_log_transform(group.copy(), data_cols)
             else:
-                inp_scalar = MinMaxScaler()
+                inp_scalar = get_scalar()
                 inp_scalar.fit(group[input_data_cols])
                 input_transformations[name] = inp_scalar
 
-                out_scalar = MinMaxScaler()
+                out_scalar = get_scalar()
                 out_scalar.fit(group[output_data_cols])
                 output_transformations[name] = out_scalar
 
-                all_scalar = MinMaxScaler()
+                all_scalar = get_scalar()
                 group[data_cols] = all_scalar.fit_transform(group[data_cols])
 
             transformed_data[name] = group

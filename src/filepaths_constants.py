@@ -24,7 +24,7 @@ import json
 import time
 import os
 import pytorch_lightning as pl
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 import random as andom
 import math
 from sklearn.compose import ColumnTransformer
@@ -66,12 +66,21 @@ FACTOR_TO_PRODUCT_DICT_FP = "data/factor_to_product.json"
 PRODUCT_TO_FACTOR_DICT_FP = "data/product_to_factor.json"
 MLFLOW_URL = "https://dagshub.com/Abuynits/TE_Connect.mlflow"
 
+
 class DATA_SPLIT(Enum):
     ON_PRODUCT_CODES = 0  # split into test,validation, training for each product code
     ON_EACH_PRODUCT = 1  # get data from each product code
 
 
 SPLIT_TYPE = DATA_SPLIT.ON_EACH_PRODUCT
+
+
+class SCALAR(Enum):
+    STANDARD = 0
+    MINMAX = 1
+
+
+SCALAR_CHOICE = SCALAR.STANDARD
 
 
 class RUN_TYPE(Enum):

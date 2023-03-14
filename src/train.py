@@ -54,10 +54,9 @@ lowest_epoch = 0
 all_valid_epoch_acc = []
 
 
-def get_model_pred(x, target, y):
+def get_model_pred(x, target):
     if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
         x = x.swapaxes(0, 1)  # want to put data in (seq, batches,num features)
-        y = y.swapaxes(0, 1)
         model_out = model.forward(x, target)
     elif ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
         model_out = model.forward(x)
@@ -86,7 +85,7 @@ def train_epoch(dl, epoch):
         target = target.to(DEVICE)
         y = y.to(DEVICE)
 
-        model_out = get_model_pred(x, target, y)
+        model_out = get_model_pred(x, target)
         # squeeze the tensors to account for 1 dim sizes
         model_out = model_out.squeeze()
         y = y.squeeze()
@@ -114,7 +113,7 @@ def test_epoch(dl, epoch):
         if ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
             model_out = time_predict(model, x)
         else:
-            model_out = get_model_pred(x, target, y)
+            model_out = get_model_pred(x, target)
 
         model_out = model_out.squeeze()
         y = y.squeeze()
