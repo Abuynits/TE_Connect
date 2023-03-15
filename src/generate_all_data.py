@@ -2,6 +2,7 @@
 from data_processing import *
 from visualization import *
 from saving_reading_data import *
+from data_constants import *
 
 if READ_FROM_DRIVE:
     from google.colab import drive

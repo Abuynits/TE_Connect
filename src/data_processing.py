@@ -1,11 +1,14 @@
 from visualization import *
 from sklearn.compose import make_column_transformer
 
+
 def get_scalar():
     if SCALAR_CHOICE == SCALAR.MINMAX:
         return MinMaxScaler()
     elif SCALAR_CHOICE == SCALAR.STANDARD:
         return StandardScaler()
+
+
 def get_raw_data(filtered_df, business_unit_group_name=None, company_region_name_level1=None, product_line_code=None):
     if business_unit_group_name is not None:
         filtered_df = filtered_df[filtered_df['business_unit_group_name']
@@ -182,25 +185,35 @@ def split_each_data_group(transformed_data, dict_train_data, dict_valid_data,
                                                                    OUTPUT_DATA_COLS)
         calc_len = min(np.shape(all_x)[0], np.shape(all_target)[0], np.shape(all_y)[0])
         end_test_data = calc_len
-        start_test_data = end_test_data - int(calc_len * PERCENT_TEST_DATA)
-
+        print("end_test_data:", end_test_data)
+        if SPLIT_BY_PERCENT:
+            start_test_data = end_test_data - int(calc_len * PERCENT_TEST_DATA)
+        else:
+            start_test_data = end_test_data - PREDICT
+        print("start_test_data:", start_test_data)
         end_valid_data = start_test_data
+        print("end_valid_data:", end_valid_data)
         start_valid_data = end_valid_data - int(calc_len * PERCENT_VALID_DATA)
-
+        print("start_valid_data:", start_valid_data)
         end_train_data = start_valid_data
+        print("end_train_data:", end_train_data)
         start_train_data = 0
+        print("start_train_data:", start_train_data)
 
         train_x = all_x[start_train_data:end_train_data]
         train_target = all_target[start_train_data:end_train_data]
         train_y = all_y[start_train_data:end_train_data]
+        print("len train_y:", len(train_y))
 
         valid_x = all_x[start_valid_data:end_valid_data]
         valid_target = all_target[start_valid_data:end_valid_data]
         valid_y = all_y[start_valid_data:end_valid_data]
+        print("len valid_y:", len(valid_y))
 
         test_x = all_x[start_test_data:]
         test_target = all_target[start_test_data:]
         test_y = all_y[start_test_data:]
+        print("len test_y:", len(test_y))
 
         if len(train_x) != len(train_target) != len(train_y):
             raise Exception("bad train data slip!!")

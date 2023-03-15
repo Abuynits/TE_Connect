@@ -1,3 +1,5 @@
+import torch
+
 from visualization import *
 from model_constants import *
 from visualization import *
@@ -6,19 +8,19 @@ from time_transformer import *
 
 
 def calc_all_accuracy(prediction, actual):
-    # print(prediction.shape)
-    # print(actual.shape)
     prediction = prediction.squeeze()
     actual = actual.squeeze()
-    prediction = prediction[:-PREDICT]
-    actual = actual[PREDICT:]
+    prediction = prediction[:-LOOKBACK]  # go from 100 -> end -> Lookback
+    actual = actual[LOOKBACK:]  # go from 0 -> end
+    print(prediction.shape)
+    print(actual.shape)
 
     return _calc_tensor_acc(prediction, actual)
 
 
 def calc_feature_similarity(prediction, actual):
-    prediction = torch.tensor(prediction).squeeze()
-    actual = torch.tensor(actual).squeeze()
+    prediction = torch.FloatTensor(prediction).squeeze()
+    actual = torch.FloatTensor(actual).squeeze()
 
     return _calc_tensor_acc(prediction, actual)
 
@@ -149,13 +151,19 @@ def calc_train_accuracy(prediction, actual):
     return _calc_tensor_acc(prediction, actual)
 
 
-def eval_data_prediction(pred_inv_t, actual_model_inv_t):
+def eval_data_prediction(pred_inv_t, actual_inv_t):
     overall_acc, overall_bias, \
         (individual_acc, individual_bias, individual_abs_err) = calc_all_accuracy(
-        torch.FloatTensor(pred_inv_t), torch.FloatTensor(actual_model_inv_t))
+        torch.FloatTensor(pred_inv_t), torch.FloatTensor(actual_inv_t))
+
+    pred_overall_acc, pred_overall_bias, (_, _, _) = calc_feature_similarity(
+        pred_inv_t[len(actual_inv_t)-LOOKBACK-PREDICT:len(actual_inv_t)-LOOKBACK],
+        actual_inv_t[-PREDICT:]
+    )
     # print(f"Accuracy: {format(overall_acc, '.4f')}, Bias: {format(overall_bias, '.2f')}")
 
-    return overall_acc, overall_bias, individual_acc, individual_bias, individual_abs_err
+    return (overall_acc, overall_bias), (pred_overall_acc, pred_overall_bias), \
+        individual_acc, individual_bias, individual_abs_err
 
 
 def test_eval():

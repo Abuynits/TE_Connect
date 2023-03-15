@@ -12,18 +12,19 @@ def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, i
 
     print(pred_data.shape)
     print(actual_data.shape)
-    overall_acc, overall_bias, individual_acc, individual_bias, individual_abs_err = eval_data_prediction(pred_data,
+    (overall_acc, overall_bias), \
+        (pred_acc, pred_bias), individual_acc, individual_bias, individual_abs_err = eval_data_prediction(pred_data,
                                                                                                           actual_data)
     ax2.plot(individual_acc, label="accuracy")
     ax2.plot(individual_bias, label="bias")
-    ax2.set_title(f"acc:{overall_acc:.4f}, bias:{overall_bias:.4f}")
+    ax2.set_title(f"Overall: acc:{overall_acc:.4f}, bias:{overall_bias:.4f}\nPred: acc:{pred_acc:.4f}, bias:{pred_bias:.4f}")
     ax2.legend()
     ax2.set_ylabel("percentage")
     ax2.set_xlabel("time steps")
 
     x_axis = list(range(0, len(actual_data)))
     x_axis_offset = list(range(LOOKBACK, len(pred_data) + LOOKBACK))
-    cut_axis_offset = list(range(LOOKBACK, len(actual_data)))
+    cut_axis_offset = list(range(LOOKBACK, LOOKBACK + len(individual_abs_err)))
     ax1.plot(x_axis_offset, pred_data, label="pred")
     ax1.plot(x_axis, actual_data, label="actual")
     ax1.plot(cut_axis_offset, individual_abs_err, label="abs err")
