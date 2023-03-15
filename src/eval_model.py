@@ -1,3 +1,5 @@
+import mlflow
+
 from saving_reading_data import *
 from data_processing import *
 from eval import *
@@ -31,6 +33,12 @@ for key, val in enumerate(dict_train_data):
 print("\n========dict_valid_data========")
 for key, val in enumerate(dict_valid_data):
     print(val)
+
+all_acc = []
+all_bias = []
+
+pred_acc = []
+pred_bias = []
 
 for key, val in enumerate(dict_test_data):
     x, tgt, y = prep_data_for_transformer_model(transformed_data[val], LOOKBACK, PREDICT, INPUT_DATA_COLS,
@@ -97,15 +105,36 @@ for key, val in enumerate(dict_test_data):
         all_pred_data = torch.Tensor(all_pred_data)
         all_actual_data = torch.Tensor(all_actual_data)
 
-        overall_acc, overall_bias = eval_plot_acc_pred_bias(
+        overall_acc, overall_bias, pred_acc, pred_bias = eval_plot_acc_pred_bias(
             f'Total acc/bias & prediction: {val}',
             all_pred_data,
             all_actual_data,
             file_name=f"total_acc_bias{val}",
             index_graphing=None)
         if run_ml_flow:
-            mlflow.log_metric("overall accuracy:", overall_acc)
-            mlflow.log_metric("overall bias:", overall_bias)
+            mlflow.log_metric("overall accuracy", overall_acc)
+            mlflow.log_metric("overall bias", overall_bias)
+            mlflow.log_metric("pred bias", overall_acc)
+            mlflow.log_metric("pred acc", overall_bias)
+
+        all_acc.append(overall_acc)
+        all_bias.append(overall_bias)
+        pred_acc.append(overall_acc)
+        pred_bias.append(overall_bias)
+
+avg_all_acc = sum(all_acc) / len(all_acc)
+print(f"all_acc avg: {avg_all_acc:.4f}")
+avg_all_bias = sum(all_bias) / len(all_bias)
+print(f"all_bias avg: {avg_all_bias:.4f}")
+avg_pred_acc = sum(pred_acc) / len(pred_acc)
+print(f"pred_acc avg: {avg_pred_acc:.4f}")
+avg_pred_bias = sum(pred_bias) / len(pred_bias)
+print(f"pred_bias avg: {avg_pred_bias:.4f}")
+
+mlflow.log_metric("avg_all_acc", avg_all_acc)
+mlflow.log_metric("avg_all_bias", avg_all_bias)
+mlflow.log_metric("avg_pred_acc", avg_pred_acc)
+mlflow.log_metric("avg_pred_bias", avg_pred_bias)
 
 if run_ml_flow:
     mlflow.end_run()

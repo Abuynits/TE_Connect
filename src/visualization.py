@@ -17,7 +17,8 @@ def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, i
                                                                                                           actual_data)
     ax2.plot(individual_acc, label="accuracy")
     ax2.plot(individual_bias, label="bias")
-    ax2.set_title(f"Overall: acc:{overall_acc:.4f}, bias:{overall_bias:.4f}\nPred: acc:{pred_acc:.4f}, bias:{pred_bias:.4f}")
+    ax2.set_title(
+        f"Overall: acc:{overall_acc:.4f}, bias:{overall_bias:.4f}\nPred: acc:{pred_acc:.4f}, bias:{pred_bias:.4f}")
     ax2.legend()
     ax2.set_ylabel("percentage")
     ax2.set_xlabel("time steps")
@@ -48,7 +49,7 @@ def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, i
             full_fp = "data_pred.png"
             mlflow.log_figure(plt, full_fp)
     plt.show()
-    return overall_acc, overall_bias
+    return (overall_acc, overall_bias), (pred_acc, pred_bias)
 
 
 def show_data_sample(x, target, y, data_type):
