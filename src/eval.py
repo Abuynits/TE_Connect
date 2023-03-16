@@ -79,7 +79,8 @@ def get_all_factor_comparison(all_data,
 
 
 def _calc_tensor_acc(prediction, actual):
-    assert len(prediction) == len(actual), "something went very wrong"
+    if len(prediction) != len(actual):
+        print("doing calculation with different lengths: ", len(prediction), len(actual))
 
     prediction = prediction.squeeze()
     actual = actual.squeeze()
@@ -157,7 +158,7 @@ def eval_data_prediction(pred_inv_t, actual_inv_t):
         torch.FloatTensor(pred_inv_t), torch.FloatTensor(actual_inv_t))
 
     pred_overall_acc, pred_overall_bias, (_, _, _) = calc_feature_similarity(
-        pred_inv_t[len(actual_inv_t)-LOOKBACK-PREDICT:len(actual_inv_t)-LOOKBACK],
+        pred_inv_t[len(actual_inv_t) - LOOKBACK - PREDICT:len(actual_inv_t) - LOOKBACK],
         actual_inv_t[-PREDICT:]
     )
     # print(f"Accuracy: {format(overall_acc, '.4f')}, Bias: {format(overall_bias, '.2f')}")

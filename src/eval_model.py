@@ -105,7 +105,7 @@ for key, val in enumerate(dict_test_data):
         all_pred_data = torch.Tensor(all_pred_data)
         all_actual_data = torch.Tensor(all_actual_data)
 
-        overall_acc, overall_bias, pred_acc, pred_bias = eval_plot_acc_pred_bias(
+        (overall_acc, overall_bias), (prediction_acc, prediction_bias) = eval_plot_acc_pred_bias(
             f'Total acc/bias & prediction: {val}',
             all_pred_data,
             all_actual_data,
@@ -119,8 +119,8 @@ for key, val in enumerate(dict_test_data):
 
         all_acc.append(overall_acc)
         all_bias.append(overall_bias)
-        pred_acc.append(overall_acc)
-        pred_bias.append(overall_bias)
+        pred_acc.append(prediction_acc)
+        pred_bias.append(prediction_bias)
 
 avg_all_acc = sum(all_acc) / len(all_acc)
 print(f"all_acc avg: {avg_all_acc:.4f}")
