@@ -29,6 +29,7 @@ import random as andom
 import math
 from sklearn.compose import ColumnTransformer
 import csv
+import ast
 
 # DATA INFO
 # location of CSV file:

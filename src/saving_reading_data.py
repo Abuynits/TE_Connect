@@ -131,20 +131,29 @@ def check_if_file_exists(filename):
 def reset_output_file():
     with open(RESULTS_FILE_PATH, 'w') as f:
         writer = csv.writer(f)
-        header_row = ["product_key", "pred", "actual", "bias", "abs_err"]
+        header_row = ["year", "fiscal week", "id", "business group", "region", "pred", "actual", "bias", "abs_err"]
         writer.writerow(header_row)
 
 
 def write_results_to_file(key, all_pred_acc, all_pred_bias,
                           acc, bias, abs_err,
-                          pred_data, actual_data):
-    assert (len(bias) == len(acc) == len(abs_err) == len(pred_data) == len(actual_data)), "bad data lengths!"
+                          pred_data, actual_data, time):
+    assert (len(time) == len(bias) == len(acc) == len(abs_err) == len(pred_data) == len(
+        actual_data)), "bad data lengths!"
 
     with open(RESULTS_FILE_PATH, 'a') as f:
         writer = csv.writer(f)
 
         for row in range(len(pred_data)):
-            data_row = [key, pred_data[row].item(), actual_data[row].item(), bias[row], abs_err[row]]
+            fiscal_week = time[row] % 100
+            year = time[row] // 100
+
+            product_id = key[0]
+            business_group = key[2]
+            region = key[1]
+
+            data_row = [year, fiscal_week, product_id, business_group, region, pred_data[row].item(),
+                        actual_data[row].item(), bias[row], abs_err[row]]
             writer.writerow(data_row)
 
         metadata = [key, all_pred_acc, all_pred_bias]
