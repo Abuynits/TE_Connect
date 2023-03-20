@@ -28,6 +28,7 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler
 import random as andom
 import math
 from sklearn.compose import ColumnTransformer
+import csv
 
 # DATA INFO
 # location of CSV file:
@@ -87,6 +88,10 @@ class RUN_TYPE(Enum):
     MLFLOW_RUN = 0
     GIT_RUN = 1
 
+
+DISPLAY_RESULTS = False
+WRITE_RESULTS_FILE = True
+RESULTS_FILE_PATH = "data/results.csv"
 
 EXPERIMENT_SOURCE = RUN_TYPE.MLFLOW_RUN
 

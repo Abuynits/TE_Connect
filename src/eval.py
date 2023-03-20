@@ -157,18 +157,20 @@ def eval_data_prediction(pred_inv_t, actual_inv_t):
         (individual_acc, individual_bias, individual_abs_err) = calc_all_accuracy(
         torch.FloatTensor(pred_inv_t), torch.FloatTensor(actual_inv_t))
 
-    pred_overall_acc, pred_overall_bias, (_, _, _) = calc_feature_similarity(
+    pred_overall_acc, pred_overall_bias, (pred_individual_acc, pred_individual_bias, pred_individual_abs_err) = calc_feature_similarity(
         pred_inv_t[len(actual_inv_t) - LOOKBACK - PREDICT:len(actual_inv_t) - LOOKBACK],
         actual_inv_t[-PREDICT:]
     )
     # print(f"Accuracy: {format(overall_acc, '.4f')}, Bias: {format(overall_bias, '.2f')}")
 
     return (overall_acc, overall_bias), (pred_overall_acc, pred_overall_bias), \
-        individual_acc, individual_bias, individual_abs_err
+        (individual_acc, individual_bias, individual_abs_err), \
+        (pred_individual_acc, pred_individual_bias, pred_individual_abs_err)
 
 
 def test_eval():
-    EVAL_VERBOSE = True
-    pred = [1, 10, 3, -10]
+
+    pred = [1, 10, 3, 10]
     actual = [1, 2, 3, 4]
     print(calc_feature_similarity(pred, actual))
+test_eval()

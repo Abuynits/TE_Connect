@@ -37,8 +37,10 @@ for key, val in enumerate(dict_valid_data):
 all_acc = []
 all_bias = []
 
-pred_acc = []
-pred_bias = []
+all_pred_acc = []
+all_pred_bias = []
+
+reset_file = True
 
 for key, val in enumerate(dict_test_data):
     x, tgt, y = prep_data_for_transformer_model(transformed_data[val], LOOKBACK, PREDICT, INPUT_DATA_COLS,
@@ -89,12 +91,27 @@ for key, val in enumerate(dict_test_data):
             if APPLY_LOG_TRANSFORM:
                 pred_inv_t, _, _ = take_exponent(pred_inv_t)
                 actual_model_inv_t, _, _ = take_exponent(actual_model_inv_t)
-            eval_plot_acc_pred_bias(
-                f'Individual acc/bias & prediction: {val}',
+            print(pred_inv_t.shape)
+            print(actual_model_inv_t.shape)
+            (overall_acc, overall_bias), \
+                (pred_acc, pred_bias), (individual_acc, individual_bias, individual_abs_err), \
+                (pred_individual_acc, pred_individual_bias, pred_individual_abs_err) = eval_data_prediction(
                 pred_inv_t,
-                actual_model_inv_t,
-                file_name=f"indiv_acc_bias{val}",
-                index_graphing=None)
+                actual_model_inv_t)
+            if DISPLAY_RESULTS:
+                eval_plot_acc_pred_bias(
+                    f'Individual acc/bias & prediction: {val}',
+                    pred_inv_t,
+                    actual_model_inv_t,
+                    individual_acc,
+                    individual_bias,
+                    individual_abs_err,
+                    overall_acc,
+                    overall_bias,
+                    pred_acc,
+                    pred_bias,
+                    file_name=f"indiv_acc_bias{val}",
+                    index_graphing=None)
 
     # display all forcast at the end
     if PREDICT_ALL_FORCAST:
@@ -105,12 +122,36 @@ for key, val in enumerate(dict_test_data):
         all_pred_data = torch.Tensor(all_pred_data)
         all_actual_data = torch.Tensor(all_actual_data)
 
-        (overall_acc, overall_bias), (prediction_acc, prediction_bias) = eval_plot_acc_pred_bias(
-            f'Total acc/bias & prediction: {val}',
-            all_pred_data,
-            all_actual_data,
-            file_name=f"total_acc_bias{val}",
-            index_graphing=None)
+        (overall_acc, overall_bias), \
+            (pred_acc, pred_bias), \
+            (individual_acc, individual_bias, individual_abs_err), \
+            (pred_individual_acc, pred_individual_bias, pred_individual_abs_err) = eval_data_prediction(
+                                                                                                        all_pred_data,
+                                                                                                        all_actual_data)
+        if DISPLAY_RESULTS:
+            eval_plot_acc_pred_bias(
+                f'Total acc/bias & prediction: {val}',
+                all_pred_data,
+                all_actual_data,
+                individual_acc,
+                individual_bias,
+                individual_abs_err,
+                overall_acc,
+                overall_bias,
+                pred_acc,
+                pred_bias,
+                file_name=f"total_acc_bias{val}",
+                index_graphing=None)
+        if WRITE_RESULTS_FILE:
+            if reset_file:
+                reset_output_file()
+                reset_file = False
+
+            write_results_to_file(val, pred_acc, pred_bias,
+                                  pred_individual_acc, pred_individual_bias, pred_individual_abs_err,
+                                  all_pred_data[len(all_actual_data) - LOOKBACK - PREDICT:len(all_actual_data) - LOOKBACK],
+                                  all_actual_data[-PREDICT:]
+                                  )
         if run_ml_flow:
             mlflow.log_metric("overall accuracy", overall_acc)
             mlflow.log_metric("overall bias", overall_bias)
@@ -119,8 +160,8 @@ for key, val in enumerate(dict_test_data):
 
         all_acc.append(overall_acc)
         all_bias.append(overall_bias)
-        pred_acc.append(prediction_acc)
-        pred_bias.append(prediction_bias)
+        all_pred_acc.append(pred_acc)
+        all_pred_bias.append(pred_bias)
 
 avg_all_acc = sum(all_acc) / len(all_acc)
 print(f"all_acc avg: {avg_all_acc:.4f}")

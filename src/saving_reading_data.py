@@ -1,3 +1,5 @@
+import csv
+
 from filepaths_constants import *
 
 
@@ -124,3 +126,26 @@ def read_model_from_fp():
 
 def check_if_file_exists(filename):
     os.makedirs(os.path.dirname(filename), exist_ok=True)
+
+
+def reset_output_file():
+    with open(RESULTS_FILE_PATH, 'w') as f:
+        writer = csv.writer(f)
+        header_row = ["product_key", "pred", "actual", "bias", "abs_err"]
+        writer.writerow(header_row)
+
+
+def write_results_to_file(key, all_pred_acc, all_pred_bias,
+                          acc, bias, abs_err,
+                          pred_data, actual_data):
+    assert (len(bias) == len(acc) == len(abs_err) == len(pred_data) == len(actual_data)), "bad data lengths!"
+
+    with open(RESULTS_FILE_PATH, 'a') as f:
+        writer = csv.writer(f)
+
+        for row in range(len(pred_data)):
+            data_row = [key, pred_data[row].item(), actual_data[row].item(), bias[row], abs_err[row]]
+            writer.writerow(data_row)
+
+        metadata = [key, all_pred_acc, all_pred_bias]
+        writer.writerow(metadata)

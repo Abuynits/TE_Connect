@@ -5,16 +5,21 @@ from filepaths_constants import *
 run_ml_flow = True if mlflow.active_run() is True else False
 
 
-def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, index_graphing=None):
+def eval_plot_acc_pred_bias(fig_title,
+                            pred_data,
+                            actual_data,
+                            individual_acc,
+                            individual_bias,
+                            individual_abs_err,
+                            overall_acc,
+                            overall_bias,
+                            pred_acc,
+                            pred_bias,
+                            file_name=None, index_graphing=None):
     fig, (ax1, ax2) = plt.subplots(1, 2)
     fig.set_size_inches(10, 8)
     fig.suptitle(fig_title)
 
-    print(pred_data.shape)
-    print(actual_data.shape)
-    (overall_acc, overall_bias), \
-        (pred_acc, pred_bias), individual_acc, individual_bias, individual_abs_err = eval_data_prediction(pred_data,
-                                                                                                          actual_data)
     ax2.plot(individual_acc, label="accuracy")
     ax2.plot(individual_bias, label="bias")
     ax2.set_title(
@@ -49,8 +54,6 @@ def eval_plot_acc_pred_bias(fig_title, pred_data, actual_data, file_name=None, i
             full_fp = "data_pred.png"
             mlflow.log_figure(plt, full_fp)
     plt.show()
-    return (overall_acc, overall_bias), (pred_acc, pred_bias)
-
 
 def show_data_sample(x, target, y, data_type):
     print(f"\n======={data_type}=======")
