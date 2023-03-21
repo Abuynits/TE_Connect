@@ -151,7 +151,8 @@ for key, val in enumerate(dict_test_data):
                                   pred_individual_acc, pred_individual_bias, pred_individual_abs_err,
                                   all_pred_data[len(all_actual_data) - LOOKBACK - PREDICT:len(all_actual_data) - LOOKBACK],
                                   all_actual_data[-PREDICT:],
-                                  transformed_data[val]['year_week_ordered'].to_numpy()[-PREDICT:]
+                                  transformed_data[val]['year_week_ordered'].to_numpy()[-PREDICT:],
+                                  transformed_data[val]['fiscal_month_historical'].to_numpy()[-PREDICT:],
                                   )
         if run_ml_flow:
             mlflow.log_metric("overall accuracy", overall_acc)

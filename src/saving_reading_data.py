@@ -1,6 +1,6 @@
 import csv
 
-from filepaths_constants import *
+from data_constants import *
 
 
 def save_train_val_test_dicts(train_dict, val_dict, test_dict):
@@ -131,30 +131,66 @@ def check_if_file_exists(filename):
 def reset_output_file():
     with open(RESULTS_FILE_PATH, 'w') as f:
         writer = csv.writer(f)
-        header_row = ["year", "fiscal week", "id", "business group", "region", "pred", "actual", "bias", "abs_err"]
+        header_row = ["year", "month", "fiscal week", "id", "business group", "region", "pred", "actual", "bias",
+                      "abs_err"]
         writer.writerow(header_row)
 
 
 def write_results_to_file(key, all_pred_acc, all_pred_bias,
                           acc, bias, abs_err,
-                          pred_data, actual_data, time):
+                          pred_data, actual_data, time, months):
     assert (len(time) == len(bias) == len(acc) == len(abs_err) == len(pred_data) == len(
         actual_data)), "bad data lengths!"
+
+    product_id = key[0]
+    business_group = key[2]
+    region = key[1]
 
     with open(RESULTS_FILE_PATH, 'a') as f:
         writer = csv.writer(f)
 
-        for row in range(len(pred_data)):
-            fiscal_week = time[row] % 100
-            year = time[row] // 100
+        if PREDICTION_TYPE == prediction_time.DAILY:
+            for row in range(len(pred_data)):
+                fiscal_week = time[row] % 100
+                year = time[row] // 100
+                month = months[row]
 
-            product_id = key[0]
-            business_group = key[2]
-            region = key[1]
+                data_row = [year, month, fiscal_week, product_id, business_group, region, pred_data[row].item(),
+                            actual_data[row].item(), bias[row], abs_err[row]]
+                writer.writerow(data_row)
 
-            data_row = [year, fiscal_week, product_id, business_group, region, pred_data[row].item(),
-                        actual_data[row].item(), bias[row], abs_err[row]]
-            writer.writerow(data_row)
+            metadata = [key, all_pred_acc, all_pred_bias]
+            writer.writerow(metadata)
+        elif PREDICTION_TYPE == prediction_time.MONTHLY:
+            past_month = months[0]
+            net_pred = 0
+            net_actual = 0
+            net_bias = 0
+            net_abs_err = 0
+            count = 0
+            for row in range(len(pred_data)):
+                fiscal_week = time[row] % 100
+                year = time[row] // 100
+                month = months[row]
 
-        metadata = [key, all_pred_acc, all_pred_bias]
-        writer.writerow(metadata)
+                if past_month == month:
+                    count += 1
+                    net_actual += actual_data[row].item()
+                    net_bias += bias[row]
+                    net_abs_err += abs_err[row]
+                    net_pred += pred_data[row].item()
+                else:
+                    data_row = [year, month, "-", product_id, business_group, region, net_pred / count,
+                                net_actual / count, net_bias / count, net_abs_err / count]
+                    writer.writerow(data_row)
+
+                    net_pred = 0
+                    net_actual = 0
+                    net_bias = 0
+                    net_abs_err = 0
+                    count = 0
+                    past_month = month
+                    row = row - 1
+
+            metadata = [key, all_pred_acc, all_pred_bias]
+            writer.writerow(metadata)
