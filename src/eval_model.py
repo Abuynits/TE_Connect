@@ -99,12 +99,19 @@ for key, val in enumerate(dict_test_data):
                 pred_inv_t,
                 actual_model_inv_t)
             if DISPLAY_RESULTS:
+                monthly_acc, monthly_bias = eval_data_monthly_pred(
+                    all_pred_data,
+                    all_actual_data,
+                    transformed_data[val]['fiscal_month_historical'].to_numpy()[-PREDICT:])
+
                 eval_plot_acc_pred_bias(
                     f'Individual acc/bias & prediction: {val}',
                     pred_inv_t,
                     actual_model_inv_t,
                     individual_acc,
                     individual_bias,
+                    monthly_acc,
+                    monthly_bias,
                     individual_abs_err,
                     overall_acc,
                     overall_bias,
@@ -128,6 +135,10 @@ for key, val in enumerate(dict_test_data):
             (pred_individual_acc, pred_individual_bias, pred_individual_abs_err) = eval_data_prediction(
                                                                                                         all_pred_data,
                                                                                                         all_actual_data)
+        monthly_acc, monthly_bias = eval_data_monthly_pred(
+                                                             all_pred_data,
+                                                             all_actual_data,
+                                                             transformed_data[val]['fiscal_month_historical'].to_numpy()[-PREDICT:])
         if DISPLAY_RESULTS:
             eval_plot_acc_pred_bias(
                 f'Total acc/bias & prediction: {val}',
@@ -135,6 +146,8 @@ for key, val in enumerate(dict_test_data):
                 all_actual_data,
                 individual_acc,
                 individual_bias,
+                monthly_acc,
+                monthly_bias,
                 individual_abs_err,
                 overall_acc,
                 overall_bias,
@@ -146,9 +159,18 @@ for key, val in enumerate(dict_test_data):
             if reset_file:
                 reset_output_file()
                 reset_file = False
-
-            write_results_to_file(val, pred_acc, pred_bias,
-                                  pred_individual_acc, pred_individual_bias, pred_individual_abs_err,
+            monthly_acc, monthly_bias = eval_data_monthly_pred(
+                all_pred_data,
+                all_actual_data,
+                transformed_data[val]['fiscal_month_historical'].to_numpy()[-PREDICT:])
+            write_results_to_file(val,
+                                  pred_acc,
+                                  pred_bias,
+                                  pred_individual_acc,
+                                  pred_individual_bias,
+                                  pred_individual_abs_err,
+                                  monthly_acc,
+                                  monthly_bias,
                                   all_pred_data[len(all_actual_data) - LOOKBACK - PREDICT:len(all_actual_data) - LOOKBACK],
                                   all_actual_data[-PREDICT:],
                                   transformed_data[val]['year_week_ordered'].to_numpy()[-PREDICT:],

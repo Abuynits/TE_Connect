@@ -152,12 +152,51 @@ def calc_train_accuracy(prediction, actual):
     return _calc_tensor_acc(prediction, actual)
 
 
+def eval_data_monthly_pred(pred_inv_t, actual_inv_t, month_data):
+    month_pred = []
+    month_actual = []
+
+    pred = pred_inv_t[len(actual_inv_t) - LOOKBACK - PREDICT:len(actual_inv_t) - LOOKBACK]
+    actual = actual_inv_t[-PREDICT:]
+
+    curr_month = month_data[0]
+    prev_month = month_data[0]
+    sum_pred = 0
+    sum_actual = 0
+    month_count = 0
+    for loc in range(len(month_data)):
+        if curr_month != prev_month:
+            if month_count != 0:
+                sum_pred /= month_count
+                sum_actual /= month_count
+
+            month_pred.append(sum_pred)
+            month_actual.append(sum_actual)
+
+            sum_actual = 0
+            sum_pred = 0
+            month_count = 0
+
+        month_count += 1
+        sum_pred += pred[loc]
+        sum_actual += actual[loc]
+
+        prev_month = curr_month
+        curr_month = month_data[loc]
+
+    month_overall_acc, month_overall_bias, (_, _, _) = calc_feature_similarity(
+        month_pred,
+        month_actual)
+    return month_overall_acc, month_overall_bias
+
+
 def eval_data_prediction(pred_inv_t, actual_inv_t):
     overall_acc, overall_bias, \
         (individual_acc, individual_bias, individual_abs_err) = calc_all_accuracy(
         torch.FloatTensor(pred_inv_t), torch.FloatTensor(actual_inv_t))
 
-    pred_overall_acc, pred_overall_bias, (pred_individual_acc, pred_individual_bias, pred_individual_abs_err) = calc_feature_similarity(
+    pred_overall_acc, pred_overall_bias, (
+        pred_individual_acc, pred_individual_bias, pred_individual_abs_err) = calc_feature_similarity(
         pred_inv_t[len(actual_inv_t) - LOOKBACK - PREDICT:len(actual_inv_t) - LOOKBACK],
         actual_inv_t[-PREDICT:]
     )
@@ -167,10 +206,9 @@ def eval_data_prediction(pred_inv_t, actual_inv_t):
         (individual_acc, individual_bias, individual_abs_err), \
         (pred_individual_acc, pred_individual_bias, pred_individual_abs_err)
 
+    def test_eval():
+        pred = [1, 10, 3, 10]
+        actual = [1, 2, 3, 4]
+        print(calc_feature_similarity(pred, actual))
 
-def test_eval():
-
-    pred = [1, 10, 3, 10]
-    actual = [1, 2, 3, 4]
-    print(calc_feature_similarity(pred, actual))
-test_eval()
+    test_eval()

@@ -136,9 +136,18 @@ def reset_output_file():
         writer.writerow(header_row)
 
 
-def write_results_to_file(key, all_pred_acc, all_pred_bias,
-                          acc, bias, abs_err,
-                          pred_data, actual_data, time, months):
+def write_results_to_file(key,
+                          all_pred_acc,
+                          all_pred_bias,
+                          acc,
+                          bias,
+                          abs_err,
+                          monthly_acc,
+                          monthly_bias,
+                          pred_data,
+                          actual_data,
+                          time,
+                          months):
     assert (len(time) == len(bias) == len(acc) == len(abs_err) == len(pred_data) == len(
         actual_data)), "bad data lengths!"
 
@@ -158,9 +167,6 @@ def write_results_to_file(key, all_pred_acc, all_pred_bias,
                 data_row = [year, month, fiscal_week, product_id, business_group, region, pred_data[row].item(),
                             actual_data[row].item(), bias[row], abs_err[row]]
                 writer.writerow(data_row)
-
-            metadata = [key, all_pred_acc, all_pred_bias]
-            writer.writerow(metadata)
         elif PREDICTION_TYPE == prediction_time.MONTHLY:
             past_month = months[0]
             net_pred = 0
@@ -191,6 +197,8 @@ def write_results_to_file(key, all_pred_acc, all_pred_bias,
                     count = 0
                     past_month = month
                     row = row - 1
-
-            metadata = [key, all_pred_acc, all_pred_bias]
-            writer.writerow(metadata)
+        print(monthly_acc, monthly_bias)
+        metadata_header = ["key", "all_pred_acc", "all_pred_bias", "monthly_acc", "monthly_bias"]
+        writer.writerow(metadata_header)
+        metadata = [key, all_pred_acc, all_pred_bias, monthly_acc, monthly_bias]
+        writer.writerow(metadata)

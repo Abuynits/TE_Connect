@@ -26,7 +26,7 @@ class prediction_time(Enum):
     DAILY = 2
 
 
-PREDICTION_TYPE = prediction_time.MONTHLY
+PREDICTION_TYPE = prediction_time.DAILY
 
 DATA_PREP_DICT = {
     "GROUP_BY_PRODUCT_LINE": GROUP_BY_PRODUCT_LINE,
