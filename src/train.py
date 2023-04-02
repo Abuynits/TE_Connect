@@ -2,6 +2,7 @@ from dl_ds import *
 from saving_reading_data import *
 from seq2seq_arch import *
 from lstm_arch import *
+from ESN import *
 from time_transformer import *
 from eval import *
 from visualization import *
@@ -38,6 +39,9 @@ elif ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
     model = lstm().to(DEVICE)
 elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
     model = time_transformer().to(DEVICE)
+elif ARCH_CHOICE == MODEL_CHOICE.DEEP_ESN:
+    model = ESN().to(DEVICE)
+
 else:
     raise Exception("bad model selected!")
 
@@ -66,6 +70,9 @@ def get_model_pred(x, target):
         # target mask: [prediction length, prediction length]
         target_mask = generate_mask(PREDICT, PREDICT, DEVICE)
         model_out, _ = model.forward(x, target, inp_mask, target_mask)
+    elif ARCH_CHOICE == MODEL_CHOICE.DEEP_ESN:
+        washout_list = [int(ESN_WASHOUT_RATE * x.size(0))] * x.size(1)
+        model_out, _ = model.forward(x, washout_list)
     else:
         raise Exception("Bad model selected!")
     return model_out

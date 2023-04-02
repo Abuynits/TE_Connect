@@ -202,3 +202,50 @@ def write_results_to_file(key,
         writer.writerow(metadata_header)
         metadata = [key, all_pred_acc, all_pred_bias, monthly_acc, monthly_bias]
         writer.writerow(metadata)
+
+"""
+Try for the entire dataset - might not get same accuracy for dataset
+try to run through all dataset - not cherry pick at the beginning
+the accuracy might not be the actual picture
+- expect it to be less than 80% in most cases
+- this should be easy to do
+take some time - forcasting for seq2seq
+
+also break into smaller datasets - what are the computation thresholds
+can ask for engagement with TE - agreement with university
+if cannot run for all dataset - break into different BU and regions
+- can use instance for 3 hrs and 
+- once generate the file that he asks - generate the file, share it,
+- we can have a better undrestanding of what hte model actually does
+
+next thing:
+- everyone needs to work on external indicator - a month from now on
+- have a month to come up with them
+- project not evaluated just best on the model
+- model will depend on external indicators
+- if go back to project definition - we coming up with external indicators that capture trend
+can we capture the downstring or upstring that will happen
+- use those external indicators and get those trends captured
+- upstrings and downstrings - will boost model performance as well and outlook when present
+
+they will be more interested in the indicators than the model
+
+current econ: a lot of factors that impact the sales - a lot of prediction issues experienced
+expect ~80% accuracy for the data
+- they will reduce inventory and reduce supply - these are things that will not be historical
+    sales data - can only get from external data
+- if not leverage external indicator - will not be able to leverage the sharp downturn
+
+have inflection points in dataset where test it out - example: covid
+- if use seq2seq without external indicators,  you can say that model not pick up downtrend during covi
+
+model never experience it before in their data - these are factors get from external indicators
+- are certain downturns that see in dataset
+- if back test, see if model can capture it
+
+if able to give at least some indicators for at least half BU: better job than just giving a best model
+- without external indicators
+
+- get dataset ready and do for all things
+- computing accuracy at month level is better for me - remove uncertainty when do at week level
+"""

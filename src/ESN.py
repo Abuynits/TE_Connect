@@ -1,8 +1,9 @@
 import torch
 import torch.nn as nn
 from torch.nn.utils.rnn import PackedSequence, pad_packed_sequence
-from .reservoir import Reservoir
-from ..utils import washout_tensor
+from reservoir import *
+from data_constants import *
+from model_constants import *
 
 
 class ESN(nn.Module):
@@ -33,25 +34,26 @@ class ESN(nn.Module):
     """
 
     def __init__(self,
-                 input_features,
-                 hidden_features,
-                 output_features,
-                 num_layers=1,
-                 non_linearity='tanh',
-                 batch_first=False,
-                 leaking_rate=1,
-                 spectral_radius=0.9,
-                 w_ih_scale=1,
-                 lambda_reg=0,
-                 density=1,
-                 w_io=False,
-                 readout_training='svd',
-                 output_steps='all'
+                 input_features=INPUT_DATA_FEATURES,
+                 hidden_features=ESN_HIDDEN_FEATURES,
+                 output_features=OUTPUT_DATA_FEATURES,
+                 num_layers=ESN_NUM_LAYERS,
+                 non_linearity=ESN_NON_LINEARITY,
+                 batch_first=ESN_BATCH_FIRST,
+                 leaking_rate=ESN_LEAKING_RATE,
+                 spectral_radius=ESN_SPECTRAL_RADIUS,
+                 w_ih_scale=ESN_W_IH_SCALE,
+                 lambda_reg=ESN_LAMBDA_REG,
+                 density=ESN_DENSITY,
+                 w_io=ESN_W_IO,
+                 readout_training=ESN_READ_OUT_TRAINING,
+                 output_steps=ESN_OUTPUT_STEPS
                  ):
         super(ESN, self).__init__()
 
         self._input_features = input_features
         self._hidden_features = hidden_features
+        self._num_layers = num_layers
         self._output_features = output_features
 
         if non_linearity == 'tanh':
@@ -64,7 +66,7 @@ class ESN(nn.Module):
             raise ValueError("Linearity '{}' not found.".format(non_linearity))
 
         self._batch_first = batch_first
-        self._leak_rate = leaking_rate
+        self._leaking_rate = leaking_rate
         self._spectral_radius = spectral_radius
 
         if type(w_ih_scale) != torch.Tensor:
@@ -88,7 +90,7 @@ class ESN(nn.Module):
                                     self._num_layers,
                                     self._leaking_rate,
                                     self._spectral_radius,
-                                    self.w_ih_scale,
+                                    self._w_ih_scale,
                                     self._density,
                                     batch_first=self._batch_first)
 
@@ -112,4 +114,3 @@ class ESN(nn.Module):
         self.XTX = None
         self.XTy = None
         self.X = None
-

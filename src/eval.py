@@ -81,6 +81,10 @@ def get_all_factor_comparison(all_data,
 def _calc_tensor_acc(prediction, actual):
     if len(prediction) != len(actual):
         print("doing calculation with different lengths: ", len(prediction), len(actual))
+        return -1, -1, \
+            (np.empty(shape=[len(prediction)]),
+             np.empty(shape=[len(prediction)]),
+             np.empty(shape=[len(prediction)]))
 
     prediction = prediction.squeeze()
     actual = actual.squeeze()
@@ -102,6 +106,7 @@ def _calc_tensor_acc(prediction, actual):
         print(prediction)
     # print(ones.shape)
     # compute absolute error for each component
+
     individual_abs_err = torch.abs(torch.sub(actual, prediction))
     if EVAL_VERBOSE:
         print("indiv abs err shape", individual_abs_err.shape)

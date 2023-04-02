@@ -42,7 +42,7 @@ class Reservoir(nn.Module):
         # initialize all weights in each recurrent layer in the ESN
         for layer in range(num_layers):
             # the input and hidden layers will have different sizes
-            layer_input_size = self._input_features if layer == 0 else self._hidden_features
+            self._layer_input_size = self._input_features if layer == 0 else self._hidden_features
 
             # map from previous recurrent layer to current one (same time step)
             w_ih = nn.Parameter(torch.Tensor(self._hidden_features, self._layer_input_size))
@@ -65,9 +65,9 @@ class Reservoir(nn.Module):
             # appends the weights for the parameters
             self._all_weights.append(param_names)
 
-        self._reset_params()
+        self.reset_params()
 
-    def reset_parameters(self):
+    def reset_params(self):
         # state_dict: used for saving and loading models
         weight_dict = self.state_dict()
         # loop over all weight params and randomize all of them
