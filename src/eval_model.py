@@ -129,16 +129,20 @@ for key, val in enumerate(dict_test_data):
         all_pred_data = torch.Tensor(all_pred_data)
         all_actual_data = torch.Tensor(all_actual_data)
 
+        if len(all_pred_data) == 0 or len(all_actual_data) == 0:
+            continue
+
         (overall_acc, overall_bias), \
             (pred_acc, pred_bias), \
             (individual_acc, individual_bias, individual_abs_err), \
             (pred_individual_acc, pred_individual_bias, pred_individual_abs_err) = eval_data_prediction(
-                                                                                                        all_pred_data,
-                                                                                                        all_actual_data)
+            all_pred_data,
+            all_actual_data)
+
         monthly_acc, monthly_bias = eval_data_monthly_pred(
-                                                             all_pred_data,
-                                                             all_actual_data,
-                                                             transformed_data[val]['fiscal_month_historical'].to_numpy()[-PREDICT:])
+            all_pred_data,
+            all_actual_data,
+            transformed_data[val]['fiscal_month_historical'].to_numpy()[-PREDICT:])
         if DISPLAY_RESULTS:
             eval_plot_acc_pred_bias(
                 f'Total acc/bias & prediction: {val}',
@@ -163,6 +167,10 @@ for key, val in enumerate(dict_test_data):
                 all_pred_data,
                 all_actual_data,
                 transformed_data[val]['fiscal_month_historical'].to_numpy()[-PREDICT:])
+            pred_data = all_pred_data[len(all_actual_data) - LOOKBACK - PREDICT:len(all_actual_data) - LOOKBACK],
+            actual_data = all_actual_data[-PREDICT:],
+            time = transformed_data[val]['year_week_ordered'].to_numpy()[-PREDICT:],
+            months = transformed_data[val]['fiscal_month_historical'].to_numpy()[-PREDICT:],
             write_results_to_file(val,
                                   pred_acc,
                                   pred_bias,
@@ -171,10 +179,10 @@ for key, val in enumerate(dict_test_data):
                                   pred_individual_abs_err,
                                   monthly_acc,
                                   monthly_bias,
-                                  all_pred_data[len(all_actual_data) - LOOKBACK - PREDICT:len(all_actual_data) - LOOKBACK],
-                                  all_actual_data[-PREDICT:],
-                                  transformed_data[val]['year_week_ordered'].to_numpy()[-PREDICT:],
-                                  transformed_data[val]['fiscal_month_historical'].to_numpy()[-PREDICT:],
+                                  pred_data,
+                                  actual_data,
+                                  time,
+                                  months,
                                   )
         if run_ml_flow:
             mlflow.log_metric("overall accuracy", overall_acc)

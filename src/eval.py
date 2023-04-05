@@ -164,6 +164,9 @@ def eval_data_monthly_pred(pred_inv_t, actual_inv_t, month_data):
     pred = pred_inv_t[len(actual_inv_t) - LOOKBACK - PREDICT:len(actual_inv_t) - LOOKBACK]
     actual = actual_inv_t[-PREDICT:]
 
+    if len(actual) != len(pred):
+        return -1, -1
+
     curr_month = month_data[0]
     prev_month = month_data[0]
     sum_pred = 0

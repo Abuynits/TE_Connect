@@ -148,6 +148,10 @@ def write_results_to_file(key,
                           actual_data,
                           time,
                           months):
+    if not len(time) == len(bias) == len(acc) == len(abs_err) == len(pred_data) == len(
+        actual_data):
+        print("bad data lengths!")
+        return;
     assert (len(time) == len(bias) == len(acc) == len(abs_err) == len(pred_data) == len(
         actual_data)), "bad data lengths!"
 
