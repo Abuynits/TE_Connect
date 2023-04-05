@@ -16,8 +16,8 @@ class Reservoir(nn.Module):
 
     def __init__(self,
                  mode,
-                 input_features,
-                 hidden_features,
+                 input_size,
+                 hidden_size,
                  num_layers,
                  leaking_rate,
                  spectral_radius,
@@ -27,35 +27,35 @@ class Reservoir(nn.Module):
                  batch_first=False):
         super(Reservoir, self).__init__()
 
-        self._mode = mode
-        self._input_features = input_features
-        self._hidden_features = hidden_features
-        self._num_layers = num_layers
-        self._leaking_rate = leaking_rate
-        self._spectral_radius = spectral_radius
-        self._w_ih_scale = w_ih_scale  # control the scale for the random init of the weights
-        self._density = density  # controls how dense the matrix is initialized with
-        self._bias = bias
-        self._batch_first = batch_first
+        self.mode = mode
+        self.input_size = input_size
+        self.hidden_size = hidden_size
+        self.num_layers = num_layers
+        self.leaking_rate = leaking_rate
+        self.spectral_radius = spectral_radius
+        self.w_ih_scale = w_ih_scale  # control the scale for the random init of the weights
+        self.density = density  # controls how dense the matrix is initialized with
+        self.bias = bias
+        self.batch_first = batch_first
 
         self._all_weights = []
         # initialize all weights in each recurrent layer in the ESN
         for layer in range(num_layers):
             # the input and hidden layers will have different sizes
-            self._layer_input_size = self._input_features if layer == 0 else self._hidden_features
+            self.layer_input_size = self.input_size if layer == 0 else self.hidden_size
 
             # map from previous recurrent layer to current one (same time step)
-            w_ih = nn.Parameter(torch.Tensor(self._hidden_features, self._layer_input_size))
+            w_ih = nn.Parameter(torch.Tensor(self.hidden_size, self.layer_input_size))
             # map from same current time step to current one (different time step, same recurrent layer)
-            w_hh = nn.Parameter(torch.Tensor(self._hidden_features, self._hidden_features))
+            w_hh = nn.Parameter(torch.Tensor(self.hidden_size, self.hidden_size))
             # add on bias to recurrent nueral networks - add a constant to a nn
-            b_ih = nn.Parameter(torch.Tensor(self._hidden_features))
+            b_ih = nn.Parameter(torch.Tensor(self.hidden_size))
 
             layer_params = (w_ih, w_hh, b_ih)
             # track and configure the wights
             param_names = ['weight_ih_l{}{}', 'weight_hh_l{}{}']
             # add on bias param name if used
-            if self._bias:
+            if self.bias:
                 param_names += ['bias_ih_l{}{}']
             param_names = [x.format(layer, '') for x in param_names]
 
@@ -63,7 +63,7 @@ class Reservoir(nn.Module):
             for name, param in zip(param_names, layer_params):
                 setattr(self, name, param)
             # appends the weights for the parameters
-            self._all_weights.append(param_names)
+            self.all_weights.append(param_names)
 
         self.reset_params()
 
@@ -147,34 +147,34 @@ class Reservoir(nn.Module):
             max_batch_size = int(batch_sizes[0])
         else:
             batch_sizes = None
-            max_batch_size = input.size(0) if self._batch_first else input.size(1)
+            max_batch_size = input.size(0) if self.batch_first else input.size(1)
             sorted_indices = None
             unsorted_indices = None
 
         if hx is None:
             # create a blank input hidden layer for hx
-            hx = input.new_zeros(self._num_layers, max_batch_size, self._hidden_features, requires_grad=False)
+            hx = input.new_zeros(self.num_layers, max_batch_size, self.hidden_size, requires_grad=False)
 
         # check that provided inputs have the correct shape for function
         self.check_forward_args(input, hx, batch_sizes)
         # create a reservoir autograd reservoir
 
         func = AutogradReservoir(
-            self._mode,
-            self._input_features,
-            self._hidden_features,
-            num_layers=self._num_layers,
-            batch_first=self._batch_first,
+            self.mode,
+            self.input_size,
+            self.hidden_size,
+            num_layers=self.num_layers,
+            batch_first=self.batch_first,
             train=is_training,
             variable_length=is_packed,
             flat_weight=None,
-            leaking_rate=self.leaking_rate
+            leaking_rate=self.leaking_rate,
         )
 
-        output, hidden = func(input, self._all_weights, hx, batch_sizes)
+        output, hidden = func(input, self.all_weights, hx, batch_sizes)
 
         if is_packed:
-            output = PackedSequence(input, self._all_weights, hx, batch_sizes)
+            output = PackedSequence(input, self.all_weights, hx, batch_sizes)
         # return the output and hidden layers involved in calculation
         return output, self.permute_hidden(hidden, unsorted_indices)
 

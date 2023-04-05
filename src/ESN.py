@@ -51,8 +51,8 @@ class ESN(nn.Module):
                  ):
         super(ESN, self).__init__()
 
-        self._input_features = input_features
-        self._hidden_features = hidden_features
+        self._input_size = input_features
+        self._hidden_size = hidden_features
         self._num_layers = num_layers
         self._output_features = output_features
 
@@ -85,8 +85,8 @@ class ESN(nn.Module):
             raise ValueError("Unknown readout training algorithm '{}'".format(readout_training))
 
         self._reservoir = Reservoir(self._mode,
-                                    self._input_features,
-                                    self._hidden_features,
+                                    self._input_size,
+                                    self._hidden_size,
                                     self._num_layers,
                                     self._leaking_rate,
                                     self._spectral_radius,
@@ -96,7 +96,7 @@ class ESN(nn.Module):
 
         if w_io:
             # layer for reading out the data from the model
-            self.readout = nn.Linear(self._input_features + self._input_features * num_layers,
+            self.readout = nn.Linear(self._input_size + self._input_size * num_layers,
                                      self._output_features)
         else:
             self.readout = nn.Linear(self._hidden_size * num_layers, self._output_features)
