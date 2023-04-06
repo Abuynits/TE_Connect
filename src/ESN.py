@@ -117,7 +117,7 @@ class ESN(nn.Module):
     def forward(self, input, washout, h_0=None, target=None):
         with torch.no_grad():
             is_packed = isinstance(input, PackedSequence)
-            # pass the output, hidden sequence and starts through the reservour.
+            # pass the output, hidden sequence and starts through the reservoir.
             output, hidden = self._reservoir(input, h_0)
             if is_packed:
                 # if have sequences of unequal length, pad the output to fit it
@@ -125,7 +125,7 @@ class ESN(nn.Module):
                                                           batch_first=self.batch_first)
             else:
                 if self.batch_first:
-                    # perform in paralel: have the batch (number of samples) times the batch eln
+                    # perform in parallel: have the batch (number of samples) times the batch eln
                     seq_lengths = output.size(0) * [output.size(1)]
                 else:
                     # batch has been transposed: have sequences of size(1) and batch is added on
@@ -176,8 +176,7 @@ class ESN(nn.Module):
                 row = 0
                 for s in range(batch_size):
                     if self.output_steps == 'all':
-                        X[row:row + seq_lengths[s], 1:] = output[:seq_lengths[s],
-                                                          s]
+                        X[row:row + seq_lengths[s], 1:] = output[:seq_lengths[s], s]
                         row += seq_lengths[s]
                     elif self.output_steps == 'mean':
                         X[row, 1:] = torch.mean(output[:seq_lengths[s], s], 0)

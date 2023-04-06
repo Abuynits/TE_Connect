@@ -100,7 +100,7 @@ class Reservoir(nn.Module):
                 w_hh = w_hh.view(self.hidden_size, self.hidden_size)
                 abs_eigs = torch.abs(torch.linalg.eigvals(w_hh))
                 weight_dict[key] = w_hh * (self.spectral_radius / torch.max(abs_eigs))
-
+        self.__setstate__(weight_dict)
         self.load_state_dict(weight_dict)
 
     def check_input(self, input, batch_sizes):
@@ -159,7 +159,7 @@ class Reservoir(nn.Module):
         self.check_forward_args(input, hx, batch_sizes)
         # create a reservoir autograd reservoir
 
-        func = AutogradReservoir(
+        auto_grad_res = AutogradReservoir(
             self.mode,
             self.input_size,
             self.hidden_size,
@@ -171,7 +171,7 @@ class Reservoir(nn.Module):
             leaking_rate=self.leaking_rate,
         )
 
-        output, hidden = func(input, self.all_weights, hx, batch_sizes)
+        output, hidden = auto_grad_res(input, self.all_weights, hx, batch_sizes)
 
         if is_packed:
             output = PackedSequence(input, self.all_weights, hx, batch_sizes)
@@ -242,7 +242,6 @@ def AutogradReservoir(mode,
                       num_layers,
                       False,
                       train=train)
-
     def forward(input, weight, hidden, batch_sizes):
         # swap out the input dims to follow the correct dimensions
         if batch_first and batch_sizes is None:
@@ -254,6 +253,8 @@ def AutogradReservoir(mode,
             output = output.transpose(0, 1)
 
         return output, nexth
+
+    return forward
 
 
 # pass through a recurrent cell in a model
@@ -318,6 +319,8 @@ def StackedRNN(inners, num_layers, lstm=False, train=True):
     total_layers = num_layers * num_directions
 
     def forward(input, hidden, weight, batch_sizes):
+        print(len(weight))
+        print(total_layers)
         assert (len(weight) == total_layers)
         next_hidden = []
         all_layers_output = []
