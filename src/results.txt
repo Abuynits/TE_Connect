@@ -1,0 +1,4988 @@
+('G30', 'Americas', 'Industrial')
+(232, 100, 3)
+(232, 76, 1)
+(407, 1)
+(0,)
+(232,)
+torch.Size([132])
+torch.Size([132])
+76
+76
+0.4746386408805847 -0.1593332290649414
+
+('G30', 'Asia Pacific & ANZ', 'Industrial')
+(182, 100, 3)
+(182, 76, 1)
+(357, 1)
+(0,)
+(182,)
+torch.Size([82])
+torch.Size([82])
+76
+76
+0.7219308614730835 -0.07027502357959747
+
+('G31', 'Americas', 'Appliances')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8309808969497681 0.09538698196411133
+
+('G41', 'Americas', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9277687072753906 0.028680087998509407
+
+('G41', 'Americas', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7802998423576355 -0.07322389632463455
+
+('G41', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8765134215354919 -0.013787788338959217
+
+('G41', 'Asia Pacific & ANZ', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7546477913856506 -0.04536490887403488
+
+('G41', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9599318504333496 -0.00410876190289855
+
+('G41', 'EMEA', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8263505101203918 0.0383763425052166
+
+('G49', 'Americas', 'Aerospace, Defense & Marine')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8035596013069153 0.13253803551197052
+
+('G49', 'Asia Pacific & ANZ', 'Aerospace, Defense & Marine')
+(179, 100, 3)
+(179, 76, 1)
+(354, 1)
+(0,)
+(179,)
+torch.Size([79])
+torch.Size([79])
+76
+76
+0.7424485683441162 0.021682262420654297
+
+('G50', 'Americas', 'Appliances')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9101352691650391 -0.005090408492833376
+
+('G59', 'Americas', 'Appliances')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7206148505210876 0.08887798339128494
+
+('G59', 'Americas', 'Industrial')
+(226, 100, 3)
+(226, 76, 1)
+(401, 1)
+(0,)
+(226,)
+torch.Size([126])
+torch.Size([126])
+76
+76
+0.5760645866394043 0.06063118577003479
+
+('G59', 'Asia Pacific & ANZ', 'Appliances')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.877223014831543 -0.020098531618714333
+
+('G59', 'Asia Pacific & ANZ', 'Channel - Appliances')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9267159104347229 0.02369069494307041
+
+('G59', 'Asia Pacific & ANZ', 'Industrial')
+(239, 100, 3)
+(239, 76, 1)
+(414, 1)
+(0,)
+(239,)
+torch.Size([139])
+torch.Size([139])
+76
+76
+0.7740218043327332 -0.007570289541035891
+
+('G59', 'EMEA', 'Appliances')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8622521162033081 0.0486040823161602
+
+('G59', 'EMEA', 'Channel - Appliances')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9311092495918274 -0.0009764498099684715
+
+('G60', 'Americas', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9542907476425171 0.00024316729104612023
+
+('G60', 'Americas', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7571015357971191 -0.02276655286550522
+
+('G60', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.948392927646637 -0.004321116488426924
+
+('G60', 'Asia Pacific & ANZ', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8523600101470947 -0.004665223415941
+
+('G60', 'EMEA', 'Appliances')
+(237, 100, 3)
+(237, 76, 1)
+(412, 1)
+(0,)
+(237,)
+torch.Size([137])
+torch.Size([137])
+76
+76
+0.816139817237854 0.07496517151594162
+
+('G60', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9576992392539978 0.013535886071622372
+
+('G60', 'EMEA', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9152293801307678 -0.02193720079958439
+
+('G61', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.939130961894989 -0.01107372622936964
+
+('G61', 'Asia Pacific & ANZ', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8139263987541199 0.04785481467843056
+
+('G61', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.958209216594696 -0.004545023199170828
+
+('G61', 'EMEA', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8982406258583069 5.174557736609131e-05
+
+('G63', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9245399236679077 0.021238580346107483
+
+('G64', 'Asia Pacific & ANZ', 'Data and Devices')
+(35, 100, 3)
+(35, 76, 1)
+(210, 1)
+(0,)
+(35,)
+torch.Size([0])
+torch.Size([0])
+doing calculation with different lengths:  0 35
+returning bc bad data
+
+('G65', 'Americas', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9214029312133789 0.0036371825262904167
+
+('G65', 'Americas', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7607448697090149 0.16043467819690704
+
+('G65', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8939036130905151 0.059478092938661575
+
+('G65', 'Asia Pacific & ANZ', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7073920965194702 0.238862082362175
+
+('G65', 'EMEA', 'Data and Devices')
+(232, 100, 3)
+(232, 76, 1)
+(407, 1)
+(0,)
+(232,)
+torch.Size([132])
+torch.Size([132])
+76
+76
+0.6005270481109619 -0.09323239326477051
+
+('G67', 'Americas', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7283716201782227 0.1292334347963333
+
+('G67', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(225, 100, 3)
+(225, 76, 1)
+(400, 1)
+(0,)
+(225,)
+torch.Size([125])
+torch.Size([125])
+76
+76
+0.7797746658325195 0.06310778856277466
+
+('G67', 'Asia Pacific & ANZ', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8817934989929199 0.0703745111823082
+
+('G67', 'EMEA', 'Data and Devices')
+(240, 100, 3)
+(240, 76, 1)
+(415, 1)
+(0,)
+(240,)
+torch.Size([140])
+torch.Size([140])
+76
+76
+0.7503848075866699 0.20752856135368347
+
+('G72', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(0,)
+(0,)
+(144, 1)
+(0,)
+(0,)
+
+('G72', 'Asia Pacific & ANZ', 'Data and Devices')
+(65, 100, 3)
+(65, 76, 1)
+(240, 1)
+(0,)
+(65,)
+torch.Size([0])
+torch.Size([0])
+doing calculation with different lengths:  30 65
+30
+65
+-1 -1
+
+('G74', 'Asia Pacific & ANZ', 'Industrial')
+(241, 100, 3)
+(241, 76, 1)
+(416, 1)
+(0,)
+(241,)
+torch.Size([141])
+torch.Size([141])
+76
+76
+0.8005255460739136 -0.01615251414477825
+
+('G74', 'EMEA', 'Industrial')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.8962920308113098 0.006062000058591366
+
+('G81', 'Asia Pacific & ANZ', 'Aerospace, Defense & Marine')
+(183, 100, 3)
+(183, 76, 1)
+(358, 1)
+(0,)
+(183,)
+torch.Size([83])
+torch.Size([83])
+76
+76
+0.6507805585861206 0.040420468896627426
+
+('G83', 'Americas', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9117062091827393 -0.022531425580382347
+
+('G83', 'Americas', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8260396718978882 0.005091145168989897
+
+('G83', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8217760324478149 -0.11473923176527023
+
+('G83', 'Asia Pacific & ANZ', 'Industrial')
+(225, 100, 3)
+(225, 76, 1)
+(400, 1)
+(0,)
+(225,)
+torch.Size([125])
+torch.Size([125])
+76
+76
+0.7577810287475586 0.02946307323873043
+
+('G83', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9428421258926392 0.0052168890833854675
+
+('G83', 'EMEA', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8038685321807861 0.023141415789723396
+
+('G85', 'Americas', 'Data and Devices')
+(150, 100, 3)
+(150, 76, 1)
+(325, 1)
+(0,)
+(150,)
+torch.Size([50])
+torch.Size([50])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('G85', 'Asia Pacific & ANZ', 'Data and Devices')
+(233, 100, 3)
+(233, 76, 1)
+(408, 1)
+(0,)
+(233,)
+torch.Size([133])
+torch.Size([133])
+76
+76
+0.6658431887626648 0.22002877295017242
+
+('G85', 'EMEA', 'Data and Devices')
+(199, 100, 3)
+(199, 76, 1)
+(374, 1)
+(0,)
+(199,)
+torch.Size([99])
+torch.Size([99])
+76
+76
+0.8615114688873291 -0.013323578052222729
+
+('G87', 'EMEA', 'Industrial')
+(147, 100, 3)
+(147, 76, 1)
+(322, 1)
+(0,)
+(147,)
+torch.Size([47])
+torch.Size([47])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('H82', 'Asia Pacific & ANZ', 'Data and Devices')
+(238, 100, 3)
+(238, 76, 1)
+(413, 1)
+(0,)
+(238,)
+torch.Size([138])
+torch.Size([138])
+76
+76
+0.7606902122497559 -0.10066074877977371
+
+('H82', 'EMEA', 'Data and Devices')
+(226, 100, 3)
+(226, 76, 1)
+(401, 1)
+(0,)
+(226,)
+torch.Size([126])
+torch.Size([126])
+76
+76
+0.7181109189987183 -0.02225382812321186
+
+('H83', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.927393913269043 0.0037787570618093014
+
+('H83', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(241, 100, 3)
+(241, 76, 1)
+(416, 1)
+(0,)
+(241,)
+torch.Size([141])
+torch.Size([141])
+76
+76
+0.8348479270935059 0.026458578184247017
+
+('H83', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9245649576187134 -0.00038586670416407287
+
+('H90', 'Americas', 'Industrial Commercial Transportation')
+(24, 100, 3)
+(24, 76, 1)
+(199, 1)
+(0,)
+(24,)
+torch.Size([0])
+torch.Size([0])
+doing calculation with different lengths:  0 24
+returning bc bad data
+
+('H90', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(241, 100, 3)
+(241, 76, 1)
+(416, 1)
+(0,)
+(241,)
+torch.Size([141])
+torch.Size([141])
+76
+76
+0.827256441116333 -0.03605080395936966
+
+('H90', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9459488391876221 0.0028928022366017103
+
+('H94', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8845934271812439 -0.0027325425762683153
+
+('H94', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9309557676315308 0.0027011840138584375
+
+('H94', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9282588362693787 -0.003684160765260458
+
+('H95', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9458685517311096 -0.005599571857601404
+
+('H95', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8192652463912964 0.015938108786940575
+
+('H95', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9247775077819824 -0.0007451248820871115
+
+('H96', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(207, 100, 3)
+(207, 76, 1)
+(382, 1)
+(0,)
+(207,)
+torch.Size([107])
+torch.Size([107])
+76
+76
+0.8138863444328308 0.05408516898751259
+
+('H98', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9439316987991333 -0.001067484961822629
+
+('J03', 'Americas', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8388601541519165 0.11686516553163528
+
+('J03', 'Asia Pacific & ANZ', 'Data and Devices')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.834662675857544 -0.0026911485474556684
+
+('J03', 'EMEA', 'Data and Devices')
+(130, 100, 3)
+(130, 76, 1)
+(305, 1)
+(0,)
+(130,)
+torch.Size([30])
+torch.Size([30])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('J04', 'Americas', 'Industrial')
+(240, 100, 3)
+(240, 76, 1)
+(415, 1)
+(0,)
+(240,)
+torch.Size([140])
+torch.Size([140])
+76
+76
+0.6791426539421082 -0.1023467555642128
+
+('J04', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7677613496780396 -0.1405508667230606
+
+('J04', 'Asia Pacific & ANZ', 'Industrial')
+(212, 100, 3)
+(212, 76, 1)
+(387, 1)
+(0,)
+(212,)
+torch.Size([112])
+torch.Size([112])
+76
+76
+0.6902936697006226 0.026928411796689034
+
+('J04', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8251340985298157 -0.002661654958501458
+
+('J04', 'EMEA', 'Industrial')
+(222, 100, 3)
+(222, 76, 1)
+(397, 1)
+(0,)
+(222,)
+torch.Size([122])
+torch.Size([122])
+76
+76
+0.7173815369606018 0.016394879668951035
+
+('J04', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8211543560028076 0.0017528337193652987
+
+('J09', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.912749171257019 0.004876990802586079
+
+('J09', 'Asia Pacific & ANZ', 'Industrial')
+(234, 100, 3)
+(234, 76, 1)
+(409, 1)
+(0,)
+(234,)
+torch.Size([134])
+torch.Size([134])
+76
+76
+0.7762404680252075 0.01319900806993246
+
+('J10', 'Asia Pacific & ANZ', 'Industrial')
+(235, 100, 3)
+(235, 76, 1)
+(410, 1)
+(0,)
+(235,)
+torch.Size([135])
+torch.Size([135])
+76
+76
+0.6794131994247437 0.06744196265935898
+
+('J10', 'EMEA', 'Industrial')
+(188, 100, 3)
+(188, 76, 1)
+(363, 1)
+(0,)
+(188,)
+torch.Size([88])
+torch.Size([88])
+76
+76
+0.35345637798309326 0.17155055701732635
+
+('J11', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9264243841171265 0.018179206177592278
+
+('J12', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8657589554786682 -0.006534544285386801
+
+('J12', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9210410714149475 0.03272007033228874
+
+('J12', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.881782054901123 -0.04600981995463371
+
+('J14', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8479461669921875 0.020013608038425446
+
+('J14', 'EMEA', 'Industrial Commercial Transportation')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.7759639620780945 -0.041963398456573486
+
+('J21', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8737436532974243 -0.03590518981218338
+
+('J21', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8098986148834229 -0.018770260736346245
+
+('J21', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9030473232269287 0.010739706456661224
+
+('J23', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(218, 100, 3)
+(218, 76, 1)
+(393, 1)
+(0,)
+(218,)
+torch.Size([118])
+torch.Size([118])
+76
+76
+0.7929275631904602 -0.026322830468416214
+
+('J24', 'Americas', 'Data and Devices')
+(203, 100, 3)
+(203, 76, 1)
+(378, 1)
+(0,)
+(203,)
+torch.Size([103])
+torch.Size([103])
+76
+76
+0.6304340362548828 -0.020784804597496986
+
+('J24', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(166, 100, 3)
+(166, 76, 1)
+(341, 1)
+(0,)
+(166,)
+torch.Size([66])
+torch.Size([66])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('J24', 'Asia Pacific & ANZ', 'Data and Devices')
+(228, 100, 3)
+(228, 76, 1)
+(403, 1)
+(0,)
+(228,)
+torch.Size([128])
+torch.Size([128])
+76
+76
+0.8355627655982971 0.07724833488464355
+
+('J24', 'EMEA', 'Data and Devices')
+(123, 100, 3)
+(123, 76, 1)
+(298, 1)
+(0,)
+(123,)
+torch.Size([23])
+torch.Size([23])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('J25', 'Americas', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9049508571624756 -0.028660979121923447
+
+('J25', 'Americas', 'Data and Devices')
+(238, 100, 3)
+(238, 76, 1)
+(413, 1)
+(0,)
+(238,)
+torch.Size([138])
+torch.Size([138])
+76
+76
+0.8273403644561768 0.0629282221198082
+
+('J25', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(214, 100, 3)
+(214, 76, 1)
+(389, 1)
+(0,)
+(214,)
+torch.Size([114])
+torch.Size([114])
+76
+76
+0.7967908382415771 0.1318843960762024
+
+('J25', 'Asia Pacific & ANZ', 'Data and Devices')
+(241, 100, 3)
+(241, 76, 1)
+(416, 1)
+(0,)
+(241,)
+torch.Size([141])
+torch.Size([141])
+76
+76
+0.8698211908340454 0.010687191970646381
+
+('J25', 'EMEA', 'Data and Devices')
+(180, 100, 3)
+(180, 76, 1)
+(355, 1)
+(0,)
+(180,)
+torch.Size([80])
+torch.Size([80])
+76
+76
+0.6462976932525635 -0.0345303975045681
+
+('J30', 'Asia Pacific & ANZ', 'Appliances')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8256649971008301 0.00014599277346860617
+
+('J30', 'Asia Pacific & ANZ', 'Channel - Appliances')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9020297527313232 0.016940677538514137
+
+('J31', 'Asia Pacific & ANZ', 'Industrial')
+(28, 100, 3)
+(28, 76, 1)
+(203, 1)
+(0,)
+(28,)
+torch.Size([0])
+torch.Size([0])
+doing calculation with different lengths:  0 28
+returning bc bad data
+
+('J35', 'Americas', 'Appliances')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7576284408569336 0.08808257430791855
+
+('J35', 'Asia Pacific & ANZ', 'Appliances')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.8296663761138916 -0.016880229115486145
+
+('J37', 'Americas', 'Industrial')
+(238, 100, 3)
+(238, 76, 1)
+(413, 1)
+(0,)
+(238,)
+torch.Size([138])
+torch.Size([138])
+76
+76
+0.4716397523880005 -0.15048545598983765
+
+('J37', 'Asia Pacific & ANZ', 'Industrial')
+(145, 100, 3)
+(145, 76, 1)
+(320, 1)
+(0,)
+(145,)
+torch.Size([45])
+torch.Size([45])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('J41', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9533020853996277 0.012299698777496815
+
+('J41', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8741974830627441 -0.06302995979785919
+
+('J41', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9299349784851074 0.041973114013671875
+
+('J42', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9266547560691833 0.05068885162472725
+
+('J42', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8698738217353821 0.049560822546482086
+
+('J42', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9092591404914856 -0.010927856899797916
+
+('J43', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9390968680381775 0.003095516236498952
+
+('J43', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8575869202613831 -0.06026649475097656
+
+('J43', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.925200343132019 0.004910145420581102
+
+('J44', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9032151699066162 0.056068938225507736
+
+('J45', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9412938952445984 0.01864580251276493
+
+('J45', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8718882203102112 0.0745331197977066
+
+('J45', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9002681374549866 -0.039702966809272766
+
+('J46', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8873701691627502 -0.00617241533473134
+
+('J63', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9096664190292358 -0.033067379146814346
+
+('J63', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.9061304330825806 -0.0451914481818676
+
+('J63', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8925980925559998 -0.06168976053595543
+
+('J67', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.934116780757904 -0.0015685077523812652
+
+('J67', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8578512668609619 0.05295887589454651
+
+('J67', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9072100520133972 0.022208746522665024
+
+('J71', 'Asia Pacific & ANZ', 'Energy')
+(232, 100, 3)
+(232, 76, 1)
+(407, 1)
+(0,)
+(232,)
+torch.Size([132])
+torch.Size([132])
+76
+76
+0.7018218040466309 0.13127802312374115
+
+('J80', 'Americas', 'Data and Devices')
+(116, 100, 3)
+(116, 76, 1)
+(291, 1)
+(0,)
+(116,)
+torch.Size([16])
+torch.Size([16])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('J80', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(0,)
+(0,)
+(60, 1)
+(0,)
+(0,)
+
+('J80', 'Asia Pacific & ANZ', 'Data and Devices')
+(141, 100, 3)
+(141, 76, 1)
+(316, 1)
+(0,)
+(141,)
+torch.Size([41])
+torch.Size([41])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('J80', 'EMEA', 'Data and Devices')
+(113, 100, 3)
+(113, 76, 1)
+(288, 1)
+(0,)
+(113,)
+torch.Size([13])
+torch.Size([13])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('J83', 'Americas', 'Data and Devices')
+(184, 100, 3)
+(184, 76, 1)
+(359, 1)
+(0,)
+(184,)
+torch.Size([84])
+torch.Size([84])
+76
+76
+0.7235649824142456 -0.05709409713745117
+
+('J83', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(0,)
+(0,)
+(159, 1)
+(0,)
+(0,)
+
+('J83', 'Asia Pacific & ANZ', 'Data and Devices')
+(130, 100, 3)
+(130, 76, 1)
+(305, 1)
+(0,)
+(130,)
+torch.Size([30])
+torch.Size([30])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('J83', 'EMEA', 'Data and Devices')
+(55, 100, 3)
+(55, 76, 1)
+(230, 1)
+(0,)
+(55,)
+torch.Size([0])
+torch.Size([0])
+doing calculation with different lengths:  10 55
+10
+55
+-1 -1
+
+('J89', 'Americas', 'Aerospace, Defense & Marine')
+(167, 100, 3)
+(167, 76, 1)
+(342, 1)
+(0,)
+(167,)
+torch.Size([67])
+torch.Size([67])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('J89', 'Asia Pacific & ANZ', 'Aerospace, Defense & Marine')
+(209, 100, 3)
+(209, 76, 1)
+(384, 1)
+(0,)
+(209,)
+torch.Size([109])
+torch.Size([109])
+76
+76
+0.6496211290359497 0.08852685242891312
+
+('J8A', 'Americas', 'Data and Devices')
+(24, 100, 3)
+(24, 76, 1)
+(199, 1)
+(0,)
+(24,)
+torch.Size([0])
+torch.Size([0])
+doing calculation with different lengths:  0 24
+returning bc bad data
+
+('J8A', 'Asia Pacific & ANZ', 'Data and Devices')
+(111, 100, 3)
+(111, 76, 1)
+(286, 1)
+(0,)
+(111,)
+torch.Size([11])
+torch.Size([11])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('J8A', 'EMEA', 'Data and Devices')
+(39, 100, 3)
+(39, 76, 1)
+(214, 1)
+(0,)
+(39,)
+torch.Size([0])
+torch.Size([0])
+doing calculation with different lengths:  0 39
+returning bc bad data
+
+('J93', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8857479095458984 -0.009278285317122936
+
+('J93', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8808771371841431 0.056337807327508926
+
+('J93', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9426966905593872 -0.018693698570132256
+
+('J96', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.881743311882019 0.034464456140995026
+
+('J96', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8721808791160583 -0.04489602893590927
+
+('J96', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9462359547615051 0.02176148071885109
+
+('J97', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.8345466256141663 -0.01511243637651205
+
+('JA1', 'Asia Pacific & ANZ', 'Energy')
+(228, 100, 3)
+(228, 76, 1)
+(403, 1)
+(0,)
+(228,)
+torch.Size([128])
+torch.Size([128])
+76
+76
+0.8153070211410522 -0.017855683341622353
+
+('JA9', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9316270351409912 -0.022342117503285408
+
+('JA9', 'Asia Pacific & ANZ', 'Industrial')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.7843960523605347 -0.0353003665804863
+
+('JB2', 'Americas', 'Aerospace, Defense & Marine')
+(0,)
+(0,)
+(115, 1)
+(0,)
+(0,)
+
+('JB3', 'Americas', 'Aerospace, Defense & Marine')
+(0,)
+(0,)
+(95, 1)
+(0,)
+(0,)
+
+('JB6', 'Americas', 'Aerospace, Defense & Marine')
+(40, 100, 3)
+(40, 76, 1)
+(215, 1)
+(0,)
+(40,)
+torch.Size([0])
+torch.Size([0])
+doing calculation with different lengths:  0 40
+returning bc bad data
+
+('JB9', 'EMEA', 'Aerospace, Defense & Marine')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9064745903015137 -0.054366011172533035
+
+('JC0', 'Americas', 'Aerospace, Defense & Marine')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.833262026309967 -0.10677153617143631
+
+('JC0', 'EMEA', 'Aerospace, Defense & Marine')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8242460489273071 -0.13356837630271912
+
+('JC1', 'EMEA', 'Aerospace, Defense & Marine')
+(238, 100, 3)
+(238, 76, 1)
+(413, 1)
+(0,)
+(238,)
+torch.Size([138])
+torch.Size([138])
+76
+76
+0.8969116806983948 -0.06825830787420273
+
+('JC2', 'Americas', 'Aerospace, Defense & Marine')
+(241, 100, 3)
+(241, 76, 1)
+(416, 1)
+(0,)
+(241,)
+torch.Size([141])
+torch.Size([141])
+76
+76
+0.7897264957427979 0.09669963270425797
+
+('JC2', 'Asia Pacific & ANZ', 'Aerospace, Defense & Marine')
+(167, 100, 3)
+(167, 76, 1)
+(342, 1)
+(0,)
+(167,)
+torch.Size([67])
+torch.Size([67])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('JC2', 'EMEA', 'Aerospace, Defense & Marine')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.8725179433822632 -0.005404223687946796
+
+('JC3', 'Americas', 'Aerospace, Defense & Marine')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7401944994926453 0.1140894666314125
+
+('JC3', 'EMEA', 'Aerospace, Defense & Marine')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9266226887702942 -0.05340727046132088
+
+('JC4', 'Americas', 'Aerospace, Defense & Marine')
+(232, 100, 3)
+(232, 76, 1)
+(407, 1)
+(0,)
+(232,)
+torch.Size([132])
+torch.Size([132])
+76
+76
+2.313671588897705 -0.3493092656135559
+
+('JC5', 'EMEA', 'Aerospace, Defense & Marine')
+(241, 100, 3)
+(241, 76, 1)
+(416, 1)
+(0,)
+(241,)
+torch.Size([141])
+torch.Size([141])
+76
+76
+0.7385499477386475 -0.09359236061573029
+
+('JC6', 'Americas', 'Aerospace, Defense & Marine')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.916046142578125 0.00480997608974576
+
+('JC6', 'EMEA', 'Aerospace, Defense & Marine')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.880037784576416 -0.024466486647725105
+
+('JC8', 'Americas', 'Aerospace, Defense & Marine')
+(239, 100, 3)
+(239, 76, 1)
+(414, 1)
+(0,)
+(239,)
+torch.Size([139])
+torch.Size([139])
+76
+76
+0.6695405840873718 0.019918549805879593
+
+('JC9', 'EMEA', 'Aerospace, Defense & Marine')
+(241, 100, 3)
+(241, 76, 1)
+(416, 1)
+(0,)
+(241,)
+torch.Size([141])
+torch.Size([141])
+76
+76
+0.8614643812179565 -0.08535370230674744
+
+('JD1', 'Americas', 'Aerospace, Defense & Marine')
+(241, 100, 3)
+(241, 76, 1)
+(416, 1)
+(0,)
+(241,)
+torch.Size([141])
+torch.Size([141])
+76
+76
+0.8438376188278198 -0.0919782891869545
+
+('JD2', 'Americas', 'Aerospace, Defense & Marine')
+(221, 100, 3)
+(221, 76, 1)
+(396, 1)
+(0,)
+(221,)
+torch.Size([121])
+torch.Size([121])
+76
+76
+0.654639720916748 0.08790349215269089
+
+('JD8', 'Americas', 'Aerospace, Defense & Marine')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8966077566146851 -0.03392868861556053
+
+('JD8', 'EMEA', 'Aerospace, Defense & Marine')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9090776443481445 -0.04806423932313919
+
+('JE2', 'Americas', 'Aerospace, Defense & Marine')
+(161, 100, 3)
+(161, 76, 1)
+(336, 1)
+(0,)
+(161,)
+torch.Size([61])
+torch.Size([61])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('JE2', 'EMEA', 'Aerospace, Defense & Marine')
+(241, 100, 3)
+(241, 76, 1)
+(416, 1)
+(0,)
+(241,)
+torch.Size([141])
+torch.Size([141])
+76
+76
+0.8101019859313965 -0.08053644746541977
+
+('JE3', 'EMEA', 'Aerospace, Defense & Marine')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8437061309814453 -0.0883135199546814
+
+('JE4', 'Americas', 'Aerospace, Defense & Marine')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.823566198348999 -0.0041496045887470245
+
+('JE8', 'EMEA', 'Aerospace, Defense & Marine')
+(241, 100, 3)
+(241, 76, 1)
+(416, 1)
+(0,)
+(241,)
+torch.Size([141])
+torch.Size([141])
+76
+76
+0.7429522275924683 -0.09350547194480896
+
+('JE9', 'Asia Pacific & ANZ', 'Aerospace, Defense & Marine')
+(177, 100, 3)
+(177, 76, 1)
+(352, 1)
+(0,)
+(177,)
+torch.Size([77])
+torch.Size([77])
+76
+76
+0.3814358115196228 0.1424883008003235
+
+('JF1', 'Americas', 'Aerospace, Defense & Marine')
+(241, 100, 3)
+(241, 76, 1)
+(416, 1)
+(0,)
+(241,)
+torch.Size([141])
+torch.Size([141])
+76
+76
+0.7967199087142944 -0.03264487534761429
+
+('JF1', 'EMEA', 'Aerospace, Defense & Marine')
+(240, 100, 3)
+(240, 76, 1)
+(415, 1)
+(0,)
+(240,)
+torch.Size([140])
+torch.Size([140])
+76
+76
+0.8319429755210876 -0.09784306585788727
+
+('JF5', 'EMEA', 'Aerospace, Defense & Marine')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.9120994806289673 -0.007988964207470417
+
+('JF9', 'Americas', 'Aerospace, Defense & Marine')
+(241, 100, 3)
+(241, 76, 1)
+(416, 1)
+(0,)
+(241,)
+torch.Size([141])
+torch.Size([141])
+76
+76
+0.8380680680274963 -0.05596501752734184
+
+('JH4', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9440277814865112 -0.013808200135827065
+
+('JH4', 'Asia Pacific & ANZ', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8635639548301697 -0.021764518693089485
+
+('JH4', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9723587036132812 -0.0016648676246404648
+
+('JH4', 'EMEA', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.849177896976471 -0.03299431502819061
+
+('JJ4', 'Americas', 'Appliances')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8999732732772827 0.050352729856967926
+
+('JJ4', 'Asia Pacific & ANZ', 'Appliances')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.849784255027771 0.03772509843111038
+
+('JJ4', 'EMEA', 'Appliances')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9052708148956299 0.03866824880242348
+
+('JJ4', 'EMEA', 'Channel - Appliances')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9449014067649841 -0.004865664057433605
+
+('JJ5', 'Americas', 'Channel - Data and Devices')
+(187, 100, 3)
+(187, 76, 1)
+(362, 1)
+(0,)
+(187,)
+torch.Size([87])
+torch.Size([87])
+76
+76
+0.7587730288505554 -0.053230833262205124
+
+('JJ5', 'Americas', 'Data and Devices')
+(12, 100, 3)
+(12, 76, 1)
+(187, 1)
+(0,)
+(12,)
+torch.Size([0])
+torch.Size([0])
+doing calculation with different lengths:  0 12
+returning bc bad data
+
+('JJ5', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(169, 100, 3)
+(169, 76, 1)
+(344, 1)
+(0,)
+(169,)
+torch.Size([69])
+torch.Size([69])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('JJ5', 'Asia Pacific & ANZ', 'Data and Devices')
+(133, 100, 3)
+(133, 76, 1)
+(308, 1)
+(0,)
+(133,)
+torch.Size([33])
+torch.Size([33])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('JJ5', 'EMEA', 'Channel - Data and Devices')
+(174, 100, 3)
+(174, 76, 1)
+(349, 1)
+(0,)
+(174,)
+torch.Size([74])
+torch.Size([74])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('JJ5', 'EMEA', 'Data and Devices')
+(9, 100, 3)
+(9, 76, 1)
+(184, 1)
+(0,)
+(9,)
+torch.Size([0])
+torch.Size([0])
+doing calculation with different lengths:  0 9
+returning bc bad data
+
+('JJ9', 'Asia Pacific & ANZ', 'Data and Devices')
+(60, 100, 3)
+(60, 76, 1)
+(235, 1)
+(0,)
+(60,)
+torch.Size([0])
+torch.Size([0])
+doing calculation with different lengths:  20 60
+20
+60
+-1 -1
+
+('JK1', 'EMEA', 'Appliances')
+(0,)
+(0,)
+(134, 1)
+(0,)
+(0,)
+
+('K00', 'Americas', 'Data and Devices')
+(103, 100, 3)
+(103, 76, 1)
+(278, 1)
+(0,)
+(103,)
+torch.Size([3])
+torch.Size([3])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('K01', 'Americas', 'Industrial')
+(208, 100, 3)
+(208, 76, 1)
+(383, 1)
+(0,)
+(208,)
+torch.Size([108])
+torch.Size([108])
+76
+76
+0.8106145858764648 0.018659858033061028
+
+('K03', 'Americas', 'Industrial')
+(160, 100, 3)
+(160, 76, 1)
+(335, 1)
+(0,)
+(160,)
+torch.Size([60])
+torch.Size([60])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('K04', 'Asia Pacific & ANZ', 'Industrial')
+(69, 100, 3)
+(69, 76, 1)
+(244, 1)
+(0,)
+(69,)
+torch.Size([0])
+torch.Size([0])
+doing calculation with different lengths:  38 69
+38
+69
+-1 -1
+
+('K05', 'Americas', 'Data and Devices')
+(102, 100, 3)
+(102, 76, 1)
+(277, 1)
+(0,)
+(102,)
+torch.Size([2])
+torch.Size([2])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('K09', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8987951874732971 -0.051679305732250214
+
+('K09', 'Asia Pacific & ANZ', 'Data and Devices')
+(238, 100, 3)
+(238, 76, 1)
+(413, 1)
+(0,)
+(238,)
+torch.Size([138])
+torch.Size([138])
+76
+76
+0.736210823059082 0.11753515899181366
+
+('K09', 'EMEA', 'Data and Devices')
+(146, 100, 3)
+(146, 76, 1)
+(321, 1)
+(0,)
+(146,)
+torch.Size([46])
+torch.Size([46])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('K13', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9115197062492371 0.03367284685373306
+
+('K13', 'Asia Pacific & ANZ', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8919411301612854 -0.0037668575532734394
+
+('K18', 'EMEA', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9420296549797058 -0.006355582736432552
+
+('K18', 'EMEA', 'Data and Devices')
+(240, 100, 3)
+(240, 76, 1)
+(415, 1)
+(0,)
+(240,)
+torch.Size([140])
+torch.Size([140])
+76
+76
+0.7676661610603333 0.17106051743030548
+
+('K21', 'Americas', 'Data and Devices')
+(241, 100, 3)
+(241, 76, 1)
+(416, 1)
+(0,)
+(241,)
+torch.Size([141])
+torch.Size([141])
+76
+76
+0.7139938473701477 -0.029707463458180428
+
+('K21', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9205950498580933 0.05099976062774658
+
+('K21', 'EMEA', 'Data and Devices')
+(232, 100, 3)
+(232, 76, 1)
+(407, 1)
+(0,)
+(232,)
+torch.Size([132])
+torch.Size([132])
+76
+76
+0.6867952346801758 -0.01885995641350746
+
+('K24', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9107575416564941 -0.02964016981422901
+
+('K24', 'EMEA', 'Industrial')
+(240, 100, 3)
+(240, 76, 1)
+(415, 1)
+(0,)
+(240,)
+torch.Size([140])
+torch.Size([140])
+76
+76
+0.8006969094276428 -0.05618896335363388
+
+('K31', 'Asia Pacific & ANZ', 'Aerospace, Defense & Marine')
+(235, 100, 3)
+(235, 76, 1)
+(410, 1)
+(0,)
+(235,)
+torch.Size([135])
+torch.Size([135])
+76
+76
+0.6755102872848511 -0.02972162328660488
+
+('K31', 'EMEA', 'Aerospace, Defense & Marine')
+(233, 100, 3)
+(233, 76, 1)
+(408, 1)
+(0,)
+(233,)
+torch.Size([133])
+torch.Size([133])
+76
+76
+0.7465412616729736 -0.02321230061352253
+
+('K42', 'Americas', 'Aerospace, Defense & Marine')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.8514184951782227 -0.10161142796278
+
+('K48', 'Americas', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8001202344894409 -0.008932681754231453
+
+('K48', 'Asia Pacific & ANZ', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9217679500579834 -0.010344094596803188
+
+('K50', 'Americas', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9592182040214539 0.016099831089377403
+
+('K50', 'Americas', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7966606020927429 0.08132825046777725
+
+('K50', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9143555164337158 0.006240610033273697
+
+('K50', 'Asia Pacific & ANZ', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8043701648712158 -0.08763343840837479
+
+('K50', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9440183639526367 -0.01708872616291046
+
+('K50', 'EMEA', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8213320970535278 0.03899100795388222
+
+('K61', 'EMEA', 'Aerospace, Defense & Marine')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.8128452301025391 -0.006331998854875565
+
+('K65', 'EMEA', 'Data and Devices')
+(0,)
+(0,)
+(85, 1)
+(0,)
+(0,)
+
+('K70', 'Americas', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9407610297203064 -0.01742209680378437
+
+('K70', 'Americas', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.834054172039032 -0.01986042782664299
+
+('K70', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.934214174747467 0.026563286781311035
+
+('K70', 'Asia Pacific & ANZ', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9292790293693542 0.029801364988088608
+
+('K70', 'EMEA', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8671073913574219 -0.026361551135778427
+
+('K70', 'EMEA', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8798639178276062 0.0508807934820652
+
+('K71', 'Asia Pacific & ANZ', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7513487935066223 0.21773768961429596
+
+('K71', 'EMEA', 'Data and Devices')
+(239, 100, 3)
+(239, 76, 1)
+(414, 1)
+(0,)
+(239,)
+torch.Size([139])
+torch.Size([139])
+76
+76
+0.753489077091217 -0.05253478139638901
+
+('K72', 'EMEA', 'Data and Devices')
+(175, 100, 3)
+(175, 76, 1)
+(350, 1)
+(0,)
+(175,)
+torch.Size([75])
+torch.Size([75])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('K73', 'Americas', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.5068410634994507 0.2168707400560379
+
+('K74', 'Asia Pacific & ANZ', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8656429052352905 0.07099053263664246
+
+('K74', 'EMEA', 'Data and Devices')
+(180, 100, 3)
+(180, 76, 1)
+(355, 1)
+(0,)
+(180,)
+torch.Size([80])
+torch.Size([80])
+76
+76
+0.546271800994873 0.08198043704032898
+
+('K75', 'Americas', 'Data and Devices')
+(0,)
+(0,)
+(93, 1)
+(0,)
+(0,)
+
+('K75', 'Asia Pacific & ANZ', 'Data and Devices')
+(0,)
+(0,)
+(81, 1)
+(0,)
+(0,)
+
+('K75', 'EMEA', 'Channel - Data and Devices')
+(0,)
+(0,)
+(102, 1)
+(0,)
+(0,)
+
+('K75', 'EMEA', 'Data and Devices')
+(0,)
+(0,)
+(51, 1)
+(0,)
+(0,)
+
+('K76', 'EMEA', 'Data and Devices')
+(223, 100, 3)
+(223, 76, 1)
+(398, 1)
+(0,)
+(223,)
+torch.Size([123])
+torch.Size([123])
+76
+76
+0.7280080318450928 0.0523405559360981
+
+('K77', 'Americas', 'Data and Devices')
+(238, 100, 3)
+(238, 76, 1)
+(413, 1)
+(0,)
+(238,)
+torch.Size([138])
+torch.Size([138])
+76
+76
+0.7259570360183716 0.06884327530860901
+
+('K77', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8945906758308411 0.05434338375926018
+
+('K77', 'Asia Pacific & ANZ', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7751290798187256 -0.013851044699549675
+
+('K78', 'Americas', 'Aerospace, Defense & Marine')
+(213, 100, 3)
+(213, 76, 1)
+(388, 1)
+(0,)
+(213,)
+torch.Size([113])
+torch.Size([113])
+76
+76
+0.7603652477264404 -0.005276869051158428
+
+('K79', 'Americas', 'Aerospace, Defense & Marine')
+(68, 100, 3)
+(68, 76, 1)
+(243, 1)
+(0,)
+(68,)
+torch.Size([0])
+torch.Size([0])
+doing calculation with different lengths:  36 68
+36
+68
+-1 -1
+
+('K80', 'Americas', 'Aerospace, Defense & Marine')
+(240, 100, 3)
+(240, 76, 1)
+(415, 1)
+(0,)
+(240,)
+torch.Size([140])
+torch.Size([140])
+76
+76
+0.9016733169555664 -0.007422841619700193
+
+('K81', 'Americas', 'Aerospace, Defense & Marine')
+(204, 100, 3)
+(204, 76, 1)
+(379, 1)
+(0,)
+(204,)
+torch.Size([104])
+torch.Size([104])
+76
+76
+0.6365453004837036 -0.040928613394498825
+
+('K85', 'Americas', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9011934995651245 0.08087369799613953
+
+('K85', 'Americas', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.288199245929718 0.4580546021461487
+
+('K85', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.858992874622345 -0.07396791875362396
+
+('K85', 'Asia Pacific & ANZ', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.779308557510376 0.13344527781009674
+
+('K85', 'EMEA', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8909934163093567 0.041097305715084076
+
+('K85', 'EMEA', 'Data and Devices')
+(222, 100, 3)
+(222, 76, 1)
+(397, 1)
+(0,)
+(222,)
+torch.Size([122])
+torch.Size([122])
+76
+76
+0.6883344054222107 -0.04410410672426224
+
+('K86', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(239, 100, 3)
+(239, 76, 1)
+(414, 1)
+(0,)
+(239,)
+torch.Size([139])
+torch.Size([139])
+76
+76
+0.9133291840553284 0.03651232644915581
+
+('K86', 'Asia Pacific & ANZ', 'Data and Devices')
+(208, 100, 3)
+(208, 76, 1)
+(383, 1)
+(0,)
+(208,)
+torch.Size([108])
+torch.Size([108])
+76
+76
+0.8087421655654907 -0.014968224801123142
+
+('K86', 'EMEA', 'Data and Devices')
+(135, 100, 3)
+(135, 76, 1)
+(310, 1)
+(0,)
+(135,)
+torch.Size([35])
+torch.Size([35])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('K88', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8717607259750366 -0.07440193742513657
+
+('K88', 'Asia Pacific & ANZ', 'Data and Devices')
+(238, 100, 3)
+(238, 76, 1)
+(413, 1)
+(0,)
+(238,)
+torch.Size([138])
+torch.Size([138])
+76
+76
+0.81905198097229 -0.004830468911677599
+
+('K97', 'Asia Pacific & ANZ', 'Industrial')
+(59, 100, 3)
+(59, 76, 1)
+(234, 1)
+(0,)
+(59,)
+torch.Size([0])
+torch.Size([0])
+doing calculation with different lengths:  18 59
+18
+59
+-1 -1
+
+('KA4', 'Americas', 'Energy')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7259179353713989 0.042908672243356705
+
+('KA5', 'Asia Pacific & ANZ', 'Energy')
+(169, 100, 3)
+(169, 76, 1)
+(344, 1)
+(0,)
+(169,)
+torch.Size([69])
+torch.Size([69])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('KA8', 'Asia Pacific & ANZ', 'Energy')
+(213, 100, 3)
+(213, 76, 1)
+(388, 1)
+(0,)
+(213,)
+torch.Size([113])
+torch.Size([113])
+76
+76
+0.7735863924026489 0.06681347638368607
+
+('KB2', 'EMEA', 'Energy')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8971921801567078 0.006656389683485031
+
+('LR0', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9164898991584778 0.0024422756396234035
+
+('LR0', 'Asia Pacific & ANZ', 'Industrial')
+(233, 100, 3)
+(233, 76, 1)
+(408, 1)
+(0,)
+(233,)
+torch.Size([133])
+torch.Size([133])
+76
+76
+0.7689557671546936 0.12729068100452423
+
+('LR1', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9030361771583557 -0.013312140479683876
+
+('LR1', 'Asia Pacific & ANZ', 'Industrial')
+(239, 100, 3)
+(239, 76, 1)
+(414, 1)
+(0,)
+(239,)
+torch.Size([139])
+torch.Size([139])
+76
+76
+0.8655861020088196 0.05627193674445152
+
+('LR2', 'EMEA', 'Industrial')
+(240, 100, 3)
+(240, 76, 1)
+(415, 1)
+(0,)
+(240,)
+torch.Size([140])
+torch.Size([140])
+76
+76
+0.8367025256156921 -0.016500253230333328
+
+('LR5', 'EMEA', 'Industrial')
+(239, 100, 3)
+(239, 76, 1)
+(414, 1)
+(0,)
+(239,)
+torch.Size([139])
+torch.Size([139])
+76
+76
+0.847151517868042 -0.010984443128108978
+
+('LS0', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(191, 100, 3)
+(191, 76, 1)
+(366, 1)
+(0,)
+(191,)
+torch.Size([91])
+torch.Size([91])
+76
+76
+0.8396663665771484 0.04389161989092827
+
+('LS0', 'Asia Pacific & ANZ', 'Industrial')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.82317054271698 0.04079217463731766
+
+('LT0', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8708258271217346 0.028842445462942123
+
+('LT0', 'Asia Pacific & ANZ', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.763269305229187 0.15952540934085846
+
+('LT0', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9180295467376709 -0.04436007887125015
+
+('LT0', 'EMEA', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9017255306243896 -0.005767577327787876
+
+('LT1', 'EMEA', 'Industrial')
+(231, 100, 3)
+(231, 76, 1)
+(406, 1)
+(0,)
+(231,)
+torch.Size([131])
+torch.Size([131])
+76
+76
+0.718651533126831 0.00046876209671609104
+
+('LT6', 'Americas', 'Aerospace, Defense & Marine')
+(188, 100, 3)
+(188, 76, 1)
+(363, 1)
+(0,)
+(188,)
+torch.Size([88])
+torch.Size([88])
+76
+76
+0.7821992635726929 -0.0860433354973793
+
+('LT6', 'EMEA', 'Aerospace, Defense & Marine')
+(185, 100, 3)
+(185, 76, 1)
+(360, 1)
+(0,)
+(185,)
+torch.Size([85])
+torch.Size([85])
+76
+76
+0.8485993146896362 0.035146165639162064
+
+('LT7', 'Americas', 'Aerospace, Defense & Marine')
+(155, 100, 3)
+(155, 76, 1)
+(330, 1)
+(0,)
+(155,)
+torch.Size([55])
+torch.Size([55])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('LT7', 'EMEA', 'Aerospace, Defense & Marine')
+(184, 100, 3)
+(184, 76, 1)
+(359, 1)
+(0,)
+(184,)
+torch.Size([84])
+torch.Size([84])
+76
+76
+0.8517633080482483 -0.024417724460363388
+
+('LU4', 'Americas', 'Aerospace, Defense & Marine')
+(94, 100, 3)
+(94, 76, 1)
+(269, 1)
+(0,)
+(94,)
+torch.Size([0])
+torch.Size([0])
+76
+76
+0.0 1.5822787284851074
+
+('LV1', 'Americas', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9520366787910461 0.00017555765225552022
+
+('LV1', 'Americas', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7571199536323547 -0.07854881882667542
+
+('LV1', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9393137097358704 -0.011865523643791676
+
+('LV1', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9525240659713745 0.004081006161868572
+
+('LV1', 'EMEA', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8011582493782043 0.10289847105741501
+
+('LV3', 'Americas', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8710936307907104 0.04336405172944069
+
+('LV3', 'Americas', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.5861116647720337 -0.15281528234481812
+
+('LV3', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9417299032211304 0.009080796502530575
+
+('LV3', 'EMEA', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8238618969917297 0.0463230200111866
+
+('LV4', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9539976716041565 -0.010490699671208858
+
+('LV5', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9447618126869202 -0.016426166519522667
+
+('LV6', 'Americas', 'Aerospace, Defense & Marine')
+(177, 100, 3)
+(177, 76, 1)
+(352, 1)
+(0,)
+(177,)
+torch.Size([77])
+torch.Size([77])
+76
+76
+0.6746749877929688 -0.0173830334097147
+
+('LV7', 'Asia Pacific & ANZ', 'Industrial')
+(240, 100, 3)
+(240, 76, 1)
+(415, 1)
+(0,)
+(240,)
+torch.Size([140])
+torch.Size([140])
+76
+76
+0.6196870803833008 0.19965766370296478
+
+('N01', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8812339901924133 0.031658247113227844
+
+('N02', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.887070894241333 0.028090806677937508
+
+('N02', 'EMEA', 'Appliances')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.8394219279289246 0.0021611505653709173
+
+('N02', 'EMEA', 'Data and Devices')
+(228, 100, 3)
+(228, 76, 1)
+(403, 1)
+(0,)
+(228,)
+torch.Size([128])
+torch.Size([128])
+76
+76
+0.8309519290924072 -0.017635682597756386
+
+('N03', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8381860256195068 -0.08477063477039337
+
+('N03', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8930642008781433 0.029745956882834435
+
+('N04', 'EMEA', 'Data and Devices')
+(192, 100, 3)
+(192, 76, 1)
+(367, 1)
+(0,)
+(192,)
+torch.Size([92])
+torch.Size([92])
+76
+76
+0.6961702108383179 0.13796879351139069
+
+('N05', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8543659448623657 0.03553330525755882
+
+('N05', 'EMEA', 'Appliances')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8670587539672852 -0.08708682656288147
+
+('N05', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9124920964241028 -0.030699947848916054
+
+('N06', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8552667498588562 0.10698303580284119
+
+('N06', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8993236422538757 0.02078082039952278
+
+('N09', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.896668553352356 -0.03462466970086098
+
+('N09', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7686065435409546 0.09497034549713135
+
+('N09', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9267110228538513 -0.010129469446837902
+
+('N17', 'Asia Pacific & ANZ', 'Industrial')
+(223, 100, 3)
+(223, 76, 1)
+(398, 1)
+(0,)
+(223,)
+torch.Size([123])
+torch.Size([123])
+76
+76
+0.8025570511817932 0.08005417883396149
+
+('N18', 'Asia Pacific & ANZ', 'Industrial')
+(237, 100, 3)
+(237, 76, 1)
+(412, 1)
+(0,)
+(237,)
+torch.Size([137])
+torch.Size([137])
+76
+76
+0.8330651521682739 0.07541287690401077
+
+('N20', 'Asia Pacific & ANZ', 'Industrial')
+(230, 100, 3)
+(230, 76, 1)
+(405, 1)
+(0,)
+(230,)
+torch.Size([130])
+torch.Size([130])
+76
+76
+0.7608838081359863 0.03303992748260498
+
+('N38', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.816779375076294 0.0064275446347892284
+
+('N41', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9142634272575378 -0.03491964936256409
+
+('N65', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(239, 100, 3)
+(239, 76, 1)
+(414, 1)
+(0,)
+(239,)
+torch.Size([139])
+torch.Size([139])
+76
+76
+0.7534925937652588 -0.024890614673495293
+
+('N65', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8768037557601929 0.06880982965230942
+
+('N73', 'Americas', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8613905310630798 -0.08358626812696457
+
+('N73', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.897290825843811 -0.0445823073387146
+
+('N73', 'EMEA', 'Industrial Commercial Transportation')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9470760822296143 -0.01087768841534853
+
+('N99', 'Asia Pacific & ANZ', 'Industrial Commercial Transportation')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.7853310704231262 -0.09335494786500931
+
+('O27', 'Asia Pacific & ANZ', 'Aerospace, Defense & Marine')
+(37, 100, 3)
+(37, 76, 1)
+(212, 1)
+(0,)
+(37,)
+torch.Size([0])
+torch.Size([0])
+doing calculation with different lengths:  0 37
+returning bc bad data
+
+('O27', 'EMEA', 'Aerospace, Defense & Marine')
+(189, 100, 3)
+(189, 76, 1)
+(364, 1)
+(0,)
+(189,)
+torch.Size([89])
+torch.Size([89])
+76
+76
+0.8667014241218567 0.001989765092730522
+
+('O34', 'EMEA', 'Aerospace, Defense & Marine')
+(239, 100, 3)
+(239, 76, 1)
+(414, 1)
+(0,)
+(239,)
+torch.Size([139])
+torch.Size([139])
+76
+76
+0.8865399956703186 -0.026105355471372604
+
+('P17', 'Asia Pacific & ANZ', 'Data and Devices')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.833997905254364 -0.0950608104467392
+
+('P23', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(239, 100, 3)
+(239, 76, 1)
+(414, 1)
+(0,)
+(239,)
+torch.Size([139])
+torch.Size([139])
+76
+76
+0.9140924215316772 0.04223552718758583
+
+('P23', 'Asia Pacific & ANZ', 'Industrial')
+(198, 100, 3)
+(198, 76, 1)
+(373, 1)
+(0,)
+(198,)
+torch.Size([98])
+torch.Size([98])
+76
+76
+0.6707955598831177 -0.07800634950399399
+
+('P40', 'Asia Pacific & ANZ', 'Industrial')
+(0,)
+(0,)
+(59, 1)
+(0,)
+(0,)
+
+('V45', 'Americas', 'Aerospace, Defense & Marine')
+(0,)
+(0,)
+(69, 1)
+(0,)
+(0,)
+
+('W02', 'Americas', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9471094608306885 -0.00929866824299097
+
+('W02', 'Americas', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.785902202129364 0.13248591125011444
+
+('W02', 'Asia Pacific & ANZ', 'Industrial')
+(241, 100, 3)
+(241, 76, 1)
+(416, 1)
+(0,)
+(241,)
+torch.Size([141])
+torch.Size([141])
+76
+76
+0.8208128809928894 0.020832369104027748
+
+('W02', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9302641153335571 0.025473305955529213
+
+('W02', 'EMEA', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8025433421134949 -0.012206860817968845
+
+('W04', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.949363648891449 -0.007133514620363712
+
+('W83', 'Asia Pacific & ANZ', 'Industrial')
+(103, 100, 3)
+(103, 76, 1)
+(278, 1)
+(0,)
+(103,)
+torch.Size([3])
+torch.Size([3])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('W83', 'EMEA', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8311141729354858 0.08847061544656754
+
+('Z04', 'EMEA', 'Aerospace, Defense & Marine')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.803209125995636 -0.1270672231912613
+
+('Z13', 'EMEA', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9182942509651184 0.033441998064517975
+
+('Z15', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9596589207649231 0.02733951061964035
+
+('Z15', 'Asia Pacific & ANZ', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7998875379562378 0.034135427325963974
+
+('Z16', 'Americas', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.95291668176651 -0.010537301190197468
+
+('Z16', 'Americas', 'Industrial')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.7657790780067444 0.09554314613342285
+
+('Z16', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.903257429599762 0.010876454412937164
+
+('Z16', 'Asia Pacific & ANZ', 'Industrial')
+(239, 100, 3)
+(239, 76, 1)
+(414, 1)
+(0,)
+(239,)
+torch.Size([139])
+torch.Size([139])
+76
+76
+0.7767410278320312 0.029221562668681145
+
+('Z16', 'EMEA', 'Industrial')
+(232, 100, 3)
+(232, 76, 1)
+(407, 1)
+(0,)
+(232,)
+torch.Size([132])
+torch.Size([132])
+76
+76
+0.7748560905456543 -0.0002703357604332268
+
+('Z17', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9334873557090759 0.018629664555191994
+
+('Z17', 'Asia Pacific & ANZ', 'Industrial')
+(240, 100, 3)
+(240, 76, 1)
+(415, 1)
+(0,)
+(240,)
+torch.Size([140])
+torch.Size([140])
+76
+76
+0.7231894731521606 0.12031619250774384
+
+('Z20', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9099175930023193 -0.020047154277563095
+
+('Z20', 'EMEA', 'Industrial')
+(240, 100, 3)
+(240, 76, 1)
+(415, 1)
+(0,)
+(240,)
+torch.Size([140])
+torch.Size([140])
+76
+76
+0.7093226909637451 0.2039962112903595
+
+('Z23', 'Americas', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9205322265625 -0.02380175143480301
+
+('Z23', 'Americas', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8009932041168213 -0.04321938380599022
+
+('Z23', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(234, 100, 3)
+(234, 76, 1)
+(409, 1)
+(0,)
+(234,)
+torch.Size([134])
+torch.Size([134])
+76
+76
+0.7797204256057739 0.011827792972326279
+
+('Z23', 'Asia Pacific & ANZ', 'Industrial')
+(168, 100, 3)
+(168, 76, 1)
+(343, 1)
+(0,)
+(168,)
+torch.Size([68])
+torch.Size([68])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('Z23', 'EMEA', 'Channel - Industrial')
+(239, 100, 3)
+(239, 76, 1)
+(414, 1)
+(0,)
+(239,)
+torch.Size([139])
+torch.Size([139])
+76
+76
+0.8007117509841919 -0.18551748991012573
+
+('Z23', 'EMEA', 'Industrial')
+(207, 100, 3)
+(207, 76, 1)
+(382, 1)
+(0,)
+(207,)
+torch.Size([107])
+torch.Size([107])
+76
+76
+0.8266656398773193 -0.11676962673664093
+
+('Z24', 'Asia Pacific & ANZ', 'Appliances')
+(235, 100, 3)
+(235, 76, 1)
+(410, 1)
+(0,)
+(235,)
+torch.Size([135])
+torch.Size([135])
+76
+76
+0.8143171668052673 -0.04223141819238663
+
+('Z24', 'Asia Pacific & ANZ', 'Industrial')
+(225, 100, 3)
+(225, 76, 1)
+(400, 1)
+(0,)
+(225,)
+torch.Size([125])
+torch.Size([125])
+76
+76
+0.7106674313545227 -0.18050701916217804
+
+('Z24', 'EMEA', 'Appliances')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.875429630279541 0.004939359147101641
+
+('Z24', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9347739219665527 0.023229358717799187
+
+('Z24', 'EMEA', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8939714431762695 -0.0021927575580775738
+
+('Z26', 'Americas', 'Industrial')
+(53, 100, 3)
+(53, 76, 1)
+(228, 1)
+(0,)
+(53,)
+torch.Size([0])
+torch.Size([0])
+doing calculation with different lengths:  6 53
+6
+53
+-1 -1
+
+('Z27', 'Americas', 'Appliances')
+(241, 100, 3)
+(241, 76, 1)
+(416, 1)
+(0,)
+(241,)
+torch.Size([141])
+torch.Size([141])
+76
+76
+0.8757876753807068 -0.05292344465851784
+
+('Z27', 'Americas', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9294372200965881 -0.0018337937071919441
+
+('Z27', 'Americas', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8384699821472168 0.010294153355062008
+
+('Z27', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9305658936500549 0.004237351939082146
+
+('Z27', 'Asia Pacific & ANZ', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7822083234786987 0.15097016096115112
+
+('Z27', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9361099600791931 -0.02920977585017681
+
+('Z27', 'EMEA', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.884221613407135 0.043953005224466324
+
+('Z28', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8906393051147461 0.03658789396286011
+
+('Z28', 'Asia Pacific & ANZ', 'Industrial')
+(240, 100, 3)
+(240, 76, 1)
+(415, 1)
+(0,)
+(240,)
+torch.Size([140])
+torch.Size([140])
+76
+76
+0.827556312084198 -0.07620197534561157
+
+('Z28', 'EMEA', 'Industrial')
+(238, 100, 3)
+(238, 76, 1)
+(413, 1)
+(0,)
+(238,)
+torch.Size([138])
+torch.Size([138])
+76
+76
+0.7971459031105042 -0.003853871952742338
+
+('Z29', 'Americas', 'Industrial')
+(223, 100, 3)
+(223, 76, 1)
+(398, 1)
+(0,)
+(223,)
+torch.Size([123])
+torch.Size([123])
+76
+76
+0.3612270951271057 0.3813140392303467
+
+('Z30', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(227, 100, 3)
+(227, 76, 1)
+(402, 1)
+(0,)
+(227,)
+torch.Size([127])
+torch.Size([127])
+76
+76
+0.8224495649337769 -0.014814148657023907
+
+('Z30', 'Asia Pacific & ANZ', 'Industrial')
+(173, 100, 3)
+(173, 76, 1)
+(348, 1)
+(0,)
+(173,)
+torch.Size([73])
+torch.Size([73])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('Z30', 'EMEA', 'Channel - Industrial')
+(126, 100, 3)
+(126, 76, 1)
+(301, 1)
+(0,)
+(126,)
+torch.Size([26])
+torch.Size([26])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('Z30', 'EMEA', 'Industrial')
+(0,)
+(0,)
+(172, 1)
+(0,)
+(0,)
+
+('Z32', 'EMEA', 'Aerospace, Defense & Marine')
+(237, 100, 3)
+(237, 76, 1)
+(412, 1)
+(0,)
+(237,)
+torch.Size([137])
+torch.Size([137])
+76
+76
+0.6960290670394897 0.08013482391834259
+
+('Z33', 'Americas', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9592487215995789 -0.005108701065182686
+
+('Z33', 'Americas', 'Industrial')
+(240, 100, 3)
+(240, 76, 1)
+(415, 1)
+(0,)
+(240,)
+torch.Size([140])
+torch.Size([140])
+76
+76
+0.6825414896011353 0.08136043697595596
+
+('Z33', 'Asia Pacific & ANZ', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8343173265457153 -0.09558366239070892
+
+('Z33', 'Asia Pacific & ANZ', 'Industrial')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.6463200449943542 -0.14096909761428833
+
+('Z33', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7316756248474121 -0.12147919088602066
+
+('Z34', 'EMEA', 'Appliances')
+(227, 100, 3)
+(227, 76, 1)
+(402, 1)
+(0,)
+(227,)
+torch.Size([127])
+torch.Size([127])
+76
+76
+0.7948314547538757 0.1402527391910553
+
+('Z34', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9417775273323059 -0.008539036847651005
+
+('Z34', 'EMEA', 'Industrial')
+(238, 100, 3)
+(238, 76, 1)
+(413, 1)
+(0,)
+(238,)
+torch.Size([138])
+torch.Size([138])
+76
+76
+0.7776424288749695 0.07801292836666107
+
+('Z35', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9624459147453308 0.0012213117443025112
+
+('Z35', 'EMEA', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8932971358299255 0.008993864990770817
+
+('Z36', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.939126193523407 0.008627204224467278
+
+('Z36', 'EMEA', 'Industrial')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.9289078712463379 0.010885750874876976
+
+('Z39', 'Americas', 'Industrial')
+(0,)
+(0,)
+(103, 1)
+(0,)
+(0,)
+
+('Z40', 'EMEA', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9681580066680908 -0.016493817791342735
+
+('Z40', 'EMEA', 'Industrial')
+(240, 100, 3)
+(240, 76, 1)
+(415, 1)
+(0,)
+(240,)
+torch.Size([140])
+torch.Size([140])
+76
+76
+0.8386794924736023 0.028236066922545433
+
+('Z43', 'Asia Pacific & ANZ', 'Industrial')
+(57, 100, 3)
+(57, 76, 1)
+(232, 1)
+(0,)
+(57,)
+torch.Size([0])
+torch.Size([0])
+doing calculation with different lengths:  14 57
+14
+57
+-1 -1
+
+('Z43', 'EMEA', 'Industrial')
+(165, 100, 3)
+(165, 76, 1)
+(340, 1)
+(0,)
+(165,)
+torch.Size([65])
+torch.Size([65])
+doing calculation with different lengths:  0 76
+returning bc bad data
+
+('Z44', 'Americas', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.344038724899292 0.6559614539146423
+
+('Z44', 'Americas', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8688244223594666 -0.027135519310832024
+
+('Z45', 'Americas', 'Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8684848546981812 -0.06561274081468582
+
+('Z54', 'Asia Pacific & ANZ', 'Industrial')
+(191, 100, 3)
+(191, 76, 1)
+(366, 1)
+(0,)
+(191,)
+torch.Size([91])
+torch.Size([91])
+76
+76
+0.8261443376541138 -0.02789359726011753
+
+('Z72', 'Americas', 'Energy')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.7713035941123962 -0.0742090716958046
+
+('Z75', 'Americas', 'Aerospace, Defense & Marine')
+(231, 100, 3)
+(231, 76, 1)
+(406, 1)
+(0,)
+(231,)
+torch.Size([131])
+torch.Size([131])
+76
+76
+0.6635371446609497 0.21369919180870056
+
+('Z76', 'EMEA', 'Aerospace, Defense & Marine')
+(94, 100, 3)
+(94, 76, 1)
+(269, 1)
+(0,)
+(94,)
+torch.Size([0])
+torch.Size([0])
+76
+76
+0.2472778558731079 -0.35107165575027466
+
+('Z77', 'Americas', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7541264295578003 0.1088598370552063
+
+('Z77', 'Americas', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.6802951097488403 -0.03798335790634155
+
+('Z77', 'Asia Pacific & ANZ', 'Aerospace, Defense & Marine')
+(0,)
+(0,)
+(50, 1)
+(0,)
+(0,)
+
+('Z77', 'Asia Pacific & ANZ', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.6375020742416382 0.09334932267665863
+
+('Z77', 'Asia Pacific & ANZ', 'Data and Devices')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.7501704692840576 0.08122605830430984
+
+('Z77', 'EMEA', 'Channel - Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.92924565076828 0.008361400105059147
+
+('Z77', 'EMEA', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.8375483751296997 -0.09103500097990036
+
+('Z78', 'EMEA', 'Industrial')
+(241, 100, 3)
+(241, 76, 1)
+(416, 1)
+(0,)
+(241,)
+torch.Size([141])
+torch.Size([141])
+76
+76
+0.869062066078186 -0.066993847489357
+
+('Z81', 'Americas', 'Channel - Industrial')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.9154459834098816 -0.03182041272521019
+
+('Z81', 'Americas', 'Industrial')
+(226, 100, 3)
+(226, 76, 1)
+(401, 1)
+(0,)
+(226,)
+torch.Size([126])
+torch.Size([126])
+76
+76
+0.7338888645172119 -0.12292257696390152
+
+('Z82', 'Americas', 'Data and Devices')
+(93, 100, 3)
+(93, 76, 1)
+(268, 1)
+(0,)
+(93,)
+torch.Size([0])
+torch.Size([0])
+76
+76
+0.0 3.9385056495666504
+
+('Z82', 'Asia Pacific & ANZ', 'Data and Devices')
+(243, 100, 3)
+(243, 76, 1)
+(418, 1)
+(0,)
+(243,)
+torch.Size([143])
+torch.Size([143])
+76
+76
+0.7376801371574402 -0.04780188947916031
+
+('Z83', 'EMEA', 'Industrial')
+(242, 100, 3)
+(242, 76, 1)
+(417, 1)
+(0,)
+(242,)
+torch.Size([142])
+torch.Size([142])
+76
+76
+0.8681919574737549 -0.014412338845431805
+
+('Z92', 'EMEA', 'Energy')
+(239, 100, 3)
+(239, 76, 1)
+(414, 1)
+(0,)
+(239,)
+torch.Size([139])
+torch.Size([139])
+76
+76
+0.8987636566162109 -0.03738691285252571
