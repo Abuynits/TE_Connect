@@ -41,6 +41,7 @@ class Reservoir(nn.Module):
         self._all_weights = []
         # initialize all weights in each recurrent layer in the ESN
         for layer in range(num_layers):
+            print("layer:", layer)
             # the input and hidden layers will have different sizes
             self.layer_input_size = self.input_size if layer == 0 else self.hidden_size
 
@@ -63,7 +64,9 @@ class Reservoir(nn.Module):
             for name, param in zip(param_names, layer_params):
                 setattr(self, name, param)
             # appends the weights for the parameters
+            print("param names:", param_names)
             self.all_weights.append(param_names)
+            print("weights:", self.all_weights)
 
         self.reset_params()
 
@@ -100,7 +103,6 @@ class Reservoir(nn.Module):
                 w_hh = w_hh.view(self.hidden_size, self.hidden_size)
                 abs_eigs = torch.abs(torch.linalg.eigvals(w_hh))
                 weight_dict[key] = w_hh * (self.spectral_radius / torch.max(abs_eigs))
-        self.__setstate__(weight_dict)
         self.load_state_dict(weight_dict)
 
     def check_input(self, input, batch_sizes):
