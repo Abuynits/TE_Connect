@@ -117,8 +117,8 @@ class ESN(nn.Module):
     def forward(self, input, washout, h_0=None, target=None):
         with torch.no_grad():
             is_packed = isinstance(input, PackedSequence)
-
-            output, hidden = self.reservoir(input, h_0)
+            # pass the output, hidden sequence and starts through the reservour.
+            output, hidden = self._reservoir(input, h_0)
             if is_packed:
                 # if have sequences of unequal length, pad the output to fit it
                 output, seq_lengths = pad_packed_sequence(output,
@@ -227,7 +227,6 @@ def washout_tensor(tensor, washout, seq_lengths, bidirectional=False, batch_firs
         seq_lengths = seq_lengths.copy()
     if type(seq_lengths) == torch.Tensor:
         seq_lengths = seq_lengths.clone()
-    # batch is now the second dimension
     for b in range(tensor.size(1)):
         if washout[b] > 0:
             tmp = tensor[washout[b]:seq_lengths[b], b].clone()

@@ -81,7 +81,7 @@ def get_all_factor_comparison(all_data,
 def _calc_tensor_acc(prediction, actual):
     if len(prediction) != len(actual):
         print("doing calculation with different lengths: ", len(prediction), len(actual))
-        return -1, -1, \
+        return BAD_CALC, BAD_CALC, \
             (np.empty(shape=[len(prediction)]),
              np.empty(shape=[len(prediction)]),
              np.empty(shape=[len(prediction)]))

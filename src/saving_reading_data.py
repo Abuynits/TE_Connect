@@ -148,28 +148,29 @@ def write_results_to_file(key,
                           actual_data,
                           time,
                           months):
-    if not len(time) == len(bias) == len(acc) == len(abs_err) == len(pred_data) == len(
-        actual_data):
-        print("bad data lengths!")
-        return;
-    assert (len(time) == len(bias) == len(acc) == len(abs_err) == len(pred_data) == len(
-        actual_data)), "bad data lengths!"
 
     product_id = key[0]
     business_group = key[2]
     region = key[1]
-
+    if len(actual_data) == 0 or len(pred_data) == 0 or len(abs_err) == 0 or len(bias) == 0:
+        print("returning bc bad data")
+        return
     with open(RESULTS_FILE_PATH, 'a') as f:
         writer = csv.writer(f)
+
 
         if PREDICTION_TYPE == prediction_time.DAILY:
             for row in range(len(pred_data)):
                 fiscal_week = time[row] % 100
                 year = time[row] // 100
                 month = months[row]
+                print(len(pred_data[row]))
+                print(len(actual_data[row]))
 
-                data_row = [year, month, fiscal_week, product_id, business_group, region, pred_data[row].item(),
-                            actual_data[row].item(), bias[row], abs_err[row]]
+
+
+                data_row = [year, month, fiscal_week, product_id, business_group, region, pred_data[row],
+                            actual_data[row], bias[row], abs_err[row]]
                 writer.writerow(data_row)
         elif PREDICTION_TYPE == prediction_time.MONTHLY:
             past_month = months[0]
@@ -207,6 +208,8 @@ def write_results_to_file(key,
         metadata = [key, all_pred_acc, all_pred_bias, monthly_acc, monthly_bias]
         writer.writerow(metadata)
 
+
+
 """
 Try for the entire dataset - might not get same accuracy for dataset
 try to run through all dataset - not cherry pick at the beginning
@@ -241,7 +244,7 @@ expect ~80% accuracy for the data
 - if not leverage external indicator - will not be able to leverage the sharp downturn
 
 have inflection points in dataset where test it out - example: covid
-- if use seq2seq without external indicators,  you can say that model not pick up downtrend during covi
+- if use seq2seq without external indicators,  you can say that model not pick up downtrend during covid
 
 model never experience it before in their data - these are factors get from external indicators
 - are certain downturns that see in dataset
