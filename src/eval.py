@@ -70,11 +70,8 @@ def get_all_factor_comparison(all_data,
             key = ','.join(key)
             actual_tensor = actual_tensor.squeeze()
             pred_tensor = pred_tensor.squeeze()
-            print(pred_tensor)
-            print(actual_tensor)
 
             overall_acc, overall_bias, (_, _, _) = calc_feature_similarity(pred_tensor, actual_tensor)
-            print(overall_acc, overall_bias)
             indicator_to_product[indicator][key]['overall_acc'] = overall_acc
             indicator_to_product[indicator][key]['overall_bias'] = overall_bias
 
@@ -85,7 +82,6 @@ def get_all_factor_comparison(all_data,
 
 
 def _calc_tensor_acc(prediction, actual):
-    EVAL_VERBOSE = True
     if len(prediction) != len(actual):
         print("doing calculation with different lengths: ", len(prediction), len(actual))
         # error return code
