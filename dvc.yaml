@@ -104,4 +104,4 @@ stages:
       - data/model/model.pkl
     outs:
       - data/eval_plots/
-      - data/results.csv
+      - data/results_seq2seq.csv

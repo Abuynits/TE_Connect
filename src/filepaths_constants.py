@@ -92,7 +92,7 @@ class RUN_TYPE(Enum):
 
 DISPLAY_RESULTS = False
 WRITE_RESULTS_FILE = True
-RESULTS_FILE_PATH = "data/results.csv"
+RESULTS_FILE_PATH = "data/results_seq2seq.csv"
 
 EXPERIMENT_SOURCE = RUN_TYPE.MLFLOW_RUN
 

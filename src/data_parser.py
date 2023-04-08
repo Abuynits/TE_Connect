@@ -2,7 +2,16 @@ import pandas as pd
 from eval import *
 import re
 
-df = pd.read_csv("/Users/abuynits/PycharmProjects/TE_Connect/data/results_deepecn.csv")
+SEQ2SEQ = "/Users/abuynits/PycharmProjects/TE_Connect/data/results_seq2seq.csv"
+DEEP_ESN = "/Users/abuynits/PycharmProjects/TE_Connect/data/results_deepecn.csv"
+model_choice = DEEP_ESN
+write_csv = False
+OUTPUT_FP = "/Users/abuynits/PycharmProjects/TE_Connect/data/parser_out.csv"
+
+
+
+
+df = pd.read_csv(model_choice)
 
 all_pred = df["pred"].dropna()
 all_pred = all_pred.str.replace('tensor', '').replace('[()\[\]]', '', regex=True).str.replace(' ', '')
@@ -16,24 +25,14 @@ all_pred = all_pred.to_numpy()
 assert (len(all_actual) == len(all_pred))
 
 product_codes = df.iloc[2::3, :]['year'].to_numpy()
-print(len(product_codes))
-print(product_codes[0])
 business_groups = df.iloc[::3, :]['business group'].to_numpy()
-print(len(business_groups))
-print(business_groups[0])
 regions = df.iloc[::3, :]['region'].to_numpy()
-print(len(regions))
-print(regions[0])
 years = df.iloc[0::3, :]['year'].str.replace('[\[\]]', '', regex=True).to_numpy()
-print(len(years))
-print(years[0])
 months = df.iloc[0::3, :]['month'].str.replace("\n", "", regex=False) \
     .str.replace("[ ", "", regex=False) \
     .str.replace("[", "", regex=False) \
     .str.replace("]", "", regex=False) \
     .str.replace("  ", " ").to_numpy()
-print(len(months))
-print(months[0])
 
 master_pred = []
 master_actual = []
@@ -45,7 +44,6 @@ for l in range(len(all_actual)):
     actual = list(map(float, all_actual[l].split(",")))
     pred = list(map(float, all_pred[l].split(",")))
     year = list(map(float, years[l].split(" ")))
-    print(len(months[l]))
     month = list(map(float, months[l].split(" ")))
 
     if len(actual) != len(pred):
@@ -64,12 +62,17 @@ for l in range(len(all_actual)):
     master_actual.extend(actual)
     master_pred.extend(pred)
 
-print(len(master_actual))
-print(len(master_pred))
-print(len(all_data))
+month_acc, month_bias, _ = calc_feature_similarity(month_master_actual, month_master_pred)
+day_acc, day_bias, _ = calc_feature_similarity(master_actual, master_pred)
 
-print(calc_feature_similarity(month_master_actual, month_master_pred))
-print(calc_feature_similarity(master_actual, master_pred))
+if model_choice == SEQ2SEQ:
+    print("========= SEQ2SEQ =========")
+elif model_choice == DEEP_ESN:
+    print("========= DEEP_ESN =========")
 
-df_write = pd.DataFrame(all_data)
-df_write.to_csv('results3.csv', sep=";", index=False)
+print("month acc:{:.4f}, month bias: {:.4f}".format(month_acc, month_bias))
+print("day acc:{:.4f}, day bias: {:.4f}".format(day_acc, day_bias))
+
+if write_csv:
+    df_write = pd.DataFrame(all_data)
+    df_write.to_csv(OUTPUT_FP, sep=";", index=False)
