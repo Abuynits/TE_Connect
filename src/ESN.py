@@ -4,6 +4,7 @@ from torch.nn.utils.rnn import PackedSequence, pad_packed_sequence
 from reservoir import Reservoir
 from model_constants import *
 from data_constants import *
+from seq2seq_arch import print_model
 
 # https://github.com/stefanonardo/pytorch-esn/blob/master/examples/mnist.py#L22
 
@@ -105,6 +106,7 @@ class ESN(nn.Module):
         self.XTX = None
         self.XTy = None
         self.X = None
+        print_model(self)
 
     def forward(self, input, washout, h_0=None, target=None):
         with torch.no_grad():

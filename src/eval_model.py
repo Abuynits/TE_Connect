@@ -37,9 +37,6 @@ for key, val in enumerate(dict_valid_data):
 all_acc = []
 all_bias = []
 
-all_pred_acc = []
-all_pred_bias = []
-
 reset_file = True
 
 for key, val in enumerate(dict_test_data):
@@ -192,22 +189,14 @@ for key, val in enumerate(dict_test_data):
 
         all_acc.append(overall_acc)
         all_bias.append(overall_bias)
-        all_pred_acc.append(pred_acc)
-        all_pred_bias.append(pred_bias)
 
 avg_all_acc = sum(all_acc) / len(all_acc)
 print(f"all_acc avg: {avg_all_acc:.4f}")
 avg_all_bias = sum(all_bias) / len(all_bias)
 print(f"all_bias avg: {avg_all_bias:.4f}")
-avg_pred_acc = sum(pred_acc) / len(pred_acc)
-print(f"pred_acc avg: {avg_pred_acc:.4f}")
-avg_pred_bias = sum(pred_bias) / len(pred_bias)
-print(f"pred_bias avg: {avg_pred_bias:.4f}")
 
 mlflow.log_metric("avg_all_acc", avg_all_acc)
 mlflow.log_metric("avg_all_bias", avg_all_bias)
-mlflow.log_metric("avg_pred_acc", avg_pred_acc)
-mlflow.log_metric("avg_pred_bias", avg_pred_bias)
 
 if run_ml_flow:
     mlflow.end_run()

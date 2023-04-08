@@ -9,6 +9,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 from torch.nn.utils.rnn import PackedSequence
 import torch.sparse
+from seq2seq_arch import print_model
 
 
 def apply_permutation(tensor, permutation, dim=1):
@@ -67,6 +68,7 @@ class Reservoir(nn.Module):
             self._all_weights.append(param_names)
 
         self.reset_parameters()
+        print_model(self)
 
     def _apply(self, fn):
         ret = super(Reservoir, self)._apply(fn)
