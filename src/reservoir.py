@@ -41,7 +41,6 @@ class Reservoir(nn.Module):
         self._all_weights = []
         # initialize all weights in each recurrent layer in the ESN
         for layer in range(num_layers):
-            print("layer:", layer)
             # the input and hidden layers will have different sizes
             self.layer_input_size = self.input_size if layer == 0 else self.hidden_size
 
@@ -64,9 +63,8 @@ class Reservoir(nn.Module):
             for name, param in zip(param_names, layer_params):
                 setattr(self, name, param)
             # appends the weights for the parameters
-            print("param names:", param_names)
-            self.all_weights.append(param_names)
-            print("weights:", self.all_weights)
+            self._all_weights.append(param_names)
+        print("weights:", self._all_weights)
 
         self.reset_params()
 
@@ -172,11 +170,16 @@ class Reservoir(nn.Module):
             flat_weight=None,
             leaking_rate=self.leaking_rate,
         )
-
-        output, hidden = auto_grad_res(input, self.all_weights, hx, batch_sizes)
+        print(self.state_dict())
+        # TODO:
+        # Have a state dict that holds the weight dict, modify repo to access stuff in it
+        # instead of accessing the wieght_dict which is a copy of the keys of state_dict()
+        print("len dict:", len(self.state_dict()))
+        print("len input:", len(input))
+        output, hidden = auto_grad_res(input, self.state_dict(), hx, batch_sizes)
 
         if is_packed:
-            output = PackedSequence(input, self.all_weights, hx, batch_sizes)
+            output = PackedSequence(input, self._all_weights, hx, batch_sizes)
         # return the output and hidden layers involved in calculation
         return output, self.permute_hidden(hidden, unsorted_indices)
 
@@ -213,6 +216,10 @@ class Reservoir(nn.Module):
         return [[getattr(self, weight) for weight in weights] for weights in
                 self._all_weights]
 
+    @all_weights.setter
+    def all_weights(self, value):
+        self._all_weights = value
+
 
 def AutogradReservoir(mode,
                       input_size,
@@ -240,10 +247,13 @@ def AutogradReservoir(mode,
         layer = (Recurrent(cell, leaking_rate),)
 
     # create the reservoir from the stacked RNN
+    print("layer len:", len(layer))
+    print("count layers:", num_layers)
     func = StackedRNN(layer,
-                      num_layers,
+                      6,
                       False,
                       train=train)
+
     def forward(input, weight, hidden, batch_sizes):
         # swap out the input dims to follow the correct dimensions
         if batch_first and batch_sizes is None:
@@ -350,6 +360,12 @@ def StackedRNN(inners, num_layers, lstm=False, train=True):
 
 # applies tanh activation function to final recurrent output
 def ResTanhCell(input, hidden, leaking_rate, w_ih, w_hh, b_ih=None):
+    print(input)
+    print(hidden)
+    print(leaking_rate)
+    print(w_ih)
+    print(w_hh)
+    print(b_ih)
     hy_ = torch.tanh(F.linear(input, w_ih, b_ih) + F.linear(hidden, w_hh))
     hy = (1 - leaking_rate) * hidden + leaking_rate * hy_
     return hy

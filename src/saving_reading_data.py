@@ -164,10 +164,6 @@ def write_results_to_file(key,
                 fiscal_week = time[row] % 100
                 year = time[row] // 100
                 month = months[row]
-                print(len(pred_data[row]))
-                print(len(actual_data[row]))
-
-
 
                 data_row = [year, month, fiscal_week, product_id, business_group, region, pred_data[row],
                             actual_data[row], bias[row], abs_err[row]]

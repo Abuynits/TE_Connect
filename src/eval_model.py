@@ -2,7 +2,6 @@ import mlflow
 
 from saving_reading_data import *
 from data_processing import *
-from data_constants import BAD_CALC
 from eval import *
 
 # check if mlflow exists and can be run
@@ -48,17 +47,16 @@ for key, val in enumerate(dict_test_data):
                                                 OUTPUT_DATA_COLS)
     print()
     print(val)
-    print(x.shape)
-    # print(trg.shape) not use lol
-    print(y.shape)
+    # print(x.shape)
+    # # print(trg.shape) not use lol
+    # print(y.shape)
     # take inverse transformation
     all_pred_data = []
-    print(transformed_data[val][OUTPUT_DATA_COLS].shape)
     all_actual_data = np.squeeze(
         output_transformations[val].inverse_transform(
             transformed_data[val][OUTPUT_DATA_COLS])[0:len(x)])
-    print(np.shape(all_pred_data))
-    print(np.shape(all_actual_data))
+    # print(np.shape(all_pred_data))
+    # print(np.shape(all_actual_data))
     for i in range(len(x)):
         # prepare data for input to model
         model_inp = torch.from_numpy(x[i]).float().to(DEVICE)
@@ -75,8 +73,6 @@ for key, val in enumerate(dict_test_data):
             all_pred_data.append(squeezed_arr)
         elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
             squeezed_arr = np.squeeze(pred_inv_t)[0]
-            print(squeezed_arr)
-            print(i)
             all_pred_data.append(squeezed_arr)
         elif ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
             all_pred_data.append(pred_inv_t)
@@ -92,8 +88,6 @@ for key, val in enumerate(dict_test_data):
             if APPLY_LOG_TRANSFORM:
                 pred_inv_t, _, _ = take_exponent(pred_inv_t)
                 actual_model_inv_t, _, _ = take_exponent(actual_model_inv_t)
-            print(pred_inv_t.shape)
-            print(actual_model_inv_t.shape)
             (overall_acc, overall_bias), \
                 (pred_acc, pred_bias), (individual_acc, individual_bias, individual_abs_err), \
                 (pred_individual_acc, pred_individual_bias, pred_individual_abs_err) = eval_data_prediction(
