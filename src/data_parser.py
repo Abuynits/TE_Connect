@@ -2,7 +2,7 @@ import pandas as pd
 from eval import *
 import re
 
-df = pd.read_csv("/Users/abuynits/PycharmProjects/TE_Connect/data/results.csv")
+df = pd.read_csv("/Users/abuynits/PycharmProjects/TE_Connect/data/results_deepecn.csv")
 
 all_pred = df["pred"].dropna()
 all_pred = all_pred.str.replace('tensor', '').replace('[()\[\]]', '', regex=True).str.replace(' ', '')
@@ -54,8 +54,6 @@ for l in range(len(all_actual)):
         if (i + 1) % 4 == 0:
             acc_avg = sum(actual[i - 3:i]) / 4
             pred_avg = sum(pred[i - 3:i]) / 4
-            print(product_codes[l])
-            print(type(product_codes[l]))
             p_code = re.sub("['()]", "", product_codes[l])
             p_code = p_code.split(",")[0]
             all_data.append(
@@ -74,4 +72,4 @@ print(calc_feature_similarity(month_master_actual, month_master_pred))
 print(calc_feature_similarity(master_actual, master_pred))
 
 df_write = pd.DataFrame(all_data)
-df_write.to_csv('results2.csv', sep=";", index=False)
+df_write.to_csv('results3.csv', sep=";", index=False)

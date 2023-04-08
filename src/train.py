@@ -58,8 +58,11 @@ num_epochs_run = 0
 lowest_epoch = 0
 all_valid_epoch_acc = []
 
+count = 0
+
 
 def get_model_pred(x, target):
+    global count
     if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
         x = x.swapaxes(0, 1)  # want to put data in (seq, batches,num features)
         model_out = model.forward(x, target)
@@ -68,19 +71,14 @@ def get_model_pred(x, target):
     elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
         # input mask: [prediction length, prediction length]
         # [batch_size*n_heads, output_sequence_length, enc_seq_len]
-        inp_mask = generate_mask(PREDICT, LOOKBACK, DEVICE, batch_size=True)  # enc_seq_len is lenght of input given to encoder
+        inp_mask = generate_mask(PREDICT, LOOKBACK, DEVICE,
+                                 batch_size=True)  # enc_seq_len is lenght of input given to encoder
         # target mask: [prediction length, prediction length]
         # [batch_size*n_heads, output_sequence_length, output_sequence_length]
         target_mask = generate_mask(PREDICT, PREDICT, DEVICE, batch_size=True)
-        # print(x.shape)
-        # print(x)
-        # print(target.shape)
-        # print(target)
-        # print(inp_mask.shape)
-        # print(inp_mask)
-        # print(target_mask.shape)
-        # print(target_mask)
-        # exit(1)
+        print("\n\n\n\n========",count,"==========")
+        count += 1
+        optim.zero_grad()
         model_out, _ = model.forward(x, target, inp_mask, target_mask)
         print(model_out)
     elif ARCH_CHOICE == MODEL_CHOICE.DEEP_ESN:
@@ -121,9 +119,8 @@ def train_epoch(dl, epoch):
         loss.backward()
         # step the optimizer
         optim.step()
-        epoch_train_loss += loss.item() * x.size(0)
-        times_run += x.size(0)
-    return epoch_train_loss / times_run
+        epoch_train_loss += float(loss)
+    return epoch_train_loss
 
 
 def test_epoch(dl, epoch):
@@ -211,7 +208,7 @@ for e in range(EPOCHS):
                 all_valid_epoch_acc[-EARLY_STOP_MIN_EPOCH],
                 num_epochs_run,
                 valid_overall_acc
-                ))
+            ))
             break
 train_time = time.time() - start_time
 

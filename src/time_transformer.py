@@ -17,39 +17,32 @@ Aggregations
 Combinations of these techniques
 
 """
-from filepaths_constants import *
 from model_constants import *
 from dl_ds import *
 from filepaths_constants import *
 
 
 # need to implement the position encoder as a class for the model
-class Pos_Encoder(pl.LightningModule):
-    def __init__(self):
-        super(Pos_Encoder, self).__init__()
-        self.dim_val = TIME_DEC_DIM_VAL  # dimension of output of sublayers
-        self.max_seq_len = TIME_MAX_SEQ_LEN  # max feature length of the pos encoder
-        self.drop = TIME_POS_ENC_DROP  # dropout for time encoder
-        self.dropout = nn.Dropout(self.drop)
-        # copy pasted from PyTorch tutorial
-        position = torch.arange(TIME_MAX_SEQ_LEN).unsqueeze(1)
+class Pos_Encoder(nn.Module):
 
-        div_term = torch.exp(torch.arange(0, self.dim_val, 2) * (-math.log(10000.0) / self.dim_val))
+    def __init__(self, d_model=TIME_ENC_DIM_VAL, dropout=TIME_ENC_DROP, max_len=TIME_MAX_SEQ_LEN):
+        super().__init__()
+        self.dropout = nn.Dropout(p=dropout)
 
-        pe = torch.zeros(self.max_seq_len, 1, self.dim_val)
-
+        position = torch.arange(max_len).unsqueeze(1)
+        div_term = torch.exp(torch.arange(0, d_model, 2) * (-math.log(10000.0) / d_model))
+        pe = torch.zeros(max_len, 1, d_model)
         pe[:, 0, 0::2] = torch.sin(position * div_term)
-
         pe[:, 0, 1::2] = torch.cos(position * div_term)
-
         self.register_buffer('pe', pe)
 
-    def forward(self, inp):
-        # shape: batch_size, enc_seq_len,dim val
-        inp = inp + self.pe[:inp.size(0)]  # return the input seq added to the position encoder
-        x = self.dropout(inp)
-
-        return x
+    def forward(self, x):
+        """
+        Args:
+            x: Tensor, shape [seq_len, batch_size, embedding_dim]
+        """
+        x = x + self.pe[:x.size(0)]
+        return self.dropout(x)
 
 
 class time_encoder(pl.LightningModule):
@@ -90,9 +83,15 @@ class time_encoder(pl.LightningModule):
     def forward(self, inp):
         # pass through input for the decoder
         # input size is: [batch size, inp seq len,num input features]
-        if TIME_VERBOSE:
+        if TIME_VERBOSE_MAX:
+            print(f"\tenc: input shape:{inp.shape}")
+            print(inp)
+        elif TIME_VERBOSE:
             print(f"\tenc: input shape:{inp.shape}")
         x = self.enc_inp_layer(inp)
+        if TIME_VERBOSE_MAX:
+            print(f"\tenc: after enc input layer:{x.shape}")
+            print(x)
         if TIME_VERBOSE:
             print(f"\tenc: after enc input layer:{x.shape}")
         # output is: [batch_size,source,dim_val] where dim_val is 512 (arbitrarily preset)
@@ -239,8 +238,6 @@ class time_transformer(pl.LightningModule):
             print(out)
         elif TIME_VERBOSE:
             print(f"out shape: {out.shape}")
-        if TIME_VERBOSE_MAX:
-            exit(1)
         return out, new_inp
 
 
