@@ -5,7 +5,7 @@ ML_FLOW_EXPERIMENT_NAME = "testing"
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 BATCH_SIZE = 1024
 LEARNING_RATE = 1e-3
-EPOCHS = 5
+EPOCHS = 30
 
 GAMMA = 0.95
 
@@ -18,7 +18,7 @@ class MODEL_CHOICE(Enum):
     DEEP_ESN = 3
 
 
-ARCH_CHOICE = MODEL_CHOICE.DEEP_ESN
+ARCH_CHOICE = MODEL_CHOICE.SEQ2SEQ
 
 EARLY_STOP_MIN_EPOCH = 10
 EARLY_STOP_DELTA = 0.05
