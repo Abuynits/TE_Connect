@@ -16,6 +16,7 @@ def apply_permutation(tensor, permutation, dim=1):
     # other dims hold the same size
     return tensor.index_select(dim, permutation)
 
+# https://github.com/stefanonardo/pytorch-esn/blob/master/examples/mnist.py#L22
 
 class Reservoir(nn.Module):
 

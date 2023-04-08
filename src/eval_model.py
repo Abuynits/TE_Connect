@@ -76,6 +76,11 @@ for key, val in enumerate(dict_test_data):
             all_pred_data.append(squeezed_arr)
         elif ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
             all_pred_data.append(pred_inv_t)
+        elif ARCH_CHOICE == MODEL_CHOICE.DEEP_ESN:
+            squeezed_arr = np.squeeze(pred_inv_t)[0]
+            all_pred_data.append(squeezed_arr)
+        else:
+            raise Exception("ERROR: bad Model selection")
 
         if EVAL_VERBOSE:
             print("actual pred data:", model_pred)

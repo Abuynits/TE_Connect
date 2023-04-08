@@ -5,6 +5,8 @@ from reservoir import Reservoir
 from model_constants import *
 from data_constants import *
 
+# https://github.com/stefanonardo/pytorch-esn/blob/master/examples/mnist.py#L22
+
 
 class ESN(nn.Module):
     """

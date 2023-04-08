@@ -5,7 +5,7 @@ ML_FLOW_EXPERIMENT_NAME = "testing"
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 BATCH_SIZE = 1024
 LEARNING_RATE = 1e-3
-EPOCHS = 30
+EPOCHS = 10
 
 GAMMA = 0.95
 

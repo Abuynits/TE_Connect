@@ -41,6 +41,11 @@ def get_model_prediction(model, model_inp):
         pred = time_predict(model, model_inp)
         pred = torch.squeeze(pred)
         pred = pred.reshape(-1, 1)
+    elif ARCH_CHOICE == MODEL_CHOICE.DEEP_ESN:
+        model_inp = model_inp.unsqueeze(1)
+        washout_list = [int(ESN_WASHOUT_RATE * model_inp.size(0))] * model_inp.size(1)
+        pred, _ = model.forward(model_inp, washout_list)
+        pred = pred.view(pred.size(1), -1)
     else:
         raise Exception("error: invalid model selected")
     return pred
