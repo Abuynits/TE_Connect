@@ -62,6 +62,7 @@ class time_encoder(pl.LightningModule):
         self.layer_count = TIME_ENC_LAYER_COUNT
         self.dim_feed_forward = TIME_ENC_DIM_FEED_FORWARD
         self.drop = TIME_ENC_DROP
+        self.batch_first = TIME_BATCH_FIRST
 
         self.enc_inp_layer = nn.Linear(  # converts the data to the dimensions for the encoder
             in_features=self.input_features,  # number of input vars
@@ -78,7 +79,7 @@ class time_encoder(pl.LightningModule):
             nhead=self.n_head,
             dim_feedforward=self.dim_feed_forward,
             dropout=self.drop,
-            batch_first=True
+            batch_first=self.batch_first
         )
         # then need to pass this block to create multiple coppies in an encoder
         # norm: optional param - need to pass in null as enc_block already normalizes it
@@ -109,17 +110,18 @@ class time_encoder(pl.LightningModule):
 class time_decoder(pl.LightningModule):
     def __init__(self):
         super(time_decoder, self).__init__()
-        self.input_features = OUTPUT_DATA_FEATURES
-        self.target_input_features = INPUT_DATA_FEATURES
+        self.input_features = INPUT_DATA_FEATURES
         self.dim_val = TIME_DEC_DIM_VAL
-        self.nheads = TIME_DEC_HEAD_COUNT
+        self.n_heads = TIME_DEC_HEAD_COUNT
         self.dec_layer_count = TIME_DEC_LAYER_COUNT
         self.feed_feed_forward_dim = TIME_DEC_DIM_FEED_FORWARD
         self.drop = TIME_DEC_DROP
+        self.output_features = OUTPUT_DATA_FEATURES
+        self.batch_first = TIME_BATCH_FIRST
         # will be passing in the variables as input to the decoder - need to get them to size 512
         # this way match output of encoder
         self.dec_inp_layer = nn.Linear(
-            in_features=self.target_input_features,
+            in_features=self.input_features,
             out_features=self.dim_val
         )
 
@@ -128,8 +130,8 @@ class time_decoder(pl.LightningModule):
             d_model=self.dim_val,
             dim_feedforward=self.feed_feed_forward_dim,
             dropout=self.drop,
-            nhead=self.nheads,
-            batch_first=True
+            nhead=self.n_heads,
+            batch_first=self.batch_first
         )
         # create a decoder based of the decoder blocks
         self.dec = nn.TransformerDecoder(
@@ -142,21 +144,28 @@ class time_decoder(pl.LightningModule):
         # need to map from the hidden sequence length (dim_val) to the prediction sequence
         self.linear_output_mapping = nn.Linear(
             in_features=self.dim_val,
-            out_features=self.input_features
+            out_features=self.output_features
         )
         # multiply dim_val by OUTPUT_DATA_COL to account for final mapping
         self.linear_input_mapping = nn.Linear(
             in_features=self.dim_val,
-            out_features=self.target_input_features
+            out_features=self.input_features
         )
 
     def forward(self, enc_out, target, input_mask, target_mask):
         # the target is the last element in seq that is used for predictions - need to convert it to right size
         # x shape: target_seq_len,batch_size,features
-        if TIME_VERBOSE:
+        if TIME_VERBOSE_MAX:
             print(f"\ttarget shape: {target.shape}")
+            print(target)
+        elif TIME_VERBOSE:
+            print(f"\ttarget shape: {target.shape}")
+
         x = self.dec_inp_layer(target)
-        if TIME_VERBOSE:
+        if TIME_VERBOSE_MAX:
+            print(f"\tdec: decoder inp layer:{x.shape}")
+            print(x)
+        elif TIME_VERBOSE:
             print(f"\tdec: decoder inp layer:{x.shape}")
         # x shape: target_seq_len,batch_size,dim_val
         # run the decoder, performing a mask on the target, nad on the input
@@ -166,13 +175,21 @@ class time_decoder(pl.LightningModule):
             tgt_mask=target_mask,
             memory_mask=input_mask
         )
-        if TIME_VERBOSE:
+        if TIME_VERBOSE_MAX:
+            print(f"\tdec: decoder output: {dec_out.shape}")
+            print(dec_out)
+        elif TIME_VERBOSE:
             print(f"\tdec: decoder output: {dec_out.shape}")
         # get: [batch_size,target_seq_len,dim_val]
         # now pass through linear mapping to convert back to size of features to be used
         mapped_dec_out = self.linear_output_mapping(dec_out)  # the output mapping used as the final result
         mapped_dec_inp = self.linear_input_mapping(dec_out)  # use to feed back into the model
-        if TIME_VERBOSE:
+        if TIME_VERBOSE_MAX:
+            print(f"\tdec: mapped_dec output: {mapped_dec_out.shape}")
+            print(mapped_dec_out)
+            print(f"\tdec: mapped_dec input: {mapped_dec_inp.shape}")
+            print(mapped_dec_inp)
+        elif TIME_VERBOSE:
             print(f"\tdec: mapped_dec output: {mapped_dec_out.shape}")
             print(f"\tdec: mapped_dec input: {mapped_dec_inp.shape}")
 
@@ -186,33 +203,56 @@ class time_transformer(pl.LightningModule):
         self.dec = time_decoder()
         print_model(self)
 
-    def forward(self, inp, target, inp_mask, target_mask):
+    def forward(self, inp, memory, inp_mask, target_mask):
         # need to convert the target sequence to a dimension that can be inputed to the decoder
 
         # inp is all of the sequence that is taken as input
         # target is the target output but shifted over by 1
         # if you get [1,2,3,4,5] as src, then that target should be [2,3,4,5,6]
-        if TIME_VERBOSE:
+        if TIME_VERBOSE_MAX:
             print()
             print(f"input: {inp.shape}")
-            print(f"target: {target.shape}")
+            print(inp)
+            print(f"target: {memory.shape}")
+            print(memory)
+            print(f"input mask: {inp_mask.shape}")
+            print(inp_mask)
+            print(f"target mask: {target_mask.shape}")
+            print(target_mask)
+        elif TIME_VERBOSE:
+            print()
+            print(f"input: {inp.shape}")
+            print(f"target: {memory.shape}")
             print(f"input mask: {inp_mask.shape}")
             print(f"target mask: {target_mask.shape}")
         enc_out = self.enc(inp)
-        if TIME_VERBOSE:
+        if TIME_VERBOSE_MAX:
             print(f"enc_out/dec_inp: {enc_out.shape}")
+            print(enc_out)
+        elif TIME_VERBOSE:
+            print(f"enc_out/dec_inp: {enc_out.shape}")
+
         dec_inp = enc_out
-        out, new_inp = self.dec(dec_inp, target, inp_mask, target_mask)
-        if TIME_VERBOSE:
+        out, new_inp = self.dec(dec_inp, memory, inp_mask, target_mask)
+        if TIME_VERBOSE_MAX:
             print(f"out shape: {out.shape}")
+            print(out)
+        elif TIME_VERBOSE:
+            print(f"out shape: {out.shape}")
+        if TIME_VERBOSE_MAX:
+            exit(1)
         return out, new_inp
 
 
-def generate_mask(dim1, dim2, device):
+def generate_mask(dim1, dim2, device, batch_size=False):
     # dim1: for both input and output - is the target len
     # dim2: for src, this is encoder seq length
     #     : for target - this is target_seq length
-    return torch.triu(torch.ones(dim1, dim2) * float('-inf'), diagonal=1).to(device)
+    single_dim = torch.triu(torch.ones(dim1, dim2) * float('-inf'), diagonal=1).to(device)
+    if batch_size:
+        all_dims = single_dim.unsqueeze(0).repeat(TIME_ENC_HEAD_COUNT * BATCH_SIZE, 1, 1)
+        return all_dims
+    return single_dim
 
 
 # TODO: go over code and make it work better

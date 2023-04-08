@@ -44,7 +44,7 @@ def get_model_prediction(model, model_inp):
     elif ARCH_CHOICE == MODEL_CHOICE.DEEP_ESN:
         model_inp = model_inp.unsqueeze(1)
         washout_list = [int(ESN_WASHOUT_RATE * model_inp.size(0))] * model_inp.size(1)
-        pred, _ = model.forward(model_inp, washout_list)
+        pred, _ = model(model_inp, washout_list)
         pred = pred.view(pred.size(1), -1)
     else:
         raise Exception("error: invalid model selected")

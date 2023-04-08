@@ -110,6 +110,7 @@ LSTM_VERBOSE = False  # debug: check if you want to debug the LSTM model
 SEQ2SEQ_VERBOSE = False  # debug: check if you want to debug the seq2seq model
 TIME_PRED_VERBOSE = False
 TIME_VERBOSE = False
+TIME_VERBOSE_MAX = False
 EVAL_VERBOSE = False
 EVAL_TRAIN_ACC = False
 APPLY_LOG_TRANSFORM = False

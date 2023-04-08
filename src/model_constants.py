@@ -3,9 +3,9 @@ from data_constants import *
 ML_FLOW_EXPERIMENT_NAME = "testing"
 # MODEL INFO:
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-BATCH_SIZE = 1024
+BATCH_SIZE = 2
 LEARNING_RATE = 1e-3
-EPOCHS = 10
+EPOCHS = 5
 
 GAMMA = 0.95
 
@@ -18,7 +18,7 @@ class MODEL_CHOICE(Enum):
     DEEP_ESN = 3
 
 
-ARCH_CHOICE = MODEL_CHOICE.DEEP_ESN
+ARCH_CHOICE = MODEL_CHOICE.TIME_TRANSFORMER
 
 EARLY_STOP_MIN_EPOCH = 10
 EARLY_STOP_DELTA = 0.05
@@ -60,18 +60,19 @@ SEQ2SEQ_TRAIN_TYPE = SEQ2SEQ_TRAIN_OPTIONS.TEACHER_FORCING
 
 TIME_MAX_SEQ_LEN = 5000  # hyper parameter for initialization of positional encoder
 TIME_POS_ENC_DROP = 0.0
+TIME_BATCH_FIRST = True
 
 TIME_ENC_DROP = 0.0  # default 0.1
 TIME_ENC_DIM_VAL = 16  # default: 512
-TIME_ENC_HEAD_COUNT = 2  # default: 4
-TIME_ENC_LAYER_COUNT = 2  # default: 4
-TIME_ENC_DIM_FEED_FORWARD = 32  # default: = 2048
+TIME_ENC_HEAD_COUNT = 1  # default: 4
+TIME_ENC_LAYER_COUNT = 1  # default: 4
+TIME_ENC_DIM_FEED_FORWARD = 16  # default: = 2048
 
 TIME_DEC_DROP = 0.0  # default 0.1
 TIME_DEC_DIM_VAL = 16  # default: 512
-TIME_DEC_HEAD_COUNT = 2  # default: 4
-TIME_DEC_LAYER_COUNT = 2  # default: 4
-TIME_DEC_DIM_FEED_FORWARD = 32  # default: = 2048
+TIME_DEC_HEAD_COUNT = 1  # default: 4
+TIME_DEC_LAYER_COUNT = 1  # default: 4
+TIME_DEC_DIM_FEED_FORWARD = 16  # default: = 2048
 
 if ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
     MODEL_CHOICE_NAME = "lstm"

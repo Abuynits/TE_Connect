@@ -1,7 +1,7 @@
 from filepaths_constants import *
 
 # must contain each one of these labels
-DATA_FILTER = ["Asia Pacific & ANZ"]
+DATA_FILTER = ["Asia Pacific & ANZ", "Industrial"]
 # data_filter = ["Asia Pacific & ANZ"]
 # collumns of interest
 INPUT_DATA_COLS = ["sales_amount", "sales_quantity",
@@ -17,8 +17,8 @@ TEST_TRAIN_SPLIT = 0.8  # test-train split percentage
 PERCENT_TRAIN_DATA = 0.7
 PERCENT_TEST_DATA = 0.1
 PERCENT_VALID_DATA = 1 - PERCENT_TRAIN_DATA - PERCENT_TEST_DATA
-LOOKBACK = 50  # number of units used to make prediction
-PREDICT = 50  # number of units that will be predicted
+LOOKBACK = 10  # number of units used to make prediction
+PREDICT = 10  # number of units that will be predicted
 
 
 class prediction_time(Enum):

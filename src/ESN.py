@@ -56,7 +56,7 @@ class ESN(nn.Module):
         self.hidden_size = hidden_size
         self.output_size = output_size
         self.num_layers = num_layers
-        # configure activation founction between computing reservoir
+        # configure activation function between computing reservoir
         if nonlinearity == 'tanh':
             mode = 'RES_TANH'
         elif nonlinearity == 'relu':
@@ -211,7 +211,35 @@ class ESN(nn.Module):
 
                 return None, None
 
+    def fit(self):
+        if self.readout_training in {'gd', 'svd'}:
+            return
 
+        if self.readout_training == 'cholesky':
+            W = torch.linalg.solve(self.XTy,
+                                   self.XTX + self.lambda_reg * torch.eye(
+                                       self.XTX.size(0), device=self.XTX.device))[0].t()
+            self.XTX = None
+            self.XTy = None
+
+            self.readout.bias = nn.Parameter(W[:, 0])
+            self.readout.weight = nn.Parameter(W[:, 1:])
+        elif self.readout_training == 'inv':
+            I = (self.lambda_reg * torch.eye(self.XTX.size(0))).to(
+                self.XTX.device)
+            A = self.XTX + I
+            X_rank = torch.linalg.matrix_rank(A).item()
+
+            if X_rank == self.X.size(0):
+                W = torch.mm(torch.inverse(A), self.XTy).t()
+            else:
+                W = torch.mm(torch.pinverse(A), self.XTy).t()
+
+            self.readout.bias = nn.Parameter(W[:, 0])
+            self.readout.weight = nn.Parameter(W[:, 1:])
+
+            self.XTX = None
+            self.XTy = None
 def washout_tensor(tensor, washout, seq_lengths, bidirectional=False, batch_first=False):
     # create a tensor such that the batch is the second dim
     tensor = tensor.transpose(0, 1) if batch_first else tensor.clone()

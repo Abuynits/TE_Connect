@@ -46,11 +46,12 @@ else:
     raise Exception("bad model selected!")
 
 if ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
+    LEARNING_RATE = 5
     optim = optimizer.SGD(model.parameters(), lr=LEARNING_RATE)
-    loss_func = nn.CrossEntropyLoss()
+    criterion = nn.CrossEntropyLoss()
 else:
     optim = optimizer.Adam(model.parameters(), lr=LEARNING_RATE)
-    loss_func = nn.MSELoss()
+    criterion = nn.MSELoss()
 scheduler = ExponentialLR(optim, gamma=GAMMA)
 
 num_epochs_run = 0
@@ -66,15 +67,27 @@ def get_model_pred(x, target):
         model_out = model.forward(x)
     elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
         # input mask: [prediction length, prediction length]
-        inp_mask = generate_mask(PREDICT, LOOKBACK, DEVICE)
+        # [batch_size*n_heads, output_sequence_length, enc_seq_len]
+        inp_mask = generate_mask(PREDICT, LOOKBACK, DEVICE, batch_size=True)  # enc_seq_len is lenght of input given to encoder
         # target mask: [prediction length, prediction length]
-        target_mask = generate_mask(PREDICT, PREDICT, DEVICE)
+        # [batch_size*n_heads, output_sequence_length, output_sequence_length]
+        target_mask = generate_mask(PREDICT, PREDICT, DEVICE, batch_size=True)
+        # print(x.shape)
+        # print(x)
+        # print(target.shape)
+        # print(target)
+        # print(inp_mask.shape)
+        # print(inp_mask)
+        # print(target_mask.shape)
+        # print(target_mask)
+        # exit(1)
         model_out, _ = model.forward(x, target, inp_mask, target_mask)
+        print(model_out)
     elif ARCH_CHOICE == MODEL_CHOICE.DEEP_ESN:
         x = x.view(x.size(1), x.size(0), -1)
         washout_list = [int(ESN_WASHOUT_RATE * x.size(0))] * x.size(1)
         model_out, _ = model.forward(x, washout_list)
-        model_out = model_out.view(model_out.size(1),-1)
+        model_out = model_out.view(model_out.size(1), -1)
     else:
         raise Exception("Bad model selected!")
     return model_out
@@ -89,7 +102,6 @@ def train_epoch(dl, epoch):
     times_run = 0
 
     for i, (x, target, y) in enumerate(dl):
-        optim.zero_grad()  # zero gradients
         x = x.to(DEVICE)
         target = target.to(DEVICE)
         y = y.to(DEVICE)
@@ -101,15 +113,16 @@ def train_epoch(dl, epoch):
         # account for swapping batch and seq count dimensions
         if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
             y = torch.t(y)
-
-        loss = loss_func(model_out, y)
+        if ARCH_CHOICE == MODEL_CHOICE.DEEP_ESN:
+            model.fit()
+        loss = criterion(model_out, y)
         # compute the loss
+        optim.zero_grad()
         loss.backward()
         # step the optimizer
         optim.step()
         epoch_train_loss += loss.item() * x.size(0)
         times_run += x.size(0)
-
     return epoch_train_loss / times_run
 
 
@@ -130,7 +143,7 @@ def test_epoch(dl, epoch):
         if ARCH_CHOICE == MODEL_CHOICE.SEQ2SEQ:
             y = torch.t(y)
 
-        loss = loss_func(model_out, y)
+        loss = criterion(model_out, y)
         overall_acc, overall_bias, _ = calc_train_accuracy(model_out, y)
         epoch_test_loss += loss.item() * x.size(0)
         times_run += x.size(0)
@@ -182,8 +195,9 @@ for e in range(EPOCHS):
     print('-' * 80)
     print('| end of epoch {:3d} | time: {:5.2f}s | lr: {:5.6f} | train loss {:.4f}| valid loss: {:.4f}'.format(e,
                                                                                                                (
-                                                                                                               time.time() - start_time),
-                                                                                                               scheduler.get_last_lr()[-1],
+                                                                                                                       time.time() - start_time),
+                                                                                                               scheduler.get_last_lr()[
+                                                                                                                   -1],
                                                                                                                avg_train_loss,
                                                                                                                avg_valid_loss))
     if EVAL_TRAIN_ACC:
@@ -192,11 +206,12 @@ for e in range(EPOCHS):
     print('-' * 80)
     if num_epochs_run > EARLY_STOP_MIN_EPOCH:
         if all_valid_epoch_acc[-EARLY_STOP_MIN_EPOCH] - valid_overall_acc > EARLY_STOP_DELTA:
-            print("Validation acc has not increased from epoch %d:%.4f to epoch %d:%.4f ".format(num_epochs_run-EARLY_STOP_MIN_EPOCH,
-                                                                                                 all_valid_epoch_acc[-EARLY_STOP_MIN_EPOCH],
-                                                                                                 num_epochs_run,
-                                                                                                 valid_overall_acc
-                                                                                                 ))
+            print("Validation acc has not increased from epoch %d:%.4f to epoch %d:%.4f ".format(
+                num_epochs_run - EARLY_STOP_MIN_EPOCH,
+                all_valid_epoch_acc[-EARLY_STOP_MIN_EPOCH],
+                num_epochs_run,
+                valid_overall_acc
+                ))
             break
 train_time = time.time() - start_time
 
