@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
 from torch.nn.utils.rnn import PackedSequence, pad_packed_sequence
-from reservoir import *
-from data_constants import *
+from reservoir import Reservoir
 from model_constants import *
+from data_constants import *
 
 
 class ESN(nn.Module):
@@ -32,12 +32,11 @@ class ESN(nn.Module):
     last: only the last timestep of reservoir output matrix is used
     """
 
-    def __init__(self,
-                 input_features=INPUT_DATA_FEATURES,
-                 hidden_features=ESN_HIDDEN_FEATURES,
-                 output_features=OUTPUT_DATA_FEATURES,
+    def __init__(self, input_size=INPUT_DATA_FEATURES,
+                 hidden_size=ESN_HIDDEN_FEATURES,
+                 output_size=OUTPUT_DATA_FEATURES,
                  num_layers=ESN_NUM_LAYERS,
-                 non_linearity=ESN_NON_LINEARITY,
+                 nonlinearity=ESN_NON_LINEARITY,
                  batch_first=ESN_BATCH_FIRST,
                  leaking_rate=ESN_LEAKING_RATE,
                  spectral_radius=ESN_SPECTRAL_RADIUS,
@@ -46,63 +45,54 @@ class ESN(nn.Module):
                  density=ESN_DENSITY,
                  w_io=ESN_W_IO,
                  readout_training=ESN_READ_OUT_TRAINING,
-                 output_steps=ESN_OUTPUT_STEPS
-                 ):
+                 output_steps=ESN_OUTPUT_STEPS):
+
         super(ESN, self).__init__()
 
-        self._input_size = input_features
-        self._hidden_size = hidden_features
-        self._num_layers = num_layers
-        self._output_features = output_features
-
-        if non_linearity == 'tanh':
-            self._mode = 'RES_TANH'
-        elif non_linearity == 'relu':
-            self._mode = 'RES_RELU'
-        elif non_linearity == 'id':
-            self._mode = 'RES_ID'
+        self.input_size = input_size
+        self.hidden_size = hidden_size
+        self.output_size = output_size
+        self.num_layers = num_layers
+        # configure activation founction between computing reservoir
+        if nonlinearity == 'tanh':
+            mode = 'RES_TANH'
+        elif nonlinearity == 'relu':
+            mode = 'RES_RELU'
+        elif nonlinearity == 'id':
+            mode = 'RES_ID'
         else:
-            raise ValueError("Linearity '{}' not found.".format(non_linearity))
-
-        self._batch_first = batch_first
-        self._leaking_rate = leaking_rate
-        self._spectral_radius = spectral_radius
-
+            raise ValueError("Unknown nonlinearity '{}'".format(nonlinearity))
+        self.batch_first = batch_first
+        self.leaking_rate = leaking_rate
+        self.spectral_radius = spectral_radius
         if type(w_ih_scale) != torch.Tensor:
-            self._w_ih_scale = torch.ones(input_features + 1)
-            self._w_ih_scale *= w_ih_scale
+            self.w_ih_scale = torch.ones(input_size + 1)
+            self.w_ih_scale *= w_ih_scale
         else:
-            self._w_ih_scale = w_ih_scale
+            self.w_ih_scale = w_ih_scale
 
-        self._lambda_reg = lambda_reg
-        self._density = density
-        self._w_io = w_io
-
+        self.lambda_reg = lambda_reg
+        self.density = density
+        self.w_io = w_io
+        # if dont want to get gradients on the readout layer, disable it
         if readout_training in {'gd', 'svd', 'cholesky', 'inv'}:
-            self._readout_training = readout_training
+            self.readout_training = readout_training
         else:
-            raise ValueError("Unknown readout training algorithm '{}'".format(readout_training))
+            raise ValueError("Unknown readout training algorithm '{}'".format(
+                readout_training))
 
-        self._reservoir = Reservoir(self._mode,
-                                    self._input_size,
-                                    self._hidden_size,
-                                    self._num_layers,
-                                    self._leaking_rate,
-                                    self._spectral_radius,
-                                    self._w_ih_scale,
-                                    self._density,
-                                    batch_first=self._batch_first)
+        self.reservoir = Reservoir(mode, input_size, hidden_size, num_layers,
+                                   leaking_rate, spectral_radius,
+                                   self.w_ih_scale, density,
+                                   batch_first=batch_first)
 
         if w_io:
-            # layer for reading out the data from the model
-            self.readout = nn.Linear(self._input_size + self._input_size * num_layers,
-                                     self._output_features)
+            self.readout = nn.Linear(input_size + hidden_size * num_layers,
+                                     output_size)
         else:
-            self.readout = nn.Linear(self._hidden_size * num_layers, self._output_features)
-        # if dont want to get gradients on the readout layer, disable it
+            self.readout = nn.Linear(hidden_size * num_layers, output_size)
         if readout_training == 'offline':
             self.readout.weight.requires_grad = False
-
         # Set the steps that are used for sampling from the repo
         if output_steps in {'all', 'mean', 'last'}:
             self.output_steps = output_steps
@@ -118,7 +108,7 @@ class ESN(nn.Module):
         with torch.no_grad():
             is_packed = isinstance(input, PackedSequence)
             # pass the output, hidden sequence and starts through the reservoir.
-            output, hidden = self._reservoir(input, h_0)
+            output, hidden = self.reservoir(input, h_0)
             if is_packed:
                 # if have sequences of unequal length, pad the output to fit it
                 output, seq_lengths = pad_packed_sequence(output,
@@ -130,7 +120,6 @@ class ESN(nn.Module):
                 else:
                     # batch has been transposed: have sequences of size(1) and batch is added on
                     seq_lengths = output.size(1) * [output.size(0)]
-
             # want to have the first dim be the number of examples in a sequence
             if self.batch_first:
                 output = output.transpose(0, 1)
@@ -176,7 +165,8 @@ class ESN(nn.Module):
                 row = 0
                 for s in range(batch_size):
                     if self.output_steps == 'all':
-                        X[row:row + seq_lengths[s], 1:] = output[:seq_lengths[s], s]
+                        X[row:row + seq_lengths[s], 1:] = output[:seq_lengths[s],
+                                                          s]
                         row += seq_lengths[s]
                     elif self.output_steps == 'mean':
                         X[row, 1:] = torch.mean(output[:seq_lengths[s], s], 0)
@@ -226,6 +216,7 @@ def washout_tensor(tensor, washout, seq_lengths, bidirectional=False, batch_firs
         seq_lengths = seq_lengths.copy()
     if type(seq_lengths) == torch.Tensor:
         seq_lengths = seq_lengths.clone()
+
     for b in range(tensor.size(1)):
         if washout[b] > 0:
             tmp = tensor[washout[b]:seq_lengths[b], b].clone()
@@ -243,3 +234,8 @@ def washout_tensor(tensor, washout, seq_lengths, bidirectional=False, batch_firs
         max_len = max(seq_lengths).item()
 
     return tensor[:max_len], seq_lengths
+
+
+def reshape_batch(batch):
+    batch = batch.view(batch.size(0), batch.size(1), -1)
+    return batch.transpose(0, 1).transpose(0, 2)

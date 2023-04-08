@@ -1,3 +1,8 @@
+"""
+This examples is not intended to be optimized. Its purpose is to show how to handle
+big datasets with multiple sequences. The accuracy should be around 10%.
+"""
+
 import re
 import torch
 import torch.nn as nn
@@ -6,10 +11,10 @@ from torch.nn.utils.rnn import PackedSequence
 import torch.sparse
 
 
-def permute_tensor(inp: torch.Tensor, permutation, dim=1):
+def apply_permutation(tensor, permutation, dim=1):
     # restructures tensor; the dimth dimension of tensor has same dim as permutation
     # other dims hold the same size
-    return inp.index_select(dim, permutation)
+    return tensor.index_select(dim, permutation)
 
 
 class Reservoir(nn.Module):
@@ -26,7 +31,6 @@ class Reservoir(nn.Module):
                  bias=True,
                  batch_first=False):
         super(Reservoir, self).__init__()
-
         self.mode = mode
         self.input_size = input_size
         self.hidden_size = hidden_size
@@ -39,36 +43,35 @@ class Reservoir(nn.Module):
         self.batch_first = batch_first
 
         self._all_weights = []
-        # initialize all weights in each recurrent layer in the ESN
         for layer in range(num_layers):
-            # the input and hidden layers will have different sizes
-            self.layer_input_size = self.input_size if layer == 0 else self.hidden_size
+            layer_input_size = input_size if layer == 0 else hidden_size
 
             # map from previous recurrent layer to current one (same time step)
-            w_ih = nn.Parameter(torch.Tensor(self.hidden_size, self.layer_input_size))
+            w_ih = nn.Parameter(torch.Tensor(hidden_size, layer_input_size))
             # map from same current time step to current one (different time step, same recurrent layer)
-            w_hh = nn.Parameter(torch.Tensor(self.hidden_size, self.hidden_size))
+            w_hh = nn.Parameter(torch.Tensor(hidden_size, hidden_size))
             # add on bias to recurrent nueral networks - add a constant to a nn
-            b_ih = nn.Parameter(torch.Tensor(self.hidden_size))
-
+            b_ih = nn.Parameter(torch.Tensor(hidden_size))
             layer_params = (w_ih, w_hh, b_ih)
             # track and configure the wights
             param_names = ['weight_ih_l{}{}', 'weight_hh_l{}{}']
             # add on bias param name if used
-            if self.bias:
+            if bias:
                 param_names += ['bias_ih_l{}{}']
             param_names = [x.format(layer, '') for x in param_names]
-
             # set the param attributes
             for name, param in zip(param_names, layer_params):
                 setattr(self, name, param)
             # appends the weights for the parameters
             self._all_weights.append(param_names)
-        print("weights:", self._all_weights)
 
-        self.reset_params()
+        self.reset_parameters()
 
-    def reset_params(self):
+    def _apply(self, fn):
+        ret = super(Reservoir, self)._apply(fn)
+        return ret
+
+    def reset_parameters(self):
         # state_dict: used for saving and loading models
         weight_dict = self.state_dict()
         # loop over all weight params and randomize all of them
@@ -115,6 +118,7 @@ class Reservoir(nn.Module):
                     self.input_size, input.size(-1)))
 
     def get_expected_hidden_size(self, input, batch_sizes):
+        # type: (Tensor, Optional[Tensor]) -> Tuple[int, int, int]
         if batch_sizes is not None:
             mini_batch = batch_sizes[0]
             mini_batch = int(mini_batch)
@@ -136,9 +140,9 @@ class Reservoir(nn.Module):
     def permute_hidden(self, hx, permutation):
         if permutation is None:
             return hx
-        return permute_tensor(hx, permutation)
+        return apply_permutation(hx, permutation)
 
-    def forward(self, input, is_training, hx=None):
+    def forward(self, input, hx=None):
         # PackedSequence holds instance of data packed in array
         is_packed = isinstance(input, PackedSequence)
         # extract input, batch size ,indices based on input type
@@ -153,34 +157,32 @@ class Reservoir(nn.Module):
 
         if hx is None:
             # create a blank input hidden layer for hx
-            hx = input.new_zeros(self.num_layers, max_batch_size, self.hidden_size, requires_grad=False)
+            hx = input.new_zeros(self.num_layers, max_batch_size,
+                                 self.hidden_size, requires_grad=False)
+        else:
+            # Each batch of the hidden state should match the input sequence that
+            # the user believes he/she is passing in.
+            hx = self.permute_hidden(hx, sorted_indices)
 
+        flat_weight = None
         # check that provided inputs have the correct shape for function
         self.check_forward_args(input, hx, batch_sizes)
         # create a reservoir autograd reservoir
-
-        auto_grad_res = AutogradReservoir(
+        func = AutogradReservoir(
             self.mode,
             self.input_size,
             self.hidden_size,
             num_layers=self.num_layers,
             batch_first=self.batch_first,
-            train=is_training,
+            train=self.training,
             variable_length=is_packed,
-            flat_weight=None,
-            leaking_rate=self.leaking_rate,
+            flat_weight=flat_weight,
+            leaking_rate=self.leaking_rate
         )
-        print(self.state_dict())
-        # TODO:
-        # Have a state dict that holds the weight dict, modify repo to access stuff in it
-        # instead of accessing the wieght_dict which is a copy of the keys of state_dict()
-        print("len dict:", len(self.state_dict()))
-        print("len input:", len(input))
-        output, hidden = auto_grad_res(input, self.state_dict(), hx, batch_sizes)
-
+        output, hidden = func(input, self.all_weights, hx, batch_sizes)
         if is_packed:
-            output = PackedSequence(input, self._all_weights, hx, batch_sizes)
-        # return the output and hidden layers involved in calculation
+            output = PackedSequence(output, batch_sizes, sorted_indices, unsorted_indices)
+            # return the output and hidden layers involved in calculation
         return output, self.permute_hidden(hidden, unsorted_indices)
 
     def extra_repr(self):
@@ -216,10 +218,6 @@ class Reservoir(nn.Module):
         return [[getattr(self, weight) for weight in weights] for weights in
                 self._all_weights]
 
-    @all_weights.setter
-    def all_weights(self, value):
-        self._all_weights = value
-
 
 def AutogradReservoir(mode,
                       input_size,
@@ -237,28 +235,22 @@ def AutogradReservoir(mode,
         cell = ResReLUCell
     elif mode == 'RES_ID':
         cell = ResIdCell
-    else:
-        raise ValueError("'{}' mode is invalid.".format(mode))
-
     # determine the layer that will be used in the reservoir
     if variable_length:
         layer = (VariableRecurrent(cell, leaking_rate),)
     else:
         layer = (Recurrent(cell, leaking_rate),)
-
     # create the reservoir from the stacked RNN
-    print("layer len:", len(layer))
-    print("count layers:", num_layers)
     func = StackedRNN(layer,
-                      6,
+                      num_layers,
                       False,
                       train=train)
 
+    # swap out the input dims to follow the correct dimensions
     def forward(input, weight, hidden, batch_sizes):
-        # swap out the input dims to follow the correct dimensions
         if batch_first and batch_sizes is None:
             input = input.transpose(0, 1)
-        # get the predicted output dims
+
         nexth, output = func(input, hidden, weight, batch_sizes)
 
         if batch_first and not variable_length:
@@ -280,6 +272,7 @@ def Recurrent(inner, leaking_rate):
             output.append(hidden[0] if isinstance(hidden, tuple) else hidden)
 
         output = torch.cat(output, 0).view(input.size(0), *output[0].size())
+
         return hidden, output
 
     return forward
@@ -327,12 +320,9 @@ def VariableRecurrent(inner, leaking_rate):
 # stacked RNN for iterating through layers
 def StackedRNN(inners, num_layers, lstm=False, train=True):
     num_directions = len(inners)
-    # number of dims to traverse through
     total_layers = num_layers * num_directions
 
     def forward(input, hidden, weight, batch_sizes):
-        print(len(weight))
-        print(total_layers)
         assert (len(weight) == total_layers)
         next_hidden = []
         all_layers_output = []
@@ -342,6 +332,7 @@ def StackedRNN(inners, num_layers, lstm=False, train=True):
             for j, inner in enumerate(inners):
                 l = i * num_directions + j
                 # pass through each inner layer and get the hidden layer and output dim
+
                 hy, output = inner(input, hidden[l], weight[l], batch_sizes)
                 next_hidden.append(hy)
                 all_output.append(output)
@@ -360,12 +351,6 @@ def StackedRNN(inners, num_layers, lstm=False, train=True):
 
 # applies tanh activation function to final recurrent output
 def ResTanhCell(input, hidden, leaking_rate, w_ih, w_hh, b_ih=None):
-    print(input)
-    print(hidden)
-    print(leaking_rate)
-    print(w_ih)
-    print(w_hh)
-    print(b_ih)
     hy_ = torch.tanh(F.linear(input, w_ih, b_ih) + F.linear(hidden, w_hh))
     hy = (1 - leaking_rate) * hidden + leaking_rate * hy_
     return hy
