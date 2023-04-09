@@ -102,13 +102,10 @@ class GRN(nn.Module):
 
     def init_weights(self):
         for name, param in self.named_parameters():
-            if ('w2' in name or 'w3' in name) and 'bias' not in name:
+            if 'bias' not in name:
                 # set normal sampling for only w2 and w3 weights
                 nn.init.xavier_normal_(param)
-                # torch.nn.init.kaiming_normal_(param, a=0, mode='fan_in', nonlinearity='leaky_relu')
-            elif ('skip_linear' in name or 'w1' in name) and 'bias' not in name:
-                # init with uniform distribution
-                nn.init.xavier_uniform_(param)
+
             elif 'bias' in name:
                 # set bias vectors to 0
                 torch.nn.init.zeros_(param)
