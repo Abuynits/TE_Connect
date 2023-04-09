@@ -1,6 +1,5 @@
-import csv
-
-from data_constants import *
+from ..config.data_constants import *
+from ..config.filepaths_constants import *
 
 
 def save_train_val_test_dicts(train_dict, val_dict, test_dict):

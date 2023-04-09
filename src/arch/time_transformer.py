@@ -17,9 +17,9 @@ Aggregations
 Combinations of these techniques
 
 """
-from model_constants import *
-from dl_ds import *
-from filepaths_constants import *
+from ..config.model_constants import *
+from ..utils.dl_ds import *
+from ..config. filepaths_constants import *
 
 
 # need to implement the position encoder as a class for the model

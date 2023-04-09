@@ -1,4 +1,4 @@
-from filepaths_constants import *
+from ..config.filepaths_constants import *
 
 
 def print_model(model):

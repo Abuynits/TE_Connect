@@ -2,14 +2,8 @@
 This examples is not intended to be optimized. Its purpose is to show how to handle
 big datasets with multiple sequences. The accuracy should be around 10%.
 """
-
-import re
-import torch
-import torch.nn as nn
-from torch.nn import functional as F
-from torch.nn.utils.rnn import PackedSequence
-import torch.sparse
-from seq2seq_arch import print_model
+from ..seq2seq_arch import print_model
+from ...config.filepaths_constants import *
 
 
 def apply_permutation(tensor, permutation, dim=1):

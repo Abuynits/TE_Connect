@@ -1,10 +1,8 @@
-import torch
-import torch.nn as nn
-from torch.nn.utils.rnn import PackedSequence, pad_packed_sequence
 from reservoir import Reservoir
-from model_constants import *
-from data_constants import *
-from seq2seq_arch import print_model
+from ...config.model_constants import *
+from ...config.data_constants import *
+from ..seq2seq_arch import print_model
+
 
 # https://github.com/stefanonardo/pytorch-esn/blob/master/examples/mnist.py#L22
 
@@ -240,6 +238,8 @@ class ESN(nn.Module):
 
             self.XTX = None
             self.XTy = None
+
+
 def washout_tensor(tensor, washout, seq_lengths, bidirectional=False, batch_first=False):
     # create a tensor such that the batch is the second dim
     tensor = tensor.transpose(0, 1) if batch_first else tensor.clone()

@@ -1,8 +1,7 @@
 # load in the data and mount it on the drive
-from data_processing import *
-from visualization import *
-from saving_reading_data import *
-from data_constants import *
+from utils.data_processing import *
+from utils.visualization import *
+from utils.saving_reading_data import *
 
 if READ_FROM_DRIVE:
     from google.colab import drive

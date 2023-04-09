@@ -1,11 +1,11 @@
-from dl_ds import *
-from saving_reading_data import *
-from seq2seq_arch import *
-from lstm_arch import *
-from ESN import *
-from time_transformer import *
-from eval import *
-from visualization import *
+import utils.saving_reading_data
+import arch.seq2seq_arch
+import arch.lstm_arch
+import arch.deep_esn.ESN
+import eval.eval
+
+from .config.model_constants import *
+from .config.filepaths_constants import *
 
 print("reading data from files..")
 train_x, train_y, train_tg, valid_x, valid_y, valid_tg = read_train_arrs_from_fp()

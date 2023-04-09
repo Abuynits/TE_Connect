@@ -1,10 +1,5 @@
-import torch
-
-from visualization import *
-from model_constants import *
-from visualization import *
-from collections import defaultdict
-from time_transformer import *
+from ..utils.visualization import *
+from ..arch.time_transformer import *
 
 
 def calc_all_accuracy(prediction, actual):

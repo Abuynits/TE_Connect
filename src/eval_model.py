@@ -1,8 +1,7 @@
-import mlflow
-
-from saving_reading_data import *
-from data_processing import *
-from eval import *
+from utils.saving_reading_data import *
+from utils.data_processing import *
+from eval.eval import *
+from utils.dl_ds import *
 
 # check if mlflow exists and can be run
 run_ml_flow = True if mlflow.active_run() is True else False

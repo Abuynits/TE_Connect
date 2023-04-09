@@ -1,6 +1,5 @@
-from visualization import *
-from saving_reading_data import *
-from data_processing import *
+from src.utils.saving_reading_data import *
+from src.utils.data_processing import *
 
 reg_data, transformed_data = read_data_from_fp()
 

@@ -1,6 +1,5 @@
-import pandas as pd
 from eval import *
-import re
+
 
 SEQ2SEQ = "/Users/abuynits/PycharmProjects/TE_Connect/data/results_seq2seq.csv"
 DEEP_ESN = "/Users/abuynits/PycharmProjects/TE_Connect/data/results_deepecn.csv"

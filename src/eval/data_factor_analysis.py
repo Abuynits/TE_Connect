@@ -1,8 +1,6 @@
-import pickle
-
 from factor_analysis_constants import *
-from data_processing import *
-from visualization import *
+from ..utils.data_processing import *
+from ..utils.visualization import *
 
 assert len(OUTPUT_DATA_COLS) == 1, "OUTPUT data cols should only be 1 value!"
 if READ_FROM_DRIVE:

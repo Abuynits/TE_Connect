@@ -3,7 +3,7 @@ Plan:
 get a data collumn to compare and always compare against the price prediction
 have the option, similar to the other one to visually split the data into subplots nad see how weel trend follows
 """
-from data_constants import OUTPUT_DATA_COLS
+from ..config.data_constants import OUTPUT_DATA_COLS
 
 OUTPUT_DATA_COL = OUTPUT_DATA_COLS[0]
 # filter based on what you want to compare and view

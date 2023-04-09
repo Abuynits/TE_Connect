@@ -1,6 +1,4 @@
 from visualization import *
-from sklearn.compose import make_column_transformer
-
 
 def get_scalar():
     if SCALAR_CHOICE == SCALAR.MINMAX:

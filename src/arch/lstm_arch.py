@@ -1,5 +1,5 @@
-from dl_ds import print_model
-from model_constants import *
+from ..utils.dl_ds import print_model
+from ..config.model_constants import *
 
 
 class lstm(pl.LightningModule):

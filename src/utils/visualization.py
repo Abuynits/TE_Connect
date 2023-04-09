@@ -1,6 +1,5 @@
-from eval import *
-from collections import defaultdict
-from filepaths_constants import *
+from ..eval.eval import *
+from ..config.data_constants import *
 
 run_ml_flow = True if mlflow.active_run() is True else False
 
