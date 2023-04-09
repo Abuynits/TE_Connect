@@ -69,6 +69,7 @@ class GRN(nn.Module):
                  dropout=None,
                  context=None,
                  return_gate=False):
+        super(GRN, self).__init__()
 
         self.hidden_size = hidden_size
         self.input_size = input_size if not None else hidden_size
@@ -112,7 +113,7 @@ class GRN(nn.Module):
 
     def forward(self, inp):
         if self.context:
-            inp, ctx = inp # extract both context and input from the param
+            inp, ctx = inp  # extract both context and input from the param
             n2 = self.ELU(self.w2(inp) + self.w3(ctx))
         else:
             # ctx vector is 0 -> ignore
@@ -127,5 +128,3 @@ class GRN(nn.Module):
             # still have a hidden size: still implement skip over the layer
             out = self.glu_add_norm(n1, inp)
         return out
-
-
