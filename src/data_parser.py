@@ -9,8 +9,6 @@ write_csv = False
 OUTPUT_FP = "/Users/abuynits/PycharmProjects/TE_Connect/data/parser_out.csv"
 
 
-
-
 df = pd.read_csv(model_choice)
 
 all_pred = df["pred"].dropna()
