@@ -1,4 +1,5 @@
 from data_constants import *
+from tft_data import *
 
 ML_FLOW_EXPERIMENT_NAME = "testing"
 # MODEL INFO:
@@ -50,6 +51,7 @@ ESN_READ_OUT_TRAINING = 'svd'
 ESN_OUTPUT_STEPS = 'all'
 ESN_WASHOUT_RATE = 0.0
 
+
 class SEQ2SEQ_TRAIN_OPTIONS(Enum):
     GENERAL = 0
     TEACHER_FORCING = 1
@@ -73,6 +75,30 @@ TIME_DEC_DIM_VAL = 16  # default: 512
 TIME_DEC_HEAD_COUNT = 1  # default: 4
 TIME_DEC_LAYER_COUNT = 1  # default: 4
 TIME_DEC_DIM_FEED_FORWARD = 16  # default: = 2048
+
+TFT_TIME_STEPS = LOOKBACK
+TFT_INPUT_SIZE = INPUT_DATA_FEATURES
+TFT_OUTPUT_SIZE = OUTPUT_DATA_FEATURES
+TFT_MULTIPROCESSING_WORKERS = 3  # TODO
+TFT_CATEGORY_COUNTS = None  # TODO
+TFT_INPUT_OBS_LOC = None  # TODO
+TFT_STATIC_INPUT_LOC = None  # TODO
+TFT_KNOWN_REGULAR_INPUTS = None  # TODO
+TFT_KNOWN_CATEGORICAL_INPUTS = None  # TODO
+TFT_QUANTILES = [0.1, 0.5, 0.9]
+TFT_HIDDEN_SIZE = None  # TODO: figure out
+TFT_DROPOUT = None  # TODO: figure out
+TFT_N_HEADS = 4
+
+TFT_COL_DEF = [
+    ('id', DataTypes.REAL_VALUED, InputTypes.ID),
+    ('hours_from_start', DataTypes.REAL_VALUED, InputTypes.TIME),
+    ('power_usage', DataTypes.REAL_VALUED, InputTypes.TARGET),
+    ('hour', DataTypes.REAL_VALUED, InputTypes.KNOWN_INPUT),
+    ('day_of_week', DataTypes.REAL_VALUED, InputTypes.KNOWN_INPUT),
+    ('hours_from_start', DataTypes.REAL_VALUED, InputTypes.KNOWN_INPUT),
+    ('categorical_id', DataTypes.CATEGORICAL, InputTypes.STATIC_INPUT),
+]
 
 if ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
     MODEL_CHOICE_NAME = "lstm"

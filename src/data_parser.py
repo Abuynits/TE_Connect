@@ -5,7 +5,7 @@ import re
 SEQ2SEQ = "/Users/abuynits/PycharmProjects/TE_Connect/data/results_seq2seq.csv"
 DEEP_ESN = "/Users/abuynits/PycharmProjects/TE_Connect/data/results_deepecn.csv"
 model_choice = DEEP_ESN
-write_csv = False
+write_csv = True
 OUTPUT_FP = "/Users/abuynits/PycharmProjects/TE_Connect/data/parser_out.csv"
 
 
