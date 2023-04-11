@@ -8,6 +8,19 @@ DATA_FILTER = ["Asia Pacific & ANZ", "Industrial"]
 # collumns of interest
 INPUT_DATA_COLS = ["sales_amount", "sales_quantity",
                    "Price"]  # add features to end to make itself predict the output col - lstm not limit to 1 feature
+OUTPUT_DATA_COLS = ["sales_amount"]
+TEST_TRAIN_SPLIT = 0.8  # test-train split percentage
+PERCENT_TRAIN_DATA = 0.7
+PERCENT_TEST_DATA = 0.1
+PERCENT_VALID_DATA = 1 - PERCENT_TRAIN_DATA - PERCENT_TEST_DATA
+LOOKBACK = 10  # number of units used to make prediction
+PREDICT = 10  # number of units that will be predicted
+
+class prediction_time(Enum):
+    MONTHLY = 1
+    DAILY = 2
+
+PREDICTION_TYPE = prediction_time.DAILY
 # input_data_cols = ["sales_amount"]
 """
 fiscal_year_historical
@@ -39,26 +52,12 @@ col_def = [
     ('Id', DataTypes.CATEGORICAL, InputTypes.ID),
 ]
 
-OUTPUT_DATA_COLS = ["sales_amount"]
+
 OUTPUT_DATA_FEATURES = len(OUTPUT_DATA_COLS)
 INPUT_DATA_FEATURES = len(INPUT_DATA_COLS)
 
 SPLIT_BY_PERCENT = False  # True: use percentage below. False: remove last 76 data points for eval, use percent for val and train
 
-TEST_TRAIN_SPLIT = 0.8  # test-train split percentage
-PERCENT_TRAIN_DATA = 0.7
-PERCENT_TEST_DATA = 0.1
-PERCENT_VALID_DATA = 1 - PERCENT_TRAIN_DATA - PERCENT_TEST_DATA
-LOOKBACK = 10  # number of units used to make prediction
-PREDICT = 10  # number of units that will be predicted
-
-
-class prediction_time(Enum):
-    MONTHLY = 1
-    DAILY = 2
-
-
-PREDICTION_TYPE = prediction_time.DAILY
 
 DATA_PREP_DICT = {
     "GROUP_BY_PRODUCT_LINE": GROUP_BY_PRODUCT_LINE,
