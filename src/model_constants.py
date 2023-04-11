@@ -1,5 +1,4 @@
 from data_constants import *
-from tft_data import *
 
 ML_FLOW_EXPERIMENT_NAME = "testing"
 # MODEL INFO:
@@ -17,9 +16,10 @@ class MODEL_CHOICE(Enum):
     BASIC_LSTM = 1
     TIME_TRANSFORMER = 2
     DEEP_ESN = 3
+    TFT = 4
 
 
-ARCH_CHOICE = MODEL_CHOICE.TIME_TRANSFORMER
+ARCH_CHOICE = MODEL_CHOICE.TFT
 
 EARLY_STOP_MIN_EPOCH = 10
 EARLY_STOP_DELTA = 0.05
@@ -89,6 +89,9 @@ TFT_QUANTILES = [0.1, 0.5, 0.9]
 TFT_HIDDEN_SIZE = None  # TODO: figure out
 TFT_DROPOUT = None  # TODO: figure out
 TFT_N_HEADS = 4
+TFT_ENC_STEPS = PREDICT
+TFT_STACKS = 4 # TODO: FIURE OUT
+TFT_N_CAT_VARS = 4
 
 TFT_COL_DEF = [
     ('id', DataTypes.REAL_VALUED, InputTypes.ID),
@@ -104,6 +107,8 @@ if ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
     MODEL_CHOICE_NAME = "lstm"
 elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
     MODEL_CHOICE_NAME = "transformer"
+elif ARCH_CHOICE == MODEL_CHOICE.TFT:
+    MODEL_CHOICE_NAME = "tft"
 else:
     MODEL_CHOICE_NAME = "seq2seq"
 

@@ -1,17 +1,17 @@
-from model_constants import *
 from tft_GRN import *
 from tft_VarSelectionNN import *
 from tft_InterpretableMHA import *
+from seq2seq_arch import print_model
 
 
 class TemporalFusionTransformer(nn.Module):
     def __init__(self):
-        super(TemporalFusionTransformer, self).__init()
+        super(TemporalFusionTransformer, self).__init__()
         self.time_steps = TFT_TIME_STEPS
         self.input_size = TFT_INPUT_SIZE
         self.output_size = TFT_OUTPUT_SIZE
         self.cat_counts = TFT_CATEGORY_COUNTS
-        self.n_cat_vars = len(self.category_counts)
+        self.n_cat_vars = TFT_N_CAT_VARS
         self.n_reg_vars = self.input_size - self.n_cat_vars
         self.n_multiprocessing_workers = TFT_MULTIPROCESSING_WORKERS
         self.n_enc_steps = TFT_ENC_STEPS
@@ -66,6 +66,7 @@ class TemporalFusionTransformer(nn.Module):
 
         # ============ init weights ============ #
         self.init_weights()
+        print_model(self)
 
     def init_weights(self):
         for name, param in self.parameters():

@@ -86,6 +86,9 @@ def display_train_test_valid_data(all_train_data, all_valid_data, all_test_data)
 def display_group_df(grouped_df, limit=5):
     count = 0
     for name, group in grouped_df:
+        if count == 0:
+            for col in group.columns:
+                print(col)
         print(name)
         print(len(group))
         display(group.head(10))

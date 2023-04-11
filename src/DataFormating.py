@@ -1,13 +1,14 @@
-import enum
-# Type definitions
-class DataTypes(enum.IntEnum):
+from enum import Enum
+
+
+class DataTypes(Enum):
     """Defines numerical types of each column."""
     REAL_VALUED = 0
     CATEGORICAL = 1
     DATE = 2
 
 
-class InputTypes(enum.IntEnum):
+class InputTypes(Enum):
     """Defines input types of each column."""
     TARGET = 0
     OBSERVED_INPUT = 1

@@ -6,6 +6,7 @@ from ESN import *
 from time_transformer import *
 from eval import *
 from visualization import *
+from tft import *
 
 print("reading data from files..")
 train_x, train_y, train_tg, valid_x, valid_y, valid_tg = read_train_arrs_from_fp()
@@ -41,7 +42,8 @@ elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
     model = time_transformer().to(DEVICE)
 elif ARCH_CHOICE == MODEL_CHOICE.DEEP_ESN:
     model = ESN().to(DEVICE)
-
+elif ARCH_CHOICE == MODEL_CHOICE.TFT:
+    model = TemporalFusionTransformer().to(DEVICE)
 else:
     raise Exception("bad model selected!")
 
