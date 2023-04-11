@@ -14,6 +14,8 @@ class TemporalFusionTransformer(nn.Module):
         self.n_cat_vars = len(self.category_counts)
         self.n_reg_vars = self.input_size - self.n_cat_vars
         self.n_multiprocessing_workers = TFT_MULTIPROCESSING_WORKERS
+        self.n_enc_steps = TFT_ENC_STEPS
+        self.n_stacks = TFT_STACKS
         self.n_heads = TFT_N_HEADS
 
         # relevant indices for TFT
@@ -227,7 +229,7 @@ class TemporalFusionTransformer(nn.Module):
                                      for i in range(self.n_reg_vars)
                                      if i in self._static_input_loc]
             # static categorical inputs: represent each one through Elipsis (not know its representation
-            # acccess the ith location corresponding with the variable location for all batches adn time steps
+            # access the ith location corresponding with the variable location for all batches adn time steps
             static_categorical_inputs = [self.cat_var_embeddings[i](categorical_inputs[Ellipsis, i])[:, 0, :]
                                          for i in range(self.n_cat_vars)
                                          if i + self.n_reg_vars in self._static_input_loc]
@@ -236,4 +238,122 @@ class TemporalFusionTransformer(nn.Module):
             static_inputs = None
 
         # Target input
-        trg_inp = torch.stack([self.reg_var_embeddings[i](regular_inputs)])
+        obs_inputs = torch.stack([self.reg_var_embeddings[i](regular_inputs[Ellipsis, i:i + 1])
+                                  for i in self._input_obs_loc], dim=-1)
+
+        # Observed (a prioir unknown) inputs
+        wired_embeddings = []
+        for i in range(self.n_cat_vars):
+            if i not in self._known_categorical_input_idx \
+                    and i not in self._input_obs_loc:
+                e = self.cat_var_embeddings[i](categorical_inputs[:, :, i])
+                wired_embeddings.append(e)
+
+        unknown_inputs = []
+        for i in range(self.n_reg_vars):
+            if i not in self._known_regular_input_idx \
+                    and i not in self._input_obs_loc:
+                e = self.reg_var_embeddings[i](regular_inputs[Ellipsis, i:i + 1])
+                unknown_inputs.append(e)
+
+        if unknown_inputs + wired_embeddings:
+            unknown_inputs = torch.stack(unknown_inputs + wired_embeddings, dim=-1)
+        else:
+            unknown_inputs = None
+
+        # A priori known inputs
+        known_regular_inputs = [self.reg_var_embeddings[i](regular_inputs[Ellipsis, i:i + 1])
+                                for i in self._known_regular_input_idx
+                                if i not in self._static_input_loc]
+        # print('known_regular_inputs')
+        # print([print(emb.shape) for emb in known_regular_inputs])
+
+        known_categorical_inputs = [self.cat_var_embeddings[i](categorical_inputs[Ellipsis, i])
+                                    for i in self._known_categorical_input_idx
+                                    if i + self.n_reg_vars not in self._static_input_loc]
+        # print('known_categorical_inputs')
+        # print([print(emb.shape) for emb in known_categorical_inputs])
+
+        known_combined_layer = torch.stack(known_regular_inputs + known_categorical_inputs, dim=-1)
+
+        return unknown_inputs, known_combined_layer, obs_inputs, static_inputs
+
+    def forward(self, all_inputs):
+        reg_inputs = all_inputs[:, :, :self.n_reg_vars].to(torch.float)
+        cat_inputs = all_inputs[:, :, self.n_reg_vars:].to(torch.long)
+
+        # gather all embedded inputs
+        unknown_inputs, known_combined_layer, obs_inputs, static_inputs \
+            = self.get_tft_embeddings(reg_inputs, cat_inputs)
+
+        # Isolate known and observed historical inputs.
+        if unknown_inputs is not None:
+            # extract the history leading up to n_enc_steps
+            hist_inp = torch.cat([
+                unknown_inputs[:, :self.n_enc_steps, :],
+                known_combined_layer[:, :self.n_enc_steps, :],
+                obs_inputs[:, :self.n_enc_steps, :]
+            ], dim=-1)
+        else:
+            hist_inp = torch.cat([
+                known_combined_layer[:, :self.n_enc_steps, :],
+                obs_inputs[:, :self.n_enc_steps, :]
+            ], dim=-1)
+
+        # extract history only after the n_enc_steps
+        future_inp = known_combined_layer[:, self.n_enc_steps:, :]
+
+        # get the static context from static vsn
+        static_enc, sparse_weights = self.static_vsn(static_inputs)
+
+        # extract static variables to be used in encder selection
+        static_ctx_var_sel = self.static_var_sel_grn(static_enc)
+        # extract static context for enrichment at temporal layer:
+        static_context_enrich = self.static_ctx_enrichment_grn(static_enc)
+        # extract variables to be used at each lstm layer
+        static_ctx_state_h = self.static_ctx_state_h_grn(static_enc)
+        # extract variables to be used at the grn layer in the temporal fusion decoder
+        static_ctx_state_c = self.static_ctx_state_c_grn(static_enc)
+
+        # select historical features and their flags
+        hist_feat, hist_flags = self.temporal_hist_vsn(hist_inp, static_ctx_var_sel)
+
+        # select known future inputs and their flags:
+        future_feat, future_flags = self.temporal_hist_vsn(future_inp, static_ctx_var_sel)
+
+        # pass in the historic data through the current lstm
+        hist_out, (hist_out_h, hist_out_c) = self.hist_lstm(hist_feat, (static_ctx_state_h.unsqueeze(0),
+                                                                        static_ctx_state_c.unsqueeze(0)))
+
+        # pass in the future features through the future lstm:
+
+        future_out, _ = self.future_lstm(future_feat, (hist_out_h, hist_out_c))
+
+        # residual layer over the inputs into the model by adding the input embeddings
+        # to output of historing and future data
+        all_inp_embeddings = torch.cat((hist_feat, future_feat), dim=1)
+        # combine all lstm outputs:
+        all_lstm_out = torch.cat((hist_out, future_out), dim=1)
+        # apply the skip connection (overlay map over lstm inputs / outputs)
+        temporal_feature_layer = self.post_seq_enc_gate_add_norm(all_lstm_out, all_inp_embeddings)
+        # enrich temporal features with static context (again)
+        # expand on axis 1 to account for handling time input
+        expanded_static_ctx = static_context_enrich.expand(1)
+
+        enriched_temporal = self.static_enrichment((temporal_feature_layer, expanded_static_ctx))
+
+        # ============ MHA =========== #
+        attn_mask = self.get_decoder_mask(enriched_temporal)
+        # calculate the interpolatable head pointer
+        x, attn = self.self_attn_layer(enriched_temporal,
+                                       enriched_temporal,
+                                       enriched_temporal,
+                                       mask=attn_mask)
+        # apply final gate attn and normalization on the gate
+        x = self.post_attn_gate_add_norm(x, attn)
+        # final skip connection for transformer:
+        final_skip = self.post_attn_gate_add_norm(x, temporal_feature_layer)
+
+        outputs = self.output_feed_forward(final_skip[Ellipsis, self.n_enc_steps:, :])
+
+        return outputs

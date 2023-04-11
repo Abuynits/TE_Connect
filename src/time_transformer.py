@@ -238,6 +238,7 @@ class time_transformer(pl.LightningModule):
             print(out)
         elif TIME_VERBOSE:
             print(f"out shape: {out.shape}")
+            # TODO: check that correctly atted to memory afterward
         return out, new_inp
 
 
