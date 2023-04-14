@@ -84,7 +84,7 @@ def transform_norm_rem_out(grouped_df, input_data_cols, output_data_cols=None, d
     count = 0
 
     if output_data_cols is None:
-        data_cols = input_data_cols
+        data_cols = INPUT_NORM_COLS
         print("using simple df cols", data_cols)
         scalar1 = get_scalar()
         if APPLY_LOG_TRANSFORM:
@@ -94,7 +94,7 @@ def transform_norm_rem_out(grouped_df, input_data_cols, output_data_cols=None, d
         # will return a single value which is the transformed data
         return grouped_df
     else:
-        data_cols = input_data_cols + list(set(output_data_cols) - set(input_data_cols))
+        data_cols = INPUT_NORM_COLS + list(set(OUTPUT_NORM_COLS) - set(INPUT_NORM_COLS))
         print("using join df cols:", data_cols)
 
     save_first_name = False
@@ -119,16 +119,16 @@ def transform_norm_rem_out(grouped_df, input_data_cols, output_data_cols=None, d
                 group.iloc[:, i].interpolate(inplace=True)
 
             if APPLY_LOG_TRANSFORM:
-                _, input_transformations[name] = apply_log_transform(group.copy(), input_data_cols)
-                _, output_transformations[name] = apply_log_transform(group.copy(), output_data_cols)
+                _, input_transformations[name] = apply_log_transform(group.copy(), INPUT_NORM_COLS)
+                _, output_transformations[name] = apply_log_transform(group.copy(), OUTPUT_NORM_COLS)
                 group, _ = apply_log_transform(group.copy(), data_cols)
             else:
                 inp_scalar = get_scalar()
-                inp_scalar.fit(group[input_data_cols])
+                inp_scalar.fit(group[INPUT_NORM_COLS])
                 input_transformations[name] = inp_scalar
 
                 out_scalar = get_scalar()
-                out_scalar.fit(group[output_data_cols])
+                out_scalar.fit(group[OUTPUT_NORM_COLS])
                 output_transformations[name] = out_scalar
 
                 all_scalar = get_scalar()

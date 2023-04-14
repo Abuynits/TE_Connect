@@ -93,15 +93,15 @@ TFT_ENC_STEPS = PREDICT
 TFT_STACKS = 4 # TODO: FIURE OUT
 TFT_N_CAT_VARS = 4
 
-TFT_COL_DEF = [
-    ('id', DataTypes.REAL_VALUED, InputTypes.ID),
-    ('hours_from_start', DataTypes.REAL_VALUED, InputTypes.TIME),
-    ('power_usage', DataTypes.REAL_VALUED, InputTypes.TARGET),
-    ('hour', DataTypes.REAL_VALUED, InputTypes.KNOWN_INPUT),
-    ('day_of_week', DataTypes.REAL_VALUED, InputTypes.KNOWN_INPUT),
-    ('hours_from_start', DataTypes.REAL_VALUED, InputTypes.KNOWN_INPUT),
-    ('categorical_id', DataTypes.CATEGORICAL, InputTypes.STATIC_INPUT),
-]
+#TFT_COL_DEF = [
+#    ('id', DataTypes.REAL_VALUED, InputTypes.ID),
+#    ('hours_from_start', DataTypes.REAL_VALUED, InputTypes.TIME),
+#    ('power_usage', DataTypes.REAL_VALUED, InputTypes.TARGET),
+#    ('hour', DataTypes.REAL_VALUED, InputTypes.KNOWN_INPUT),
+#    ('day_of_week', DataTypes.REAL_VALUED, InputTypes.KNOWN_INPUT),
+#    ('hours_from_start', DataTypes.REAL_VALUED, InputTypes.KNOWN_INPUT),
+#    ('categorical_id', DataTypes.CATEGORICAL, InputTypes.STATIC_INPUT),
+#]
 
 if ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
     MODEL_CHOICE_NAME = "lstm"
