@@ -21,15 +21,6 @@ if SPLIT_TYPE == DATA_SPLIT.ON_PRODUCT_CODES:
                all_valid_data,
                all_train_data,
                all_test_data)
-elif SPLIT_TYPE == TFT_SPLIT:
-    split_tft_data(transformed_data,
-                   dict_train_data,
-                   dict_valid_data,
-                   dict_test_data,
-                   all_valid_data,
-                   all_train_data,
-                   all_test_data
-    )
 else:
     split_each_data_group(transformed_data,
                           dict_train_data,
