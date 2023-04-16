@@ -33,6 +33,7 @@ def alter_df_time_scale(df):
     df.reset_index(drop=True, inplace=True)
     u_prod_code = df["product_line_code"].unique()
     print(u_prod_code)
+    print(df["sales_amount"])
     df["Price"] = df["sales_amount"] / df["sales_quantity"]
     return df
 

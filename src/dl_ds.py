@@ -104,8 +104,7 @@ class tft_ds(Dataset):
 
         df_index_abs = g[[self.target_col]].transform(lambda x: x.index + self.lookback) \
             .reset_index() \
-            .rename(columns={'index': 'init_abs',
-                             self.target_col: 'end_abs'})
+            .rename(columns={'index': 'init_abs', self.target_col: 'end_abs'})
         df_index_rel_init = g[[self.target_col]].transform(lambda x: x.reset_index(drop=True).index) \
             .rename(columns={self.target_col: 'init_rel'})
         df_index_rel_end = g[[self.target_col]].transform(lambda x: x.reset_index(drop=True).index + self.lookback) \

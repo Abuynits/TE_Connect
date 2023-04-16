@@ -11,14 +11,35 @@ DATA_FILTER = ["Asia Pacific & ANZ", "Industrial"]
 INPUT_DATA_COLS = ["sales_amount",
                    "sales_quantity",
                    "Price",
-                   "fiscal_week_historical",
-                   "business_unit_group_name",
-                   "company_region_name_level_1"]
+                   "extr_1",
+                   "extr_2",
+                   "extr_3",
+                   "extr_4",
+                   "extr_5"]
+
+# INPUT_DATA_COLS = ["sales_amount",
+#                   "sales_quantity",
+#                   "Price",
+#                   "fiscal_week_historical",
+#                   "business_unit_group_name",
+#                   "company_region_name_level_1"]
+
+# INPUT_NORM_COLS = ["sales_amount",
+#                    "sales_quantity",
+#                    "Price",
+#                    "fiscal_week_historical",
+#                    "fiscal_month_historical",
+#                    "fiscal_quarter_historical",
+#                    "fiscal_year_historical"]
 
 INPUT_NORM_COLS = ["sales_amount",
                    "sales_quantity",
                    "Price",
-                   "fiscal_week_historical"]
+                   "extr_1",
+                   "extr_2",
+                   "extr_3",
+                   "extr_4",
+                   "extr_5"]
 
 # processed in this order
 INPUT_DATA_FORMAT = [DataTypes.QUANT,
