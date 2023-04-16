@@ -21,12 +21,12 @@ class TemporalFusionTransformer(nn.Module):
         # relevant indices for TFT
         self._input_obs_loc = TFT_INPUT_OBS_LOC
         self._static_input_loc = TFT_STATIC_INPUT_LOC
-        self._known_regular_input_idx = TFT_KNOWN_REGULAR_INPUTS
-        self._known_categorical_input_idx = TFT_KNOWN_CATEGORICAL_INPUTS
+        self._known_regular_input_idx = TFT_REGULAR_INPUTS
+        self._known_categorical_input_idx = TFT_CATEGORICAL_INPUTS
 
-        self.num_non_static_historical_inputs = self.get_historical_num_inputs()
-        self.num_non_static_future_inputs = self.get_future_num_inputs()
-        self.col_def = TFT_COL_DEF
+        self.num_non_static_historical_inputs = TFT_HIST_INPUTS
+        self.num_non_static_future_inputs = TFT_FUTURE_INPUTS
+
         self.quantiles = TFT_QUANTILES
 
         self.hidden_size = TFT_HIDDEN_SIZE
@@ -78,36 +78,6 @@ class TemporalFusionTransformer(nn.Module):
                 nn.init.orthogonal_(param)
             elif 'lstm' in name and 'bias' in name:
                 nn.init.zeros_(param)
-
-    def get_historical_num_inputs(self):
-
-        obs_inputs = [i for i in self._input_obs_loc]
-
-        known_regular_inputs = [i for i in self._known_regular_input_idx
-                                if i not in self._static_input_loc]
-
-        known_categorical_inputs = [i for i in self._known_categorical_input_idx
-                                    if i + self.n_reg_vars not in self._static_input_loc]
-
-        wired_embeddings = [i for i in range(self.n_cat_vars)
-                            if i not in self._known_categorical_input_idx
-                            and i not in self._input_obs_loc]
-
-        unknown_inputs = [i for i in range(self.n_reg_vars)
-                          if i not in self._known_regular_input_idx
-                          and i not in self._input_obs_loc]
-
-        return len(obs_inputs + known_regular_inputs + known_categorical_inputs + wired_embeddings + unknown_inputs)
-
-    def get_future_num_inputs(self):
-
-        known_regular_inputs = [i for i in self._known_regular_input_idx
-                                if i not in self._static_input_loc]
-
-        known_categorical_inputs = [i for i in self._known_categorical_input_idx
-                                    if i + self.n_reg_vars not in self._static_input_loc]
-
-        return len(known_regular_inputs + known_categorical_inputs)
 
     def build_embeddings(self):
         # nn.embeddings: A simple lookup table that stores embeddings of a fixed dictionary and size.

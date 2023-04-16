@@ -1,5 +1,4 @@
 from data_constants import *
-
 ML_FLOW_EXPERIMENT_NAME = "testing"
 # MODEL INFO:
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -80,20 +79,37 @@ TFT_TIME_STEPS = LOOKBACK
 TFT_INPUT_SIZE = INPUT_DATA_FEATURES
 TFT_OUTPUT_SIZE = OUTPUT_DATA_FEATURES
 TFT_MULTIPROCESSING_WORKERS = 3  # TODO
-TFT_CATEGORY_COUNTS = None  # TODO
-TFT_INPUT_OBS_LOC = None  # TODO
-TFT_STATIC_INPUT_LOC = None  # TODO
-TFT_KNOWN_REGULAR_INPUTS = None  # TODO
-TFT_KNOWN_CATEGORICAL_INPUTS = None  # TODO
+
+if READ_FROM_DRIVE:
+    from google.colab import drive
+
+    drive.mount('/content/gdrive')
+    df = pd.read_csv(CSV_DRIVE_PATH)
+else:
+    df = pd.read_csv(CSV_FILE_PATH)
+
+TFT_CATEGORY_COUNTS = [df["product_line_code"].unique(),
+                       df["company_region_name_level_1"].unique(),
+                       df["business_unit_group_name"].unique()]
+
+TFT_INPUT_OBS_LOC = [i for i in INPUT_DATA_TYPE if i is InputTypes.FUTURE_HIST_INP]
+TFT_STATIC_INPUT_LOC = [i for i in INPUT_DATA_TYPE if i is InputTypes.STATIC_INPUT]
+
+TFT_REGULAR_INPUTS = [i for i in INPUT_DATA_TYPE if i is InputTypes.HIST_INPUT]
+TFT_CATEGORICAL_INPUTS = [i for i in INPUT_DATA_FORMAT if i is DataTypes.CAT]
+
+TFT_FUTURE_INPUTS = len([i for i in INPUT_DATA_TYPE if i is InputTypes.FUTURE_HIST_INP])
+TFT_HIST_INPUTS = len([i for i in INPUT_DATA_TYPE if i is InputTypes.FUTURE_HIST_INP])
+
 TFT_QUANTILES = [0.1, 0.5, 0.9]
-TFT_HIDDEN_SIZE = None  # TODO: figure out
-TFT_DROPOUT = None  # TODO: figure out
+TFT_HIDDEN_SIZE = 160
+TFT_DROPOUT = 0.1
 TFT_N_HEADS = 4
 TFT_ENC_STEPS = PREDICT
-TFT_STACKS = 4 # TODO: FIURE OUT
-TFT_N_CAT_VARS = 4
+TFT_STACKS = 1
+TFT_N_CAT_VARS = len(TFT_CATEGORICAL_INPUTS)
 
-#TFT_COL_DEF = [
+# TFT_COL_DEF = [
 #    ('id', DataTypes.REAL_VALUED, InputTypes.ID),
 #    ('hours_from_start', DataTypes.REAL_VALUED, InputTypes.TIME),
 #    ('power_usage', DataTypes.REAL_VALUED, InputTypes.TARGET),
@@ -101,7 +117,7 @@ TFT_N_CAT_VARS = 4
 #    ('day_of_week', DataTypes.REAL_VALUED, InputTypes.KNOWN_INPUT),
 #    ('hours_from_start', DataTypes.REAL_VALUED, InputTypes.KNOWN_INPUT),
 #    ('categorical_id', DataTypes.CATEGORICAL, InputTypes.STATIC_INPUT),
-#]
+# ]
 
 if ARCH_CHOICE == MODEL_CHOICE.BASIC_LSTM:
     MODEL_CHOICE_NAME = "lstm"
