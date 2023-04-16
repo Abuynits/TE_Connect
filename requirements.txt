@@ -64,3 +64,4 @@ voluptuous
 wcwidth
 xmltodict
 zc.lockfile
+torch

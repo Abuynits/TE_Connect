@@ -1,11 +1,12 @@
-import utils.saving_reading_data
-import arch.seq2seq_arch
-import arch.lstm_arch
-import arch.deep_esn.ESN
-import eval.eval
-
-from .config.model_constants import *
-from .config.filepaths_constants import *
+from dl_ds import *
+from saving_reading_data import *
+from seq2seq_arch import *
+from lstm_arch import *
+from ESN import *
+from time_transformer import *
+from eval import *
+from visualization import *
+from tft import *
 
 print("reading data from files..")
 train_x, train_y, train_tg, valid_x, valid_y, valid_tg = read_train_arrs_from_fp()
@@ -41,7 +42,8 @@ elif ARCH_CHOICE == MODEL_CHOICE.TIME_TRANSFORMER:
     model = time_transformer().to(DEVICE)
 elif ARCH_CHOICE == MODEL_CHOICE.DEEP_ESN:
     model = ESN().to(DEVICE)
-
+elif ARCH_CHOICE == MODEL_CHOICE.TFT:
+    model = TemporalFusionTransformer().to(DEVICE)
 else:
     raise Exception("bad model selected!")
 

@@ -52,7 +52,8 @@ ML_RUNS_PATH = "mlruns"
 # not tracked by dvc
 READ_FROM_DRIVE = False
 CSV_DRIVE_PATH = "content/gdrive/MyDrive/te_ai_cup_sales_forecasting_data.csv"
-CSV_FILE_PATH = "data/te_ai_cup_sales_forecasting_data.csv"
+#CSV_FILE_PATH = "data/te_ai_cup_sales_forecasting_data.csv"
+CSV_FILE_PATH = "data/data.csv"
 
 TRAIN_DICT_FILE_PATH = "data/dicts/train_dict.pkl"
 VAL_DICT_FILE_PATH = "data/dicts/validation_dict.pkl"
@@ -118,7 +119,7 @@ DISPLAY_BATCH_TRAIN_DATA = False  # debug: check if you want to display the atch
 LSTM_VERBOSE = False  # debug: check if you want to debug the LSTM model
 SEQ2SEQ_VERBOSE = False  # debug: check if you want to debug the seq2seq model
 TIME_PRED_VERBOSE = False
-TIME_VERBOSE = False
+TIME_VERBOSE = True
 TIME_VERBOSE_MAX = False
 EVAL_VERBOSE = False
 EVAL_TRAIN_ACC = False
