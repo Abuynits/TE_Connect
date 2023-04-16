@@ -3,9 +3,10 @@ from eval import *
 import re
 
 SEQ2SEQ = "/Users/abuynits/PycharmProjects/TE_Connect/data/results_seq2seq.csv"
-STANLEY_SEQ2SEQ = "/Users/abuynits/PycharmProjects/TE_Connect/data/results_stanley.csv"
+STANLEY_SEQ2SEQ_5 = "/Users/abuynits/PycharmProjects/TE_Connect/data/results_stanley.csv"
+STANLEY_SEQ2SEQ_1 = "/Users/abuynits/PycharmProjects/TE_Connect/data/stanley_run_2.csv"
 DEEP_ESN = "/Users/abuynits/PycharmProjects/TE_Connect/data/results_deepecn.csv"
-model_choice = STANLEY_SEQ2SEQ
+model_choice = STANLEY_SEQ2SEQ_1
 write_csv = True
 OUTPUT_FP = "/Users/abuynits/PycharmProjects/TE_Connect/data/parser_out.csv"
 
