@@ -9,7 +9,11 @@ run_ml_flow = True if mlflow.active_run() is True else False
 # create dataloader for test dataset
 test_x, test_tg, test_y = read_test_data_from_fp()
 
-test_ds = finance_data_set(test_x, test_tg, test_y)
+if ARCH_CHOICE == MODEL_CHOICE.TFT:
+    test_ds = tft_ds(test_x, test_tg, test_y)
+else:
+    test_ds = finance_data_set(test_x, test_tg, test_y)
+
 test_dl = DataLoader(test_ds, batch_size=BATCH_SIZE, shuffle=False)
 print(f"batches in test dl: {len(test_dl)}")
 print(next(iter(test_dl))[0].shape)

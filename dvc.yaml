@@ -102,6 +102,3 @@ stages:
       - src/train.py
       - src/visualization.py
       - data/model/model.pkl
-    outs:
-      - data/eval_plots/
-      - data/results_seq2seq.csv

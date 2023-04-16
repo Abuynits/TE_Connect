@@ -11,9 +11,12 @@ from tft import *
 print("reading data from files..")
 train_x, train_y, train_tg, valid_x, valid_y, valid_tg = read_train_arrs_from_fp()
 print("creating datasets...")
-train_ds = finance_data_set(train_x, train_tg, train_y)
-
-valid_ds = finance_data_set(valid_x, valid_tg, valid_y)
+if ARCH_CHOICE == MODEL_CHOICE.TFT:
+    train_ds = tft_ds(train_x, train_tg, train_y)
+    valid_ds = tft_ds(valid_x, valid_tg, valid_y)
+else:
+    train_ds = finance_data_set(train_x, train_tg, train_y)
+    valid_ds = finance_data_set(valid_x, valid_tg, valid_y)
 
 # create dataloader for train dataset
 train_dl = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True)
@@ -22,14 +25,15 @@ print(f"batches in train dl: {len(train_dl)}")
 valid_dl = DataLoader(valid_ds, batch_size=BATCH_SIZE, shuffle=True)
 print(f"batches in valid dl: {len(valid_dl)}")
 
-if CHECK_DL:
-    check_data_loader(next(iter(train_dl))[0], next(iter(train_dl))[1])
-dl_unit = next(iter(train_dl))
-print_data_loader(dl_unit[0], dl_unit[1], dl_unit[2], 2)
+if ARCH_CHOICE is not MODEL_CHOICE.TFT:
+    if CHECK_DL:
+        check_data_loader(next(iter(train_dl))[0], next(iter(train_dl))[1])
+    dl_unit = next(iter(train_dl))
+    print_data_loader(dl_unit[0], dl_unit[1], dl_unit[2], 2)
 
-print(next(iter(train_dl))[0].shape)
-print(next(iter(train_dl))[1].shape)
-print(next(iter(train_dl))[2].shape)
+    print(next(iter(train_dl))[0].shape)
+    print(next(iter(train_dl))[1].shape)
+    print(next(iter(train_dl))[2].shape)
 
 train_loss = []  # track training loss
 valid_loss = []  # track validation loss

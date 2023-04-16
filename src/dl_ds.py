@@ -70,50 +70,33 @@ class finance_data_set(Dataset):
 
 
 class tft_ds(Dataset):
-    def __init__(self, df):
+    def __init__(self, xDT, targetDT, yDT):
         super().__init__()
-        self.data = df.reset_index(drop = True)
-        # pass in the whole dataframe - with indices, everything.
-        self.id_col = get_col_from_inp_type(InputTypes.ID, col_def)
-        self.time_col = get_col_from_inp_type(InputTypes.TIME, col_def)
-        self.target_col = get_col_from_inp_type(InputTypes.TARGET, col_def)
+        self.x = xDT
+        self.y = yDT
+        self.t = targetDT
+        self.data_len = len(self.t)
 
-        self.inp_cols = [
-            tup[0]
-            for tup in col_def
-            if tup[2] not in {InputTypes.ID, InputTypes.TIME}
-        ]
+    def __len__(self):
+        return self.data_len
 
-        self.col_map = {
-            'identifier': [self.id_col],
-            'time': [self.time_col],
-            'outputs': [self.target_col],
-            'inputs': self.inp_cols
-        }
+    def __getitem__(self, i):
+        cat_inp_cols = [loc for loc, val in enumerate(INPUT_DATA_FORMAT) if val is DataTypes.CAT]
+        cat_inp = self.x[i, :, cat_inp_cols].astype(str)
 
-        self.lookback = LOOKBACK
-        self.num_enc_steps = PREDICT
+        hist_inp_cols = [loc for loc, val in enumerate(INPUT_DATA_TYPE) if val is not InputTypes.STATIC_INPUT and
+                         INPUT_DATA_FORMAT[loc] is not DataTypes.CAT]
+        hist_inp = self.x[i, :, hist_inp_cols].astype(float)
 
-        self.data_idx = self.get_idx_filtering()
-        self.group_size = self.data.groupby([self.id_col]).apply(lambda x: x.shape[0]).mean()
-        self.data_index = self.data_idx[self.data_idx.end_rel < self.group_size].reset_index()
-        # TODO: need to add id col to dataframe
+        known_inp_cols = [loc for loc, val in enumerate(INPUT_DATA_TYPE) if val is InputTypes.FUTURE_HIST_INP]
+        known_inp = self.t[i, :, known_inp_cols].astype(float)
 
-    def get_index_filtering(self):
-        g = self.data.groupby([self.id_col])
+        target = self.y[i].astype(float)
 
-        df_index_abs = g[[self.target_col]].transform(lambda x: x.index + self.lookback) \
-            .reset_index() \
-            .rename(columns={'index': 'init_abs', self.target_col: 'end_abs'})
-        df_index_rel_init = g[[self.target_col]].transform(lambda x: x.reset_index(drop=True).index) \
-            .rename(columns={self.target_col: 'init_rel'})
-        df_index_rel_end = g[[self.target_col]].transform(lambda x: x.reset_index(drop=True).index + self.lookback) \
-            .rename(columns={self.target_col: 'end_rel'})
-        df_total_count = g[[self.target_col]].transform(lambda x: x.shape[0] - self.lookback + 1) \
-            .rename(columns={self.target_col: 'group_count'})
-
-        return pd.concat([df_index_abs,
-                          df_index_rel_init,
-                          df_index_rel_end,
-                          self.data[[self.id_col]],
-                          df_total_count], axis=1).reset_index(drop=True)
+        print(np.shape(hist_inp), np.shape(known_inp), np.shape(cat_inp), np.shape(target))
+        print(type(hist_inp), type(known_inp), type(cat_inp), type(target))
+        print(hist_inp)
+        print(known_inp)
+        print(cat_inp)
+        print(target)
+        return hist_inp, known_inp, cat_inp, target

@@ -86,7 +86,7 @@ if READ_FROM_DRIVE:
     drive.mount('/content/gdrive')
     df = pd.read_csv(CSV_DRIVE_PATH)
 else:
-    df = pd.read_csv(CSV_FILE_PATH)
+    df = pd.read_csv(CSV_FILE_PATH, low_memory=False)
 
 TFT_CATEGORY_COUNTS = [df["product_line_code"].unique(),
                        df["company_region_name_level_1"].unique(),
