@@ -49,9 +49,10 @@ class GateAddNorm(nn.Module):
     def __init__(self,
                  input_size,
                  hidden_size,
-                 drop_out):
+                 dropout):
+        super(GateAddNorm, self).__init__()
         # create GLU layer for processing input
-        self.GLU = GLU(input_size, hidden_size, drop_out)
+        self.GLU = GLU(input_size, hidden_size, dropout)
 
         # create LayerNorm for final output Processing
         self.layer_norm = nn.LayerNorm(hidden_size)
@@ -72,7 +73,9 @@ class GRN(nn.Module):
         super(GRN, self).__init__()
 
         self.hidden_size = hidden_size
-        self.input_size = input_size if not None else hidden_size
+        self.input_size = input_size
+        if input_size is None:
+            self.input_size = hidden_size
         self.output_size = output_size
         self.dropout = dropout
         # handle additional static context if needed
@@ -103,12 +106,13 @@ class GRN(nn.Module):
 
     def init_weights(self):
         for name, param in self.named_parameters():
-            if 'bias' not in name:
-                # set normal sampling for only w2 and w3 weights
-                nn.init.xavier_normal_(param)
-
+            print(name)
+            if ('w2' in name or 'w3' in name) and 'bias' not in name:
+                torch.nn.init.kaiming_normal_(param, a=0, mode='fan_in', nonlinearity='leaky_relu')
+            elif ('skip_linear' in name or 'w1' in name) and 'bias' not in name:
+                torch.nn.init.xavier_uniform_(param)
+                #                 torch.nn.init.kaiming_normal_(p, a=0, mode='fan_in', nonlinearity='sigmoid')
             elif 'bias' in name:
-                # set bias vectors to 0
                 torch.nn.init.zeros_(param)
 
     def forward(self, inp):

@@ -69,7 +69,7 @@ class TemporalFusionTransformer(nn.Module):
         print_model(self)
 
     def init_weights(self):
-        for name, param in self.parameters():
+        for name, param in self.named_parameters():
             # only init the lstm layers as the rest are init in other modules
             if ('lstm' in name and 'ih' in name) and 'bias' not in name:
                 # make lstm start out at  same place
@@ -120,17 +120,17 @@ class TemporalFusionTransformer(nn.Module):
 
     def build_static_ctx_networks(self):
         # for all layers, init them with the hidden size (the size of the static tensors)
-        self.static_var_sel_grn = GRN(self.hidden_size,
-                                      self.dropout)
+        self.static_var_sel_grn = GRN(hidden_size=self.hidden_size,
+                                      dropout=self.dropout)
 
-        self.static_ctx_enrichment_grn = GRN(self.hidden_size,
-                                             self.dropout)
+        self.static_ctx_enrichment_grn = GRN(hidden_size=self.hidden_size,
+                                             dropout=self.dropout)
 
-        self.static_ctx_state_h_grn = GRN(self.hidden_layer_size,
-                                          self.dropout)
+        self.static_ctx_state_h_grn = GRN(hidden_size=self.hidden_size,
+                                          dropout=self.dropout)
 
-        self.static_ctx_state_c_grn = GRN(self.hidden_layer_size,
-                                          self.dropout)
+        self.static_ctx_state_c_grn = GRN(hidden_size=self.hidden_size,
+                                          dropout=self.dropout)
 
     def build_lstm(self):
         self.hist_lstm = nn.LSTM(
@@ -163,22 +163,22 @@ class TemporalFusionTransformer(nn.Module):
     def build_temporal_self_attn(self):
         self.self_attn_layer = InterpretableMultiHeadAttention(n_head=self.n_heads,
                                                                hidden_size=self.hidden_size,
-                                                               dropout=self.dropout_rate)
+                                                               dropout=self.dropout)
 
-        self.post_attn_gate_add_norm = GRN(self.hidden_layer_size,
-                                           self.hidden_layer_size,
-                                           self.dropout_rate)
+        self.post_attn_gate_add_norm = GRN(hidden_size=self.hidden_size,
+                                           input_size=self.hidden_size,
+                                           dropout=self.dropout)
 
     def build_position_wise_feed_forward(self):
-        self.GRN_positionwise = GRN(self.hidden_layer_size,
+        self.GRN_positionwise = GRN(self.hidden_size,
                                     dropout=self.dropout)
 
-        self.post_tfd_gate_add_norm = GateAddNorm(self.hidden_layer_size,
-                                                  self.hidden,
-                                                  self.dropout)
+        self.post_tfd_gate_add_norm = GateAddNorm(input_size=self.hidden_size,
+                                                  hidden_size=self.hidden_size,
+                                                  dropout=self.dropout)
 
     def build_output_feed_forward(self):
-        self.output_feed_forward = torch.nn.Linear(self.hidden_layer_size,
+        self.output_feed_forward = torch.nn.Linear(self.hidden_size,
                                                    self.output_size * len(self.quantiles))
 
     def get_decoder_mask(self, self_attn_inputs):

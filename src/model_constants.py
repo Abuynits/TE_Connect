@@ -88,9 +88,8 @@ if READ_FROM_DRIVE:
 else:
     df = pd.read_csv(CSV_FILE_PATH, low_memory=False)
 
-TFT_CATEGORY_COUNTS = [df["product_line_code"].unique(),
-                       df["company_region_name_level_1"].unique(),
-                       df["business_unit_group_name"].unique()]
+TFT_CATEGORY_COUNTS = [len(df["company_region_name_level_1"].unique().astype(str)),
+                       len(df["business_unit_group_name"].unique().astype(str))]
 
 TFT_INPUT_OBS_LOC = [i for i in INPUT_DATA_TYPE if i is InputTypes.FUTURE_HIST_INP]
 TFT_STATIC_INPUT_LOC = [i for i in INPUT_DATA_TYPE if i is InputTypes.STATIC_INPUT]
