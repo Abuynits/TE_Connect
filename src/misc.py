@@ -1,7 +1,7 @@
 import pandas as pd
 import glob
 
-path = r'/Users/abuynits/PycharmProjects/TE_Connect/data/datasets_top_5'
+path = r'/Users/abuynits/Downloads/testing/with_external_indicators'
 allFiles = glob.glob(path + "/*.csv")
 allFiles.sort()
 df_out = pd.DataFrame()

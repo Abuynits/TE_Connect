@@ -3,7 +3,7 @@ from DataFormating import DataTypes
 from DataFormating import InputTypes
 
 # must contain each one of these labels
-DATA_FILTER = ["Asia Pacific & ANZ", "Industrial"]
+DATA_FILTER = []
 # data_filter = ["Asia Pacific & ANZ"]
 # collumns of interest
 
@@ -13,9 +13,7 @@ INPUT_DATA_COLS = ["sales_amount",
                    "Price",
                    "extr_1",
                    "extr_2",
-                   "extr_3",
-                   "extr_4",
-                   "extr_5"]
+                   "extr_3"]
 
 # INPUT_DATA_COLS = ["sales_amount",
 #                   "sales_quantity",
@@ -37,9 +35,7 @@ INPUT_NORM_COLS = ["sales_amount",
                    "Price",
                    "extr_1",
                    "extr_2",
-                   "extr_3",
-                   "extr_4",
-                   "extr_5"]
+                   "extr_3"]
 
 # processed in this order
 INPUT_DATA_FORMAT = [DataTypes.QUANT,
